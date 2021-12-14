@@ -12,21 +12,18 @@ class CardModel {
     this.name,
     this.picUrl,
     this.numBloggers,
-    this.bloggers,
   });
 
   String? id;
   String? name;
   String? picUrl;
   int? numBloggers;
-  List<dynamic>? bloggers;
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
         id: json["id"],
         name: json["name"],
         picUrl: json["picUrl"],
         numBloggers: json["numBloggers"],
-        bloggers: List<dynamic>.from(json["bloggers"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -34,14 +31,13 @@ class CardModel {
         "name": name,
         "picUrl": picUrl,
         "numBloggers": numBloggers,
-        // "bloggers": List<dynamic>.from(bloggers.map((x) => x)),
       };
 }
 
-List<BlogersModel> blogerModelFromJson(String str) => List<BlogersModel>.from(
+List<BlogersModel> blogersModelFromJson(String str) => List<BlogersModel>.from(
     json.decode(str).map((x) => BlogersModel.fromJson(x)));
 
-String blogerModelToJson(List<BlogersModel> data) =>
+String blogersModelToJson(List<BlogersModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class BlogersModel {
@@ -50,6 +46,9 @@ class BlogersModel {
     this.userName,
     this.fullName,
     this.picUrl,
+    this.numFollowers,
+    this.absoluteLikes,
+    this.absoluteComments,
     this.er,
   });
 
@@ -57,6 +56,9 @@ class BlogersModel {
   String? userName;
   String? fullName;
   String? picUrl;
+  int? numFollowers;
+  int? absoluteLikes;
+  int? absoluteComments;
   double? er;
 
   factory BlogersModel.fromJson(Map<String, dynamic> json) => BlogersModel(
@@ -64,6 +66,9 @@ class BlogersModel {
         userName: json["userName"],
         fullName: json["fullName"],
         picUrl: json["picUrl"],
+        numFollowers: json["numFollowers"],
+        absoluteLikes: json["absoluteLikes"],
+        absoluteComments: json["absoluteComments"],
         er: json["er"].toDouble(),
       );
 
@@ -72,6 +77,9 @@ class BlogersModel {
         "userName": userName,
         "fullName": fullName,
         "picUrl": picUrl,
+        "numFollowers": numFollowers,
+        "absoluteLikes": absoluteLikes,
+        "absoluteComments": absoluteComments,
         "er": er,
       };
 }

@@ -2,6 +2,7 @@ import 'package:blogonomy/Repository/card_repositoriesCateg.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/card_stateCateg.dart';
 import 'package:blogonomy/main.dart';
+import 'package:blogonomy/screens/bloger_profile_screen.dart';
 import 'package:blogonomy/widget/bloger_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,14 +27,18 @@ class BlogersList extends StatelessWidget {
                 height: MediaQuery.of(context).size.height - 250,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
-                    physics: PageScrollPhysics(),
+                    //     physics: PageScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: state.loadedBlogers?.length,
                     itemBuilder: (context, index) {
                       i++;
                       return GestureDetector(
                         onTap: () {
-                          print("click");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BlogerProfileScreen(
+                                      state.loadedBlogers![index])));
                         },
                         child: BlogerView(
                             id: '$i',

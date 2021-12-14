@@ -7,8 +7,12 @@ import '../../main.dart';
 class CardApi {
   Future<List<CardModel>> getCard() async {
     print("object");
-    final response = await http.get(Uri.parse(
-        'https://service-blogonomy.maksatlabs.ru/api/info/AboutCategories'));
+    final response = await http.post(
+        Uri.parse(
+            'https://service-blogonomy.maksatlabs.ru/api/info/AboutCategories'),
+        headers: {"Content-Type": "application/json"});
+    print("a");
+    print(response.body);
     print("a");
     if (response.statusCode == 200) {
       final List<dynamic> cardJson = json.decode(response.body);
@@ -21,56 +25,67 @@ class CardApi {
 
 class BlogersApi {
   Future<List<BlogersModel>> getBloger() async {
-    print("запрос");
+    print("запрос2");
 
-    String id = filterModels.id ?? "";
+    List<String?>? id = filterModels.id ?? [];
+
+    String minComments = filterModels.absoluteCommentsFilterMin ?? "";
+    String maxComments = filterModels.absoluteCommentsFilterMax ?? "";
+
+    String minLikes = filterModels.absoluteLikesFilterMin ?? "";
+    String maxLikes = filterModels.absoluteLikesFilterMax ?? "";
+
     String minerr = filterModels.ermin ?? "";
     String maxerr = filterModels.ermax ?? "";
 
-    var body = json.encode({
-      "size": 8,
+    var body = {
+      "size": 50,
       "page": 1,
-    });
+      "categoryIds": id,
+      "absoluteCommentsFilter": {"max": maxComments, "min": minComments},
+      "absoluteLikesFilter": {"max": maxLikes, "min": minLikes},
+      "erFilter": {"max": maxerr, "min": minerr}
+    };
 
-    if (id != "") {
-      body = json.encode({
-        "size": 8,
-        "page": 1,
-        "categoryIds": [id]
-      });
+    if (filterModels.id == null) {
+      body.remove("categoryIds");
     }
 
-    if (minerr != "" && maxerr != "") {
-      body = json.encode({
-        "size": 8,
-        "page": 1,
-        "filterEr": {"max": maxerr, "min": minerr}
-      });
+    if (filterModels.absoluteCommentsFilterMax == "") {
+      body.remove("absoluteCommentsFilter");
     }
-    if (id != "" && minerr != "" && maxerr != "") {
-      body = json.encode({
-        "size": 8,
-        "page": 1,
-        "categoryIds": [id],
-        "filterEr": {"max": maxerr, "min": minerr}
-      });
+
+    if (filterModels.absoluteLikesFilterMax == "") {
+      body.remove("absoluteLikesFilter");
+    }
+
+    if (filterModels.ermax == "") {
+      body.remove("erFilter");
     }
 
     print("+++++++++++++++++++++++++");
     print(filterModels.id);
+    print(filterModels.absoluteCommentsFilterMin);
+    print(filterModels.absoluteCommentsFilterMax);
+    print(filterModels.absoluteLikesFilterMin);
+    print(filterModels.absoluteLikesFilterMax);
     print(filterModels.ermin);
     print(filterModels.ermax);
     print(id);
+    print(minComments);
+    print(maxComments);
+    print(minLikes);
+    print(maxLikes);
     print(minerr);
     print(maxerr);
-    print(body);
+    print(json.encode(body));
     print("+++++++++++++++++++++++++");
 
     final response = await http.post(
         Uri.parse(
             'https://service-blogonomy.maksatlabs.ru/api/info/AboutBloggers'),
         headers: {"Content-Type": "application/json"},
-        body: body);
+        body: json.encode(body));
 
     if (response.statusCode == 200) {
       final List<dynamic> blogersJson = json.decode(response.body);

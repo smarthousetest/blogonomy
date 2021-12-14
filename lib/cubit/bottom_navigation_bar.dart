@@ -12,6 +12,5 @@ class BottomNavigationControllerSelect extends Cubit<int> {
 
   void select(int index) {
     emit(index);
-    if (index != 1) filterModels.id = "";
   }
 }

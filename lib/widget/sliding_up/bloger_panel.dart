@@ -36,28 +36,32 @@ class _SlidingUpState extends State<SlidingUp2> {
         topLeft: Radius.circular(30),
         topRight: Radius.circular(30),
       ),
-      maxHeight: 300,
+      maxHeight: MediaQuery.of(context).size.height > 500
+          ? 410
+          : MediaQuery.of(context).size.height / 1.6,
       minHeight: 0,
       backdropEnabled: true,
       controller: pc,
-      panel: Column(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-              color: Colors.black,
-            ),
-            margin: const EdgeInsets.only(top: 8, bottom: 16),
-            width: 118,
-            height: 4,
+      panelBuilder: (ScrollController sc) {
+        return SingleChildScrollView(
+          controller: sc,
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                  color: Colors.black,
+                ),
+                margin: const EdgeInsets.only(top: 8, bottom: 18),
+                width: 118,
+                height: 4,
+              ),
+              BlogersPanel(),
+            ],
           ),
-          BlogersPanel(() {
-            setState(() {
-              pc.animatePanelToPosition(1);
-            });
-          }),
-        ],
-      ),
+        );
+      },
     );
   }
 }
