@@ -45,7 +45,7 @@ class CardView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 100.0,
+                  width: 250,
                   height: 56.0,
                   child: Stack(
                     children: [
