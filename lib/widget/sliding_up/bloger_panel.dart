@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import 'package:blogonomy/cubit/bottom_navigation_bar.dart';
+=======
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:blogonomy/main.dart';
 import 'package:blogonomy/screens/blogers_sliding.dart';
@@ -8,6 +11,11 @@ import 'package:provider/src/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class SlidingUp2 extends StatefulWidget {
+<<<<<<< HEAD
+=======
+  const SlidingUp2({Key? key}) : super(key: key);
+
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
   @override
   _SlidingUpState createState() => _SlidingUpState();
 }
@@ -20,7 +28,10 @@ class _SlidingUpState extends State<SlidingUp2> {
       print("first $ev");
       if (ev is OpenState) {
         print("second $ev");
+<<<<<<< HEAD
         //  fetchCarde();
+=======
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
         pc.open();
       } else if (ev is CloseState) {
         pc.close();
@@ -36,9 +47,15 @@ class _SlidingUpState extends State<SlidingUp2> {
         topLeft: Radius.circular(30),
         topRight: Radius.circular(30),
       ),
+<<<<<<< HEAD
       maxHeight: MediaQuery.of(context).size.height > 540
           ? 420
           : MediaQuery.of(context).size.height / 1.5,
+=======
+      maxHeight: MediaQuery.of(context).size.height > 500
+          ? 410
+          : MediaQuery.of(context).size.height / 1.6,
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
       minHeight: 0,
       backdropEnabled: true,
       controller: pc,
@@ -65,6 +82,7 @@ class _SlidingUpState extends State<SlidingUp2> {
     );
   }
 }
+<<<<<<< HEAD
 
 class SlidingUp3 extends StatefulWidget {
   @override
@@ -325,3 +343,5 @@ class _SlidingUpState4 extends State<SlidingUp4> {
     );
   }
 }
+=======
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf

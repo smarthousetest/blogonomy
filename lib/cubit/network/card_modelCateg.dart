@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+<<<<<<< HEAD
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 
+=======
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
 List<CardModel> cardModelFromJson(String str) =>
     List<CardModel>.from(json.decode(str).map((x) => CardModel.fromJson(x)));
 
@@ -85,6 +88,7 @@ class BlogersModel {
         "er": er,
       };
 }
+<<<<<<< HEAD
 
 class FilterModel {
   List<dynamic>? filter;
@@ -117,3 +121,5 @@ class FilterModel {
     return FilterModel(filter: forlist);
   }
 }
+=======
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf

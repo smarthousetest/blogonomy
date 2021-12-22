@@ -14,7 +14,11 @@ class CardCubit extends Cubit<CardState> {
   Future<void> fetchCard() async {
     try {
       emit(CardLoadingState());
+<<<<<<< HEAD
       List<CardModel> _loaded = await cardRepository.getAllCards();
+=======
+      final List<CardModel> _loaded = await cardRepository.getAllCards();
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
       print("приватная  $_loaded");
       emit(CardLoadedState(loadedCard: _loaded));
     } catch (_) {
@@ -49,6 +53,7 @@ class BlogersCubit extends Cubit<BlogersState> {
     emit(BlogersEmptyState());
   }
 }
+<<<<<<< HEAD
 
 class FilterCubit extends Cubit<FilterState> {
   final FilterRepository filterRepository;
@@ -77,3 +82,5 @@ class FilterCubit extends Cubit<FilterState> {
     emit(FilterEmptyState());
   }
 }
+=======
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf

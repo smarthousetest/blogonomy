@@ -289,6 +289,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+<<<<<<< HEAD
   multi_select_flutter:
     dependency: "direct main"
     description:
@@ -303,6 +304,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.7"
+=======
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
   nested:
     dependency: transitive
     description:

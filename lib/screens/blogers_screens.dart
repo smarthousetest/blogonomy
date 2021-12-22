@@ -7,6 +7,7 @@ import 'package:blogonomy/widget/bloger_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+<<<<<<< HEAD
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class BlogersList extends StatefulWidget {
@@ -29,6 +30,14 @@ class _BlogersListState extends State<BlogersList> {
 
     BlogersCubit blogersCubit = context.read<BlogersCubit>();
     // blogersCubit.fetchBlogers();
+=======
+
+class BlogersList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    BlogersCubit blogersCubit = context.read<BlogersCubit>();
+    blogersCubit.fetchBlogers();
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
 
     return BlocBuilder<BlogersCubit, BlogersState>(builder: (context, state) {
       if (state is BlogersLoadingState) {
@@ -37,6 +46,7 @@ class _BlogersListState extends State<BlogersList> {
       if (state is BlogersLoadedState) {
         print("BlogersLoadedState");
         var i = 0;
+<<<<<<< HEAD
 
         return RefreshIndicator(
             child: Column(children: [
@@ -68,6 +78,12 @@ class _BlogersListState extends State<BlogersList> {
               ),
               Container(
                 height: MediaQuery.of(context).size.height - 300,
+=======
+        return RefreshIndicator(
+            child: Column(children: [
+              Container(
+                height: MediaQuery.of(context).size.height - 250,
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
                     //     physics: PageScrollPhysics(),
@@ -87,9 +103,13 @@ class _BlogersListState extends State<BlogersList> {
                             id: '$i',
                             userName: '${state.loadedBlogers?[index].userName}',
                             //   fullName: '${state.loadedBlogers?[index].fullName}',
+<<<<<<< HEAD
                             //picUrl: '${state.loadedBlogers?[index].picUrl}',
                             picUrl:
                                 'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
+=======
+                            picUrl: '${state.loadedBlogers?[index].picUrl}',
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
                             er: state.loadedBlogers?[index].er ?? 1),
                       );
                     }),

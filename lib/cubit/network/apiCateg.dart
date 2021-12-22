@@ -27,7 +27,11 @@ class BlogersApi {
   Future<List<BlogersModel>> getBloger() async {
     print("запрос2");
 
+<<<<<<< HEAD
     List<String>? id = filterModels.id?.map((e) => e.id).toList() ?? null;
+=======
+    List<String?>? id = filterModels.id ?? [];
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
 
     String minComments = filterModels.absoluteCommentsFilterMin ?? "";
     String maxComments = filterModels.absoluteCommentsFilterMax ?? "";
@@ -47,7 +51,11 @@ class BlogersApi {
       "erFilter": {"max": maxerr, "min": minerr}
     };
 
+<<<<<<< HEAD
     if (filterModels.id?.isEmpty == true) {
+=======
+    if (filterModels.id == null) {
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
       body.remove("categoryIds");
     }
 
@@ -95,6 +103,7 @@ class BlogersApi {
     }
   }
 }
+<<<<<<< HEAD
 
 class FilterLoadApi {
   Future<FilterModel> getFilterLoad() async {
@@ -131,3 +140,5 @@ class FilterLoadApi {
     }
   }
 }
+=======
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf

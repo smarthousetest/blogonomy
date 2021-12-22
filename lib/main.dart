@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
               create: (context) => sl<SlidingUpCubit>()),
           BlocProvider<SlidingUpCubit2>(
               create: (context) => sl<SlidingUpCubit2>()),
+<<<<<<< HEAD
           BlocProvider<SlidingUpCubit3>(
               create: (context) => sl<SlidingUpCubit3>()),
           BlocProvider<SlidingUpCubit4>(
@@ -48,6 +49,10 @@ class MyApp extends StatelessWidget {
           BlocProvider<CardCubit>(create: (context) => sl<CardCubit>()),
           BlocProvider<BlogersCubit>(create: (context) => sl<BlogersCubit>()),
           BlocProvider<FilterCubit>(create: (context) => sl<FilterCubit>()),
+=======
+          BlocProvider<CardCubit>(create: (context) => sl<CardCubit>()),
+          BlocProvider<BlogersCubit>(create: (context) => sl<BlogersCubit>()),
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
           BlocProvider<BottomNavigationControllerSelect>(
               create: (context) => sl<BottomNavigationControllerSelect>())
         ],
@@ -71,6 +76,23 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
+<<<<<<< HEAD
+=======
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //     if (_selectedIndex == 2) {
+  //       onTap();
+  //     }
+  //   });
+  //   print(_selectedIndex);
+  // }
+
+  // onTap() {
+  //   context.read<SlidingUpCubit>().open();
+  // }
+
+>>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
   final List<Widget> _widgetOptions = <Widget>[
     const CollectionsPage(),
     Blogers(),
