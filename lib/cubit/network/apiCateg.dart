@@ -27,7 +27,7 @@ class BlogersApi {
   Future<List<BlogersModel>> getBloger() async {
     print("запрос2");
 
-    List<String?>? id = filterModels.id ?? [];
+    List<String>? id = filterModels.id?.map((e) => e.id).toList() ?? null;
 
     String minComments = filterModels.absoluteCommentsFilterMin ?? "";
     String maxComments = filterModels.absoluteCommentsFilterMax ?? "";
@@ -47,7 +47,7 @@ class BlogersApi {
       "erFilter": {"max": maxerr, "min": minerr}
     };
 
-    if (filterModels.id == null) {
+    if (filterModels.id?.isEmpty == true) {
       body.remove("categoryIds");
     }
 
@@ -92,6 +92,42 @@ class BlogersApi {
       return blogersJson.map((json) => BlogersModel.fromJson(json)).toList();
     } else {
       throw Exception('Error fetching blogers');
+    }
+  }
+}
+
+class FilterLoadApi {
+  Future<FilterModel> getFilterLoad() async {
+    print("Дошел1");
+    List<String?>? id = filterModels.id?.map((e) => e.id).toList() ?? null;
+
+    if (filterModels.id?.isEmpty == true) {
+      id = null;
+    }
+    var body = {
+      "Ids": id,
+    };
+
+    print("+++++++++++++++++++++++++");
+    print(filterModels.id);
+    print(id);
+    print(json.encode(body));
+    print("+++++++++++++++++++++++++");
+
+    final response = await http.post(
+        Uri.parse(
+            'https://service-blogonomy.maksatlabs.ru/api/info/BloggerFilterExtremes'),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(body));
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print("внутри");
+      print(FilterModel.fromJson(json.decode(response.body)));
+
+      return FilterModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Error FilterLoadModel');
     }
   }
 }

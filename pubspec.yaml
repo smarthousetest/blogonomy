@@ -46,6 +46,9 @@ dependencies:
   circular_profile_avatar: ^2.0.5
   fl_chart: ^0.40.6
   quiver: ^3.0.1+1
+  multi_select_flutter: ^4.0.0
+  multiselect_formfield: ^0.1.7
+
   
 dev_dependencies:
   flutter_test:
@@ -87,6 +90,7 @@ flutter:
       - assets/icons/star_icon.svg
       - assets/icons/category_icon.svg
       - assets/icons/filter.svg
+      - assets/icons/info_square.svg
       - assets/images/image_2021-11-19_00-10-15.png
       - assets/images/image_2021-11-19_00-53-42.png
       - assets/images/image_2021-11-19_00-57-04.png

@@ -1,3 +1,4 @@
+import 'package:blogonomy/cubit/network/card_modelCateg.dart';
 import 'package:flutter/material.dart';
 
 abstract class CardState {}
@@ -8,9 +9,7 @@ class CardLoadingState extends CardState {}
 
 class CardLoadedState extends CardState {
   List<dynamic>? loadedCard;
-  CardLoadedState({this.loadedCard}) {
-    print('card loaded  $loadedCard');
-  }
+  CardLoadedState({this.loadedCard}) {}
 }
 
 class CardErrorState extends CardState {}
@@ -29,3 +28,18 @@ class BlogersLoadedState extends BlogersState {
 }
 
 class BlogersErrorState extends BlogersState {}
+
+abstract class FilterState {}
+
+class FilterEmptyState extends FilterState {}
+
+class FilterLoadingState extends FilterState {}
+
+class FilterLoadedState extends FilterState {
+  FilterModel? loadedFilter;
+  FilterLoadedState({this.loadedFilter}) {
+    print('Filter loaded  $loadedFilter');
+  }
+}
+
+class FilterErrorState extends FilterState {}

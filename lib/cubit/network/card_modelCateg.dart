@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:blogonomy/cubit/panel_controller_cubit.dart';
+
 List<CardModel> cardModelFromJson(String str) =>
     List<CardModel>.from(json.decode(str).map((x) => CardModel.fromJson(x)));
 
@@ -82,4 +84,36 @@ class BlogersModel {
         "absoluteComments": absoluteComments,
         "er": er,
       };
+}
+
+class FilterModel {
+  List<dynamic>? filter;
+
+  FilterModel({this.filter}) {
+    print("filter $filter");
+  }
+
+  factory FilterModel.fromJson(Map<String, dynamic> json) {
+    var absoluteCommentsExtremesJson = json['absoluteCommentsExtremes'];
+    var absoluteLikesExtremesJson = json['absoluteLikesExtremes'];
+    var erExtremesJson = json['erExtremes'];
+
+    List<dynamic> forlist = [];
+
+    forlist.add(absoluteCommentsExtremesJson["min"]);
+
+    forlist.add(absoluteCommentsExtremesJson["max"]);
+
+    forlist.add(absoluteLikesExtremesJson["min"]);
+
+    forlist.add(absoluteLikesExtremesJson["max"]);
+
+    forlist.add(erExtremesJson["min"]);
+
+    forlist.add(erExtremesJson["max"]);
+
+    print("forlist $forlist");
+
+    return FilterModel(filter: forlist);
+  }
 }

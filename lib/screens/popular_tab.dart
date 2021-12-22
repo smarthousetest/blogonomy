@@ -4,14 +4,20 @@ import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/card_stateCateg.dart';
 import 'package:blogonomy/cubit/network/filters_model.dart';
 import 'package:blogonomy/main.dart';
+import 'package:blogonomy/screens/blogers_sliding.dart';
 import 'package:blogonomy/widget/card_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Popular extends StatelessWidget {
+class Popular extends StatefulWidget {
   const Popular({Key? key}) : super(key: key);
 
+  @override
+  State<Popular> createState() => _PopularState();
+}
+
+class _PopularState extends State<Popular> {
   @override
   Widget build(BuildContext context) {
     CardCubit cardCubit = context.read<CardCubit>();
@@ -34,19 +40,30 @@ class Popular extends StatelessWidget {
                           onTap: () {
                             BlogersCubit blogersCubit =
                                 context.read<BlogersCubit>();
+
                             context
                                 .read<BottomNavigationControllerSelect>()
                                 .select(1);
 
                             filterModels.clearAll();
 
-                            filterModels.id!
-                                .add("${state.loadedCard?[index].id}");
+                            ListCategotyFilters one = ListCategotyFilters(
+                                id: state.loadedCard?[index].id,
+                                name: state.loadedCard?[index].name);
+
+                            filterModels.id!.add(one);
+
+                            // fetchCarde();
+
                             print("filterModels: ${filterModels.id}");
                             filterModels.ermin = "";
                             filterModels.ermax = "";
 
                             blogersCubit.fetchBlogers();
+
+                            FilterCubit filterCubit =
+                                context.read<FilterCubit>();
+                            filterCubit.fetchFilter();
                           },
                           child: CardView(
                               id: '${state.loadedCard?[index].id}',
@@ -54,8 +71,7 @@ class Popular extends StatelessWidget {
                               image:
                                   'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
 
-                              //  image: '${state.loadedCard?[index].picUrl}',
-
+                              // image: '${state.loadedCard?[index].picUrl}',
                               numberOfBloggers:
                                   state.loadedCard?[index].numBloggers ?? 1),
                         )),

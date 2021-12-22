@@ -5,7 +5,6 @@ import 'package:dartz/dartz.dart';
 
 class GettAllCards {
   final CardRepository cardRepository;
-
   GettAllCards(this.cardRepository);
   Future<List<CardModel>> getCardBy() async {
     return await cardRepository.getAllCards();
@@ -14,9 +13,16 @@ class GettAllCards {
 
 class GettAllBlogers {
   final BlogersRepository blogersRepository;
-
   GettAllBlogers(this.blogersRepository);
   Future<List<BlogersModel>> getBlogersBy() async {
     return await blogersRepository.getAllBlogers();
+  }
+}
+
+class GettAllFilters {
+  final FilterRepository filterRepository;
+  GettAllFilters(this.filterRepository);
+  Future<Object> getFiltersBy() async {
+    return await filterRepository.gettAllFilters();
   }
 }

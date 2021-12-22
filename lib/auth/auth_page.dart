@@ -26,7 +26,8 @@ class AuthPage extends StatelessWidget {
           },
         ),
       ),
-      const SlidingUp2(),
+      SlidingUp2(),
+      SlidingUp3(),
     ]));
   }
 }
