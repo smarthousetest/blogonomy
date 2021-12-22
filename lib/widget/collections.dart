@@ -1,8 +1,5 @@
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
-<<<<<<< HEAD
 import 'package:blogonomy/screens/podborki_main.dart';
-=======
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
 import 'package:blogonomy/screens/popular_tab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,17 +39,8 @@ class _CollectionsPageState extends State<CollectionsPage> {
       ),
     ),
   };
-<<<<<<< HEAD
   List<Widget> images = [const Popular(), const PodborkiMain()];
-=======
-  List<Widget> images = [
-    const Popular(),
-    Center(
-      child: Image.network(
-          'https://lh3.googleusercontent.com/proxy/TCLmxot4-EgQXN8pkEVyquRjyil8yLxiisUT50vrocd_4o9Z9vfkmsJbPY9N5X3eEThrO-kN9x_1fP8bmS12tp2WfSl9A2o1J-wonnR6oBYt480ry_FKPB5q_2eLaUE_-OO0YfsIBjfrWmvFGfywsBk4AKrt'),
-    )
-  ];
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
+
   int selectedValue = 0;
   @override
   Widget build(BuildContext context) {
@@ -63,11 +51,7 @@ class _CollectionsPageState extends State<CollectionsPage> {
                   borderRadius: BorderRadius.circular(12),
                   color: const Color(0xFFFFFFFF)),
               child: ListView(children: [
-<<<<<<< HEAD
                 const SizedBox(height: 42.0),
-=======
-                const SizedBox(height: 62.0),
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
                 Container(
                   alignment: Alignment.center,
                   height: 20.0,

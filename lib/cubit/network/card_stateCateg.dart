@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
-=======
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
+
 import 'package:flutter/material.dart';
 
 abstract class CardState {}
@@ -12,13 +10,7 @@ class CardLoadingState extends CardState {}
 
 class CardLoadedState extends CardState {
   List<dynamic>? loadedCard;
-<<<<<<< HEAD
   CardLoadedState({this.loadedCard}) {}
-=======
-  CardLoadedState({this.loadedCard}) {
-    print('card loaded  $loadedCard');
-  }
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
 }
 
 class CardErrorState extends CardState {}
@@ -37,7 +29,6 @@ class BlogersLoadedState extends BlogersState {
 }
 
 class BlogersErrorState extends BlogersState {}
-<<<<<<< HEAD
 
 abstract class FilterState {}
 
@@ -53,5 +44,3 @@ class FilterLoadedState extends FilterState {
 }
 
 class FilterErrorState extends FilterState {}
-=======
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf

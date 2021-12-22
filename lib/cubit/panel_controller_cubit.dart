@@ -78,7 +78,6 @@ class SlidingUpCubit2 extends Cubit<BaseState> {
     emit(CloseState());
   }
 }
-<<<<<<< HEAD
 
 class SlidingUpCubit3 extends Cubit<BaseState> {
   SlidingUpCubit3() : super(CloseState());
@@ -135,5 +134,3 @@ class SlidingUpCubit4 extends Cubit<BaseState> {
     emit(CloseState());
   }
 }
-=======
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf

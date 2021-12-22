@@ -1,19 +1,14 @@
-<<<<<<< HEAD
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:blogonomy/main.dart';
-=======
-import 'package:blogonomy/cubit/panel_controller_cubit.dart';
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
+
 import 'package:blogonomy/screens/blogers_screens.dart';
 import 'package:blogonomy/screens/popular_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/src/provider.dart';
-<<<<<<< HEAD
+
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-=======
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
 
 class Blogers extends StatefulWidget {
   const Blogers({Key? key}) : super(key: key);
@@ -31,11 +26,7 @@ class BlogerState extends State<Blogers> {
                     borderRadius: BorderRadius.circular(12),
                     color: const Color(0xFFFFFFFF)),
                 child: ListView(children: [
-<<<<<<< HEAD
                   const SizedBox(height: 42.0),
-=======
-                  const SizedBox(height: 62.0),
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -47,19 +38,11 @@ class BlogerState extends State<Blogers> {
                       ),
                       Container(
                         alignment: Alignment.center,
-<<<<<<< HEAD
-=======
-                        height: 25.0,
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
                         child: const Text(
                           'Блогеры',
                           style: TextStyle(
                             fontFamily: 'Roboto-Medium.ttf',
-<<<<<<< HEAD
                             fontSize: 18.0,
-=======
-                            fontSize: 21.0,
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF24282E),
@@ -86,7 +69,6 @@ class BlogerState extends State<Blogers> {
                       ),
                     ],
                   ),
-<<<<<<< HEAD
                   Padding(
                     padding: const EdgeInsets.only(left: 20.0, right: 21.0),
                     child: TextFormField(
@@ -117,9 +99,6 @@ class BlogerState extends State<Blogers> {
                     ),
                   ),
                   const SizedBox(height: 4.0),
-=======
-                  const SizedBox(height: 34.0),
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
                   Container(
                     child: BlogersList(),
                   )

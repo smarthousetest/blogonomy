@@ -1,9 +1,5 @@
 class FiltersModels {
-<<<<<<< HEAD
   List<ListCategotyFilters>? id = [];
-=======
-  List<String?>? id = [];
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
 
   String? absoluteCommentsFilterMin;
   String? absoluteCommentsFilterMax;
@@ -32,7 +28,6 @@ class FiltersModels {
     ermin = "";
     ermax = "";
   }
-<<<<<<< HEAD
 
   void clearId() {
     id = [];
@@ -45,6 +40,4 @@ class ListCategotyFilters {
   String id;
   String name;
   ListCategotyFilters({this.id = "", this.name = ""});
-=======
->>>>>>> 50d9cf1265dc3f4d79fd3d70e05476ded861adcf
 }
