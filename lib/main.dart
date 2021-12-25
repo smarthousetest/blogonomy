@@ -4,6 +4,10 @@ import 'package:blogonomy/cubit/locator_services.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/filters_model.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
+import 'package:blogonomy/screens/about.dart';
+import 'package:blogonomy/screens/confid.dart';
+//import 'package:blogonomy/screens/auth_screen.dart';
+import 'package:blogonomy/screens/notifications.dart';
 //import 'package:blogonomy/librur/bottom_bar.dart';
 import 'package:blogonomy/widget/blogers.dart';
 import 'package:blogonomy/widget/profile.dart';
@@ -14,8 +18,11 @@ import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:blogonomy/cubit/locator_services.dart' as servic;
 import 'package:flutter/services.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'cubit/network/auth_cubit.dart';
 
 FiltersModels filterModels = FiltersModels();
 
@@ -49,7 +56,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<BlogersCubit>(create: (context) => sl<BlogersCubit>()),
           BlocProvider<FilterCubit>(create: (context) => sl<FilterCubit>()),
           BlocProvider<BottomNavigationControllerSelect>(
-              create: (context) => sl<BottomNavigationControllerSelect>())
+              create: (context) => sl<BottomNavigationControllerSelect>()),
+          BlocProvider<AuthCubit>(
+              create: (context) => sl<AuthCubit>()..check()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
@@ -57,6 +66,12 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           home: const AuthPage(),
+          routes: <String, WidgetBuilder>{
+            '/a': (BuildContext context) => Notifications(),
+            '/b': (BuildContext context) => Confid(),
+            '/c': (BuildContext context) => const About(),
+            //      '/d': (BuildContext context) => AuthScreen(),
+          },
         ));
   }
 }
@@ -70,6 +85,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //     if (_selectedIndex == 2) {
+  //       onTap();
+  //     }
+  //   });
+  //   print(_selectedIndex);
+  // }
+
+  // onTap() {
+  //   context.read<SlidingUpCubit>().open();
+  // }
 
   final List<Widget> _widgetOptions = <Widget>[
     const CollectionsPage(),

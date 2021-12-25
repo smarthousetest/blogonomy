@@ -16,7 +16,8 @@ class ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     context.read<SlidingUpCubit>().open();
     return Scaffold(
-        body: Column(children: [
+        body: SingleChildScrollView(
+            child: Column(children: [
       ClipPath(
         clipper: CurvedBottomClipper(),
         child: Container(
@@ -57,310 +58,373 @@ class ProfileState extends State<Profile> {
           ),
         ),
       ),
-      Expanded(
-        child: SingleChildScrollView(
-          child: Column(children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Полное имя',
-                    hintStyle: TextStyle(
-                      fontFamily: 'Roboto-Regular.ttf',
-                      fontSize: 15.0,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFFADB3BD),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                        borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                        borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                  ),
+      Column(children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Полное имя',
+                hintStyle: TextStyle(
+                  fontFamily: 'Roboto-Regular.ttf',
+                  fontSize: 15.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFFADB3BD),
                 ),
+                enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Email',
-                    hintStyle: TextStyle(
-                      fontFamily: 'Roboto-Regular.ttf',
-                      fontSize: 15.0,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFFADB3BD),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                        borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                        borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Мобильный телефон',
-                    hintStyle: TextStyle(
-                      fontFamily: 'Roboto-Regular.ttf',
-                      fontSize: 15.0,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFFADB3BD),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                        borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                        borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-              child: Container(
-                height: 104.0,
-                margin: const EdgeInsets.only(left: 20.0, right: 21.0),
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 0,
-                      blurRadius: 25,
-                      // changes position of shadow
-                    ),
-                  ],
-                  border: Border.all(
-                    color: const Color(0xFFF0F0FF),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(32.0),
-                  color: const Color(0xFFFFFFFF),
-                  // gradient: const LinearGradient(
-                  //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                  // ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 24, right: 24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Icon(Icons.ac_unit),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Text("Настройка уведомлений"),
-                      ),
-                      Spacer(
-                        flex: 1,
-                      ),
-                      Icon(Icons.arrow_back),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-              child: Container(
-                height: 104.0,
-                margin: const EdgeInsets.only(left: 20.0, right: 21.0),
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 0,
-                      blurRadius: 25,
-                      // changes position of shadow
-                    ),
-                  ],
-                  border: Border.all(
-                    color: const Color(0xFFF0F0FF),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(32.0),
-                  color: const Color(0xFFFFFFFF),
-                  // gradient: const LinearGradient(
-                  //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                  // ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 24, right: 24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Icon(Icons.ac_unit),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Text("Настройка уведомлений"),
-                      ),
-                      Spacer(
-                        flex: 1,
-                      ),
-                      Icon(Icons.arrow_back),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-              child: Container(
-                height: 104.0,
-                margin: const EdgeInsets.only(left: 20.0, right: 21.0),
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 0,
-                      blurRadius: 25,
-                      // changes position of shadow
-                    ),
-                  ],
-                  border: Border.all(
-                    color: const Color(0xFFF0F0FF),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(32.0),
-                  color: const Color(0xFFFFFFFF),
-                  // gradient: const LinearGradient(
-                  //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                  // ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 24, right: 24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Icon(Icons.ac_unit),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Text("Настройка уведомлений"),
-                      ),
-                      Spacer(
-                        flex: 1,
-                      ),
-                      Icon(Icons.arrow_back),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-              child: Container(
-                height: 104.0,
-                margin: const EdgeInsets.only(left: 20.0, right: 21.0),
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 0,
-                      blurRadius: 25,
-                      // changes position of shadow
-                    ),
-                  ],
-                  border: Border.all(
-                    color: const Color(0xFFF0F0FF),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(32.0),
-                  color: const Color(0xFFFFFFFF),
-                  // gradient: const LinearGradient(
-                  //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                  // ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 24, right: 24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Icon(Icons.ac_unit),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Text("Настройка уведомлений"),
-                      ),
-                      Spacer(
-                        flex: 1,
-                      ),
-                      Icon(Icons.arrow_back),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 55.0,
-              width: 600,
-              margin: const EdgeInsets.only(left: 33.0, right: 35.0, top: 20),
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  'Выйти',
-                  style: TextStyle(
-                    fontFamily: 'Roboto-Bold.ttf',
-                    fontSize: 15.0,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF006FFD),
-                  ),
-                ),
-                style: ButtonStyle(
-                  elevation: MaterialStateProperty.all(0),
-                  backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFFFFFFFF)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      side: BorderSide(color: Color(0xFF006FFD)),
-                      borderRadius: BorderRadius.circular(32.0),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            )
-          ]),
+          ),
         ),
-      )
-    ]));
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Email',
+                hintStyle: TextStyle(
+                  fontFamily: 'Roboto-Regular.ttf',
+                  fontSize: 15.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFFADB3BD),
+                ),
+                enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Мобильный телефон',
+                hintStyle: TextStyle(
+                  fontFamily: 'Roboto-Regular.ttf',
+                  fontSize: 15.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFFADB3BD),
+                ),
+                enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/a');
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+            child: Container(
+              height: 104.0,
+              margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0,
+                    blurRadius: 25,
+                    // changes position of shadow
+                  ),
+                ],
+                border: Border.all(
+                  color: const Color(0xFFF0F0FF),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(32.0),
+                color: const Color(0xFFFFFFFF),
+                // gradient: const LinearGradient(
+                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                // ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24, right: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Image.asset(
+                        'assets/images/notif.png',
+                        width: 27,
+                        height: 27,
+                        color: Colors.yellow,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        "Настройка уведомлений",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Image.asset(
+                      'assets/images/arrow.png',
+                      height: 30,
+                      width: 30,
+                      color: Colors.blue,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () => Navigator.pushNamed(context, '/b'),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+            child: Container(
+              height: 104.0,
+              margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0,
+                    blurRadius: 25,
+                    // changes position of shadow
+                  ),
+                ],
+                border: Border.all(
+                  color: const Color(0xFFF0F0FF),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(32.0),
+                color: const Color(0xFFFFFFFF),
+                // gradient: const LinearGradient(
+                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                // ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24, right: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Image.asset(
+                        'assets/images/shield.png',
+                        width: 27,
+                        height: 27,
+                        color: Color(0x40200E32),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        "Политика конфиденциальности",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Image.asset(
+                      'assets/images/arrow.png',
+                      height: 30,
+                      width: 30,
+                      color: Colors.blue,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+          child: Container(
+            height: 104.0,
+            margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 0,
+                  blurRadius: 25,
+                  // changes position of shadow
+                ),
+              ],
+              border: Border.all(
+                color: const Color(0xFFF0F0FF),
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(32.0),
+              color: const Color(0xFFFFFFFF),
+              // gradient: const LinearGradient(
+              //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+              // ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 24, right: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Image.asset(
+                      'assets/images/info.png',
+                      width: 27,
+                      height: 27,
+                      color: Colors.green,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      "Подсказки",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  Spacer(
+                    flex: 1,
+                  ),
+                  Image.asset(
+                    'assets/images/arrow.png',
+                    height: 30,
+                    width: 30,
+                    color: Colors.blue,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () => Navigator.pushNamed(context, '/c'),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+            child: Container(
+              height: 104.0,
+              margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0,
+                    blurRadius: 25,
+                    // changes position of shadow
+                  ),
+                ],
+                border: Border.all(
+                  color: const Color(0xFFF0F0FF),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(32.0),
+                color: const Color(0xFFFFFFFF),
+                // gradient: const LinearGradient(
+                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                // ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24, right: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Image.asset(
+                        'assets/images/copy.png',
+                        width: 27,
+                        height: 27,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        "О приложении",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Image.asset(
+                      'assets/images/arrow.png',
+                      height: 30,
+                      width: 30,
+                      color: Colors.blue,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Container(
+          height: 55.0,
+          width: 600,
+          margin: const EdgeInsets.only(left: 33.0, right: 35.0, top: 20),
+          child: ElevatedButton(
+            onPressed: () {},
+            child: const Text(
+              'Выйти',
+              style: TextStyle(
+                fontFamily: 'Roboto-Bold.ttf',
+                fontSize: 15.0,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF006FFD),
+              ),
+            ),
+            style: ButtonStyle(
+              elevation: MaterialStateProperty.all(0),
+              backgroundColor:
+                  MaterialStateProperty.all(const Color(0xFFFFFFFF)),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  side: BorderSide(color: Color(0xFF006FFD)),
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        )
+      ]),
+    ])));
   }
 }
 

@@ -1,5 +1,6 @@
 //import 'package:collections_page/cubit/failure.dart';
 import 'package:blogonomy/Repository/card_repositoriesCateg.dart';
+import 'package:blogonomy/cubit/network/auth_mode.dart';
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
 import 'package:dartz/dartz.dart';
 

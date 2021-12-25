@@ -1,6 +1,9 @@
 import 'dart:convert';
-import 'dart:core';
+import 'package:blogonomy/cubit/network/auth_mode.dart';
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
+import 'package:blogonomy/screens/sliding_up_panel_screens.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart' as http;
 
 import '../../main.dart';
@@ -93,6 +96,117 @@ class BlogersApi {
       return blogersJson.map((json) => BlogersModel.fromJson(json)).toList();
     } else {
       throw Exception('Error fetching blogers');
+    }
+  }
+}
+
+AuthApi authApi = AuthApi();
+String? hash;
+
+class AuthApi {
+  Future<AuthModel> createMail(String mail) async {
+    var error;
+    print(mail);
+    final response = await http.post(
+        Uri.parse(
+            "https://passport-blogonomy.maksatlabs.ru/api/Forgot/CheckEmail"),
+        body: json.encode({
+          "Email": mail,
+        }),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json"
+        });
+
+    print(response.statusCode);
+    print("Auth api mail = $mail");
+    if (response.statusCode == 200) {
+      final String responseString = response.body;
+
+      print(responseString);
+      return authModelFromJson(responseString);
+    } else {
+      return error;
+    }
+  }
+
+  Future<AuthModel> getCode(String mail) async {
+    var error;
+    print("Get code $mail");
+    final response = await http.post(
+        Uri.parse(
+            "https://passport-blogonomy.maksatlabs.ru/api/Forgot/GetCode"),
+        body: json.encode({
+          "Email": mail,
+        }),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json"
+        });
+    Map<String, dynamic> responseJson = json.decode(response.body);
+
+    hash = responseJson['hash'];
+    print('Hash = $hash');
+
+    print("body = ${response.body}");
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      final String responseString = response.body;
+      print("response string $responseString");
+      return authModelFromJson(responseString);
+    } else {
+      return error;
+    }
+  }
+
+  Future<AuthModel> setCode(String code) async {
+    var error;
+
+    print("hash 2 = $hash");
+    print("code = $code");
+    final response = await http.post(
+        Uri.parse(
+            "https://passport-blogonomy.maksatlabs.ru/api/Forgot/SetCode"),
+        body: json.encode({"Code": code, "Hash": hash}),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json"
+        });
+    Map<String, dynamic> responseJson = json.decode(response.body);
+    hash = responseJson['hash'];
+    print("body = ${response.body}");
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      final String responseString = response.body;
+      print("response string $responseString");
+      return authModelFromJson(responseString);
+    } else {
+      return error;
+    }
+  }
+
+  Future<AuthModel> setPassword(String password) async {
+    var error;
+
+    print("hash 3 = $hash");
+    final response = await http.post(
+        Uri.parse(
+            "https://passport-blogonomy.maksatlabs.ru/api/Forgot/SetPassword"),
+        body: json.encode({"Password": password, "Hash": hash}),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json"
+        });
+
+    print("body = ${response.body}");
+    print(response.statusCode);
+    print("hash 4 = $hash");
+    if (response.statusCode == 200) {
+      final String responseString = response.body;
+      print("response string $responseString");
+      return authModelFromJson(responseString);
+    } else {
+      return error;
     }
   }
 }

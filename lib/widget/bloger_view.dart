@@ -17,6 +17,9 @@ class BlogerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: 10,
+        ),
         Container(
           height: 80.0,
           margin: const EdgeInsets.only(left: 20.0, right: 21.0),

@@ -67,11 +67,10 @@ class _PopularState extends State<Popular> {
                           child: CardView(
                               id: '${state.loadedCard?[index].id}',
                               name: '${state.loadedCard?[index].name}',
-                              image:
-                                  'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
+                              // image:
+                              //     'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
 
-                              // image: '${state.loadedCard?[index].picUrl}',
-
+                              image: '${state.loadedCard?[index].picUrl}',
                               numberOfBloggers:
                                   state.loadedCard?[index].numBloggers ?? 1),
                         )),

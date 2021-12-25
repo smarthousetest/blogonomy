@@ -48,8 +48,10 @@ dependencies:
   quiver: ^3.0.1+1
   multi_select_flutter: ^4.0.0
   multiselect_formfield: ^0.1.7
-
+  flutter_secure_storage: ^5.0.2
+  shared_preferences: ^2.0.11
   
+  fluttertoast: ^8.0.8
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -98,6 +100,11 @@ flutter:
       - assets/images/image_2021-11-19_01-00-48.png
       - assets/images/back.png
       - assets/images/logo.png
+      - assets/images/arrow.png
+      - assets/images/arrow2.png
+      - assets/images/shield.png
+      - assets/images/info.png
+      - assets/images/copy.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

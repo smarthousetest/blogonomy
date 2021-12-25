@@ -45,7 +45,7 @@ class CardView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 100.0,
+                  width: 160,
                   height: 56.0,
                   child: Stack(
                     children: [
@@ -82,15 +82,19 @@ class CardView extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
-                  child: SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.network(
-                          '$image',
-                        ),
-                      )),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Container(
+                        color: Colors.blue,
+                        width: 70,
+                        height: 70,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Image.network(
+                            '$image',
+                          ),
+                        )),
+                  ),
                 ),
               ],
             ),

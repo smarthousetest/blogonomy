@@ -88,9 +88,9 @@ class _BlogersListState extends State<BlogersList> {
                             userName: '${state.loadedBlogers?[index].userName}',
                             //   fullName: '${state.loadedBlogers?[index].fullName}',
 
-                            //picUrl: '${state.loadedBlogers?[index].picUrl}',
-                            picUrl:
-                                'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
+                            picUrl: '${state.loadedBlogers?[index].picUrl}',
+                            // picUrl:
+                            //     'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
                             er: state.loadedBlogers?[index].er ?? 1),
                       );
                     }),
