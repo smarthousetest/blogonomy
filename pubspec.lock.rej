@@ -1,0 +1,9 @@
+diff a/pubspec.lock b/pubspec.lock	(rejected hunks)
+@@ -289,7 +289,6 @@
+       url: "https://pub.dartlang.org"
+     source: hosted
+     version: "1.7.0"
+-<<<<<<< HEAD
+   multi_select_flutter:
+     dependency: "direct main"
+     description:
