@@ -22,3 +22,8 @@ class FilterRepository {
 
   Future<FilterModel> gettAllFilters() => filterLoadApi.getFilterLoad();
 }
+
+class OneBlogerRepository {
+  OneBlogerApi oneBlogerApi = OneBlogerApi();
+  Future<OneBlogerModel> getOneBloger() => oneBlogerApi.getBloger();
+}

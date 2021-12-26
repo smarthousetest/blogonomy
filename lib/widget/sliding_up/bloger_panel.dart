@@ -39,14 +39,17 @@ class _SlidingUpState extends State<SlidingUp2> {
         topLeft: Radius.circular(30),
         topRight: Radius.circular(30),
       ),
-      maxHeight: MediaQuery.of(context).size.height > 540
-          ? 420
-          : MediaQuery.of(context).size.height / 1.5,
+      maxHeight: MediaQuery.of(context).size.height > 580
+          ? 556
+          : MediaQuery.of(context).size.height / 1.4,
       minHeight: 0,
       backdropEnabled: true,
       controller: pc,
       panelBuilder: (ScrollController sc) {
         return SingleChildScrollView(
+          physics: MediaQuery.of(context).size.height > 580
+              ? NeverScrollableScrollPhysics()
+              : AlwaysScrollableScrollPhysics(),
           controller: sc,
           scrollDirection: Axis.vertical,
           child: Column(
@@ -82,7 +85,6 @@ class _SlidingUpState3 extends State<SlidingUp3> {
       print("first $ev");
       if (ev is OpenState) {
         print("second $ev");
-        //  fetchCarde();
         pc3.open();
       } else if (ev is CloseState) {
         pc3.close();
@@ -212,7 +214,6 @@ class _SlidingUpState4 extends State<SlidingUp4> {
       print("first $ev");
       if (ev is OpenState) {
         print("second $ev");
-        //  fetchCarde();
         pc4.open();
       } else if (ev is CloseState) {
         pc4.close();

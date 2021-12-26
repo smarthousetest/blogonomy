@@ -96,6 +96,7 @@ class FilterModel {
     var absoluteCommentsExtremesJson = json['absoluteCommentsExtremes'];
     var absoluteLikesExtremesJson = json['absoluteLikesExtremes'];
     var erExtremesJson = json['erExtremes'];
+    var numFollowersExtremesJson = json['numFollowersExtremes'];
 
     List<dynamic> forlist = [];
 
@@ -111,8 +112,139 @@ class FilterModel {
 
     forlist.add(erExtremesJson["max"]);
 
+    forlist.add(numFollowersExtremesJson["min"]);
+
+    forlist.add(numFollowersExtremesJson["max"]);
+
     print("forlist $forlist");
 
     return FilterModel(filter: forlist);
   }
+}
+
+OneBlogerModel oneBlogerModelFromJson(String str) =>
+    OneBlogerModel.fromJson(json.decode(str));
+
+String oneBlogerModelToJson(OneBlogerModel data) => json.encode(data.toJson());
+
+class OneBlogerModel {
+  OneBlogerModel({
+    this.id,
+    this.instagramId,
+    this.userName,
+    this.fullName,
+    this.picUrl,
+    this.numFollowers,
+    this.absoluteLikes,
+    this.absoluteComments,
+    this.er,
+    this.location,
+    this.hashtag,
+    this.taggedUser,
+  });
+
+  String? id;
+  String? instagramId;
+  String? userName;
+  String? fullName;
+  String? picUrl;
+  int? numFollowers;
+  int? absoluteLikes;
+  int? absoluteComments;
+  double? er;
+  Location? location;
+  List<Hashtag>? hashtag;
+  List<TaggedUser>? taggedUser;
+
+  factory OneBlogerModel.fromJson(Map<String, dynamic> json) => OneBlogerModel(
+        id: json["id"],
+        instagramId: json["instagramId"],
+        userName: json["userName"],
+        fullName: json["fullName"],
+        picUrl: json["picUrl"],
+        numFollowers: json["numFollowers"],
+        absoluteLikes: json["absoluteLikes"],
+        absoluteComments: json["absoluteComments"],
+        er: json["er"].toDouble(),
+        location: Location.fromJson(json["location"]),
+        hashtag:
+            List<Hashtag>.from(json["hashtag"].map((x) => Hashtag.fromJson(x))),
+        taggedUser: List<TaggedUser>.from(
+            json["taggedUser"].map((x) => TaggedUser.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "instagramId": instagramId,
+        "userName": userName,
+        "fullName": fullName,
+        "picUrl": picUrl,
+        "numFollowers": numFollowers,
+        "absoluteLikes": absoluteLikes,
+        "absoluteComments": absoluteComments,
+        "er": er,
+        "location": location?.toJson(),
+        "hashtag": List<dynamic>.from(hashtag!.map((x) => x.toJson())),
+        "taggedUser": List<dynamic>.from(taggedUser!.map((x) => x.toJson())),
+      };
+}
+
+class Hashtag {
+  Hashtag({
+    this.name,
+    this.count,
+  });
+
+  String? name;
+  int? count;
+
+  factory Hashtag.fromJson(Map<String, dynamic> json) => Hashtag(
+        name: json["name"],
+        count: json["count"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "count": count,
+      };
+}
+
+class Location {
+  Location({
+    this.name,
+    this.slag,
+  });
+
+  String? name;
+  String? slag;
+
+  factory Location.fromJson(Map<String, dynamic> json) => Location(
+        name: json["name"],
+        slag: json["slag"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "slag": slag,
+      };
+}
+
+class TaggedUser {
+  TaggedUser({
+    this.name,
+    this.coun,
+  });
+
+  String? name;
+  int? coun;
+
+  factory TaggedUser.fromJson(Map<String, dynamic> json) => TaggedUser(
+        name: json["name"],
+        coun: json["coun"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "coun": coun,
+      };
 }

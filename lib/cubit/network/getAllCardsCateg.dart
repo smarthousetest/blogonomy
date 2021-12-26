@@ -28,3 +28,11 @@ class GettAllFilters {
     return await filterRepository.gettAllFilters();
   }
 }
+
+class GettAllOneBloger {
+  final OneBlogerRepository oneBlogerRepository;
+  GettAllOneBloger(this.oneBlogerRepository);
+  Future<Object> getOneBlogerBy() async {
+    return await oneBlogerRepository.getOneBloger();
+  }
+}

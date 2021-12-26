@@ -10,6 +10,9 @@ class FiltersModels {
   String? ermin;
   String? ermax;
 
+  String? numFollowersmin;
+  String? numFollowersmax;
+
   FiltersModels(
       {this.id,
       this.absoluteCommentsFilterMin = "",
@@ -17,7 +20,9 @@ class FiltersModels {
       this.absoluteLikesFilterMin = "",
       this.absoluteLikesFilterMax = "",
       this.ermin = "",
-      this.ermax = ""});
+      this.ermax = "",
+      this.numFollowersmin = "",
+      this.numFollowersmax = ""});
 
   void clearAll() {
     id = [];
@@ -27,6 +32,8 @@ class FiltersModels {
     absoluteLikesFilterMax = "";
     ermin = "";
     ermax = "";
+    numFollowersmin = "";
+    numFollowersmax = "";
   }
 
   void clearId() {

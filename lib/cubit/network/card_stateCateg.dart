@@ -44,3 +44,18 @@ class FilterLoadedState extends FilterState {
 }
 
 class FilterErrorState extends FilterState {}
+
+abstract class OneBlogerState {}
+
+class OneBlogerEmptyState extends OneBlogerState {}
+
+class OneBlogerLoadingState extends OneBlogerState {}
+
+class OneBlogerLoadedState extends OneBlogerState {
+  dynamic? loadedBloger;
+  OneBlogerLoadedState({this.loadedBloger}) {
+    print('Bloger loaded  $loadedBloger');
+  }
+}
+
+class OneBlogerErrorState extends OneBlogerState {}

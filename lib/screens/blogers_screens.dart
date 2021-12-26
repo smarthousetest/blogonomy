@@ -1,4 +1,5 @@
 import 'package:blogonomy/Repository/card_repositoriesCateg.dart';
+import 'package:blogonomy/cubit/network/bloger_find_model.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/card_stateCateg.dart';
 import 'package:blogonomy/main.dart';
@@ -77,11 +78,13 @@ class _BlogersListState extends State<BlogersList> {
                       i++;
                       return GestureDetector(
                         onTap: () {
+                          blogerFindModel = BlogerFindModel(
+                              id: "${state.loadedBlogers?[index].id}");
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => BlogerProfileScreen(
-                                      state.loadedBlogers![index])));
+                                  builder: (context) => BlogerProfileScreen()));
                         },
                         child: BlogerView(
                             id: '$i',

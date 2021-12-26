@@ -42,13 +42,17 @@ class BlogersApi {
     String minerr = filterModels.ermin ?? "";
     String maxerr = filterModels.ermax ?? "";
 
+    String minnumFollowers = filterModels.numFollowersmin ?? "";
+    String maxnumFollowers = filterModels.numFollowersmax ?? "";
+
     var body = {
       "size": 50,
       "page": 1,
       "categoryIds": id,
       "absoluteCommentsFilter": {"max": maxComments, "min": minComments},
       "absoluteLikesFilter": {"max": maxLikes, "min": minLikes},
-      "erFilter": {"max": maxerr, "min": minerr}
+      "erFilter": {"max": maxerr, "min": minerr},
+      "numFollowersFilter": {"max": maxnumFollowers, "min": minnumFollowers}
     };
 
     if (filterModels.id?.isEmpty == true) {
@@ -67,6 +71,10 @@ class BlogersApi {
       body.remove("erFilter");
     }
 
+    if (filterModels.numFollowersmax == "") {
+      body.remove("numFollowersFilter");
+    }
+
     print("+++++++++++++++++++++++++");
     print(filterModels.id);
     print(filterModels.absoluteCommentsFilterMin);
@@ -75,6 +83,8 @@ class BlogersApi {
     print(filterModels.absoluteLikesFilterMax);
     print(filterModels.ermin);
     print(filterModels.ermax);
+    print(filterModels.numFollowersmin);
+    print(filterModels.numFollowersmax);
     print(id);
     print(minComments);
     print(maxComments);
@@ -82,6 +92,8 @@ class BlogersApi {
     print(maxLikes);
     print(minerr);
     print(maxerr);
+    print(minnumFollowers);
+    print(maxnumFollowers);
     print(json.encode(body));
     print("+++++++++++++++++++++++++");
 
@@ -243,6 +255,29 @@ class FilterLoadApi {
       return FilterModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Error FilterLoadModel');
+    }
+  }
+}
+
+class OneBlogerApi {
+  Future<OneBlogerModel> getBloger() async {
+    late String? id = blogerFindModel.id;
+
+    var body = {
+      "id": id,
+    };
+    final response = await http.post(
+        Uri.parse(
+            'https://service-blogonomy.maksatlabs.ru/api/info/AboutBlogger'),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(body));
+
+    print(response.body);
+    if (response.statusCode == 200) {
+      //  final List<dynamic> blogerJson = json.decode(response.body);
+      return OneBlogerModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Error fetching one blogger');
     }
   }
 }

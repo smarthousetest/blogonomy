@@ -93,6 +93,9 @@ flutter:
       - assets/icons/category_icon.svg
       - assets/icons/filter.svg
       - assets/icons/info_square.svg
+      - assets/icons/chat.svg
+      - assets/icons/heart.svg
+      - assets/icons/bookmark.svg
       - assets/images/image_2021-11-19_00-10-15.png
       - assets/images/image_2021-11-19_00-53-42.png
       - assets/images/image_2021-11-19_00-57-04.png

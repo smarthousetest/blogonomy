@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:blogonomy/Repository/card_repositoriesCateg.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
@@ -18,92 +17,52 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import '../main.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 
-List<MultiSelectItem<ListCategotyFilters>>? items = [];
-List? items2 = [];
-List<ListCategotyFilters>? listik;
-List<ListCategotyFilters>? listikselected;
+List<ListCategotyFilters>? listikloaded;
+List? listikload = [];
+List? itemslist = [];
+
+class ListItem<String> {
+  bool selected;
+  String data;
+  ListItem({required this.data, required this.selected});
+}
 
 List<dynamic>? loaded;
 Future<void> fetchCarde() async {
-  print("BlogersPanelStatefetchCarde");
-
   loaded = await CardRepository().getAllCards();
-  print("++++++++++++++++++++++++++++++++++++++++++");
-
-  print(loaded);
-
-  listik = loaded
+  listikloaded = loaded
       ?.map((value) => ListCategotyFilters(id: value.id!, name: value.name!))
       .toList();
+  listikload = loaded?.map((value) => value.name!).toList();
+}
 
-  items = listik
-      ?.map((value) => MultiSelectItem<ListCategotyFilters>(value, value.name))
-      .toList();
+void outselected() {
+  List? itemsSelected = [];
 
-  items2 = listik
-      ?.map((e) => {
-            "display": "${e.name}",
-            "value": ListCategotyFilters(id: e.id, name: e.name)
-          })
-      .toList();
-  print("=====+++++++++++++++++++++++++++======ewqeqw");
-  print(items2);
-  print("=====+++++++++++++++++++++++++++======ewqeqw");
-  print(listik);
-  int imain = listik!.length;
+  itemsSelected = filterModels.id?.map((e) => e.name).toList() ?? null;
 
-  print("prime2 ${filterModels.id}");
-  print("prime4 $listik");
+  if (itemsSelected != null) {
+    itemslist = listikload
+        ?.map((e) => ListItem(
+            data: e, selected: itemsSelected!.contains(e) ? true : false))
+        .toList();
+  } else {
+    if (itemsSelected == null) {
+      itemslist =
+          listikload?.map((e) => ListItem(data: e, selected: false)).toList();
+    }
+  }
+}
 
-  if (filterModels.id?.isEmpty == false) {
-    for (var item in filterModels.id!) {
-      for (var i = 0; i < imain; i++) {
-        for (var item2 in listik!) {
-          if (item2.id != item.id) {
-            listik?.remove(item2);
-            print("prime3 $item2");
-            break;
-          }
-        }
+void setselected() {
+  filterModels.id = [];
+  for (var i = 0; i < listikload!.length; i++) {
+    if (listikload?.contains(itemslist?[i].data) == true) {
+      if (itemslist?[i].selected == true) {
+        filterModels.id?.add(listikloaded![i]);
       }
     }
   }
-
-  // if (filterModels.id?.isEmpty == false) {
-  //   for (var item in filterModels.id!) {
-  //     for (var i = 0; i < imain; i++) {
-  //       for (var item2 in listik!) {
-  //         if (item2.id != item.id) {
-  //           listik?.remove(item2);
-  //           print("prime3 $item2");
-  //           break;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-  print("prime5 $listik");
-  // if (filterModels.id?.isEmpty == false) {
-  //   for (var item in filterModels.id!) {
-  //     for (var item2 in listik!) {
-  //       if (item2.id != item.id) {
-  //         listik?.remove(item2);
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }
-
-  // if (filterModels.id?.isEmpty == false) {
-  //   for (var item in filterModels.id!) {
-  //     print(item);
-  //     print(listik?.remove(ListCategotyFilters(id: item.id, name: item.name)));
-  //     print(item.id);
-  //     print(item.name);
-  //   }
-  // }
-  print(filterModels.id);
-  print("++++++++++++++++++++++++++++++++++++++++++");
 }
 
 class BlogersPanel extends StatefulWidget {
@@ -111,24 +70,20 @@ class BlogersPanel extends StatefulWidget {
   State<BlogersPanel> createState() => BlogersPanelState();
 }
 
-final PanelController pc = new PanelController();
-
 class BlogersPanelState extends State<BlogersPanel> {
   @override
   void initState() {
     fetchCarde();
 
-    print("BlogersPanelStateinitstate");
-
     FilterCubit filterCubit = context.read<FilterCubit>();
     filterCubit.fetchFilter();
-
     super.initState();
   }
 
   RangeValues currentRangeValueser = RangeValues(0, 15);
   RangeValues currentRangeValueslikes = RangeValues(0, 15);
   RangeValues currentRangeValuescomments = RangeValues(0, 15);
+  RangeValues currentRangeValuessubscribers = RangeValues(0, 15);
 
   final textCompilationController = TextEditingController();
   @override
@@ -165,6 +120,15 @@ class BlogersPanelState extends State<BlogersPanel> {
           currentRangeValuescomments = RangeValues(
               state.loadedFilter?.filter?[0].roundToDouble(),
               state.loadedFilter?.filter?[1].roundToDouble());
+        }
+
+        if (state.loadedFilter?.filter?[6].roundToDouble() >
+                currentRangeValuessubscribers.start.round() ||
+            state.loadedFilter?.filter?[7].roundToDouble() <
+                currentRangeValuessubscribers.end.round()) {
+          currentRangeValuessubscribers = RangeValues(
+              state.loadedFilter?.filter?[6].roundToDouble(),
+              state.loadedFilter?.filter?[7].roundToDouble());
         }
 
         BlogersCubit blogersCubit = context.read<BlogersCubit>();
@@ -389,149 +353,154 @@ class BlogersPanelState extends State<BlogersPanel> {
                     ],
                   ),
                 ),
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Подписчиков",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontFamily: 'Roboto-Bold.ttf',
+                          fontSize: 12,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            currentRangeValuessubscribers.start
+                                .round()
+                                .toString(),
+                            style: TextStyle(
+                              fontFamily: 'Roboto-Bold.ttf',
+                              fontSize: 15,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          Text(
+                              currentRangeValuessubscribers.end
+                                  .round()
+                                  .toString(),
+                              style: TextStyle(
+                                fontFamily: 'Roboto-Bold.ttf',
+                                fontSize: 15,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w700,
+                              )),
+                        ],
+                      ),
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          // overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+                          rangeThumbShape: CircleThumbShape(),
+                        ),
+                        child: RangeSlider(
+                            values: currentRangeValuessubscribers,
+                            max: state.loadedFilter?.filter?[7]
+                                        .roundToDouble() ==
+                                    0.0
+                                ? 1.0
+                                : state.loadedFilter?.filter?[7]
+                                    .roundToDouble(),
+                            min: state.loadedFilter?.filter?[6].roundToDouble(),
+                            divisions:
+                                state.loadedFilter?.filter?[7].round() == 0
+                                    ? 1
+                                    : state.loadedFilter?.filter?[7].round(),
+                            onChanged: (RangeValues values) {
+                              setState(() {
+                                currentRangeValuessubscribers = values;
+                              });
+                            },
+                            onChangeEnd: (RangeValues values) {
+                              filterModels.numFollowersmin =
+                                  values.start.round().toString();
 
-                // const SizedBox(height: 24),
-                // TextFormField(
-                //   controller: textCompilationController,
-                //   decoration: const InputDecoration(
-                //     hintText: 'Название подборки',
-                //     hintStyle: TextStyle(
-                //       fontFamily: 'Roboto-Regular.ttf',
-                //       fontSize: 15.0,
-                //       fontStyle: FontStyle.normal,
-                //       fontWeight: FontWeight.w400,
-                //       color: Color(0xFFADB3BD),
-                //     ),
-                //     enabledBorder: OutlineInputBorder(
-                //         borderSide:
-                //             BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                //         borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                //     focusedBorder: OutlineInputBorder(
-                //         borderSide:
-                //             BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                //         borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                //   ),
-                // ),
+                              filterModels.numFollowersmax =
+                                  values.end.round().toString();
 
-                // Column(
-                //   children: [
-                //     MultiSelectFormField(
-                //       chipBackGroundColor: Colors.red,
-                //       chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-                //       dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),
-                //       checkBoxActiveColor: Colors.red,
-                //       checkBoxCheckColor: Colors.green,
-                //       dialogShapeBorder: RoundedRectangleBorder(
-                //           borderRadius:
-                //               BorderRadius.all(Radius.circular(12.0))),
-                //       title: Text(
-                //         "Title Of Form",
-                //         style: TextStyle(fontSize: 16),
-                //       ),
-                //       dataSource: items2,
-                //       textField: 'display',
-                //       valueField: 'value',
-                //       okButtonLabel: 'OK',
-                //       cancelButtonLabel: 'CANCEL',
-                //       hintWidget: Text('Please choose one or more'),
-                //       initialValue: filterModels.id ?? [],
-                //       onSaved: (value) {
-                //         if (value == null) return;
-                //         setState(() {});
-                //       },
-                //     ),
-                //     MultiSelectChipField(
-                //       items: items ?? [],
-                //       initialValue: listik,
-                //       title: Text("Animals"),
-                //       headerColor: Colors.blue.withOpacity(0.5),
-                //       decoration: BoxDecoration(
-                //         border: Border.all(color: Colors.blue, width: 1.8),
-                //       ),
-                //       selectedChipColor: Colors.blue.withOpacity(0.5),
-                //       selectedTextStyle: TextStyle(color: Colors.blue[800]),
-                //       onTap: (values) {
-                //         filterModels.clearId();
-                //         for (var item in values) {
-                //           item = item as ListCategotyFilters;
-                //           filterModels.id!.add(item);
-                //         }
+                              blogersCubit.fetchBlogers();
+                            }),
+                      ),
+                      const SizedBox(height: 12),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    filterModels.id == null ||
+                            filterModels.id == [] ||
+                            filterModels.id?.isEmpty == true
+                        ? Expanded(
+                            flex: 3,
+                            child: Container(
+                                padding: EdgeInsets.all(4),
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  "Выбраны все категории",
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto-Bold.ttf',
+                                    fontSize: 14,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )),
+                          )
+                        : Expanded(
+                            flex: 3,
+                            child: MultiSelectChipDisplay(
+                              icon: Icon(
+                                Icons.close,
+                                color: Colors.white,
+                              ),
+                              textStyle: TextStyle(color: Colors.white),
+                              chipColor: Colors.blue,
+                              scroll: true,
+                              items: filterModels.id
+                                  ?.map((e) => MultiSelectItem(e, e.name))
+                                  .toList(),
+                              onTap: (value) {
+                                setState(() {
+                                  filterModels.id!.remove(value);
+                                  print(
+                                      "filterModels.id: -${filterModels.id}-");
+                                  BlogersCubit blogersCubit =
+                                      context.read<BlogersCubit>();
+                                  blogersCubit.fetchBlogers();
 
-                //         print("prime1 ${filterModels.id}");
-                //         //  fetchCarde();
-                //         BlogersCubit blogersCubit =
-                //             context.read<BlogersCubit>();
-                //         blogersCubit.fetchBlogers();
-
-                //         FilterCubit filterCubit = context.read<FilterCubit>();
-                //         filterCubit.fetchFilter();
-                //       },
-                //     ),
-                //     MultiSelectDialogField(
-                //       //   initialChildSize: 0.4,
-                //       listType: MultiSelectListType.CHIP,
-                //       initialValue: listik,
-                //       items: items ?? [],
-                //       onConfirm: (values) {
-                //         filterModels.clearId();
-                //         print("---filterModels.id--- ${filterModels.id}");
-                //         print("---filterModels.id--- ${values}");
-                //         for (var item in values) {
-                //           print(item);
-                //           print(item.runtimeType);
-
-                //           item = item as ListCategotyFilters;
-                //           print(item.id);
-                //           print(item.name);
-                //           filterModels.id!.add(item);
-                //         }
-
-                //         print("---filterModels.id--- ${filterModels.id}");
-
-                //         BlogersCubit blogersCubit =
-                //             context.read<BlogersCubit>();
-                //         blogersCubit.fetchBlogers();
-
-                //         FilterCubit filterCubit = context.read<FilterCubit>();
-                //         filterCubit.fetchFilter();
-                //       },
-                //     ),
-                //     MultiSelectChipDisplay(
-                //       icon: Icon(
-                //         Icons.close,
-                //         color: Colors.white,
-                //       ),
-                //       textStyle: TextStyle(color: Colors.white),
-                //       chipColor: Colors.blue,
-                //       scroll: true,
-                //       items: filterModels.id
-                //           ?.map((e) => MultiSelectItem(e, e.name))
-                //           .toList(),
-                //       onTap: (value) {
-                //         setState(() {
-                //           filterModels.id!.remove(value);
-                //           print("filterModels.id: -${filterModels.id}-");
-                //           BlogersCubit blogersCubit =
-                //               context.read<BlogersCubit>();
-                //           blogersCubit.fetchBlogers();
-
-                //           FilterCubit filterCubit = context.read<FilterCubit>();
-                //           filterCubit.fetchFilter();
-                //         });
-                //       },
-                //     ),
-                //     filterModels.id == null || filterModels.id == []
-                //         ? Container(
-                //             padding: EdgeInsets.all(10),
-                //             alignment: Alignment.centerLeft,
-                //             child: Text(
-                //               "Выбраны все категории",
-                //               style: TextStyle(color: Colors.black54),
-                //             ))
-                //         : Container(),
-                //   ],
-                // ),
-
+                                  FilterCubit filterCubit =
+                                      context.read<FilterCubit>();
+                                  filterCubit.fetchFilter();
+                                });
+                              },
+                            ),
+                          ),
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          outselected();
+                          showAlertDialog(context);
+                        },
+                        child: Text("Изменить",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontFamily: 'Roboto-Bold.ttf',
+                              fontSize: 14,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500,
+                            )),
+                      ),
+                    )
+                  ],
+                ),
                 const SizedBox(height: 16),
                 ElevatedButton(
                     style: ButtonStyle(
@@ -567,4 +536,74 @@ class BlogersPanelState extends State<BlogersPanel> {
           child: Text("Error"));
     });
   }
+}
+
+showAlertDialog(BuildContext context) {
+  // set up the button
+  Widget cancelButton = TextButton(
+    child: Text("Отменить"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+  Widget okButton = TextButton(
+    child: Text("Применить"),
+    onPressed: () {
+      setselected();
+
+      FilterCubit filterCubit = context.read<FilterCubit>();
+      filterCubit.fetchFilter();
+
+      BlogersCubit blogersCubit = context.read<BlogersCubit>();
+      blogersCubit.fetchBlogers();
+
+      Navigator.pop(context);
+    },
+  );
+
+  // set up the AlertDialog
+  var alert = StatefulBuilder(// StatefulBuilder
+      builder: (context, setState) {
+    return AlertDialog(
+      title: Text("Категории"),
+      content: Container(
+        height: 200,
+        child: SingleChildScrollView(
+          child: Column(
+            children: List.generate(itemslist!.length, (int index) {
+              return Column(
+                children: [
+                  CheckboxListTile(
+                    value: itemslist?[index].selected,
+                    onChanged: (value) {
+                      setState(() {
+                        itemslist?[index].selected =
+                            !itemslist?[index].selected;
+                      });
+                    },
+                    title: Text("${itemslist?[index].data}"),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                  ),
+                  Divider(),
+                ],
+              );
+            }),
+          ),
+        ),
+      ),
+      actions: [cancelButton, okButton],
+    );
+  });
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return StatefulBuilder(// StatefulBuilder
+          builder: (context, setState) {
+        return alert;
+      });
+    },
+  );
 }

@@ -78,3 +78,24 @@ class FilterCubit extends Cubit<FilterState> {
     emit(FilterEmptyState());
   }
 }
+
+class OneBlogerCubit extends Cubit<OneBlogerState> {
+  final OneBlogerRepository oneBlogerRepository;
+
+  OneBlogerCubit(this.oneBlogerRepository) : super(OneBlogerLoadedState());
+
+  Future<void> fetchBloger() async {
+    try {
+      emit(OneBlogerLoadingState());
+      final OneBlogerModel _loaded2 = await oneBlogerRepository.getOneBloger();
+      print("приватная  $_loaded2");
+      emit(OneBlogerLoadedState(loadedBloger: _loaded2));
+    } catch (_) {
+      emit(OneBlogerErrorState());
+    }
+  }
+
+  Future<void> clearBloger() async {
+    emit(OneBlogerEmptyState());
+  }
+}

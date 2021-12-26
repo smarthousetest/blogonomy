@@ -12,6 +12,7 @@ final sl = GetIt.instance;
 final cardRepository = CardRepository();
 final blogersRepository = BlogersRepository();
 final filterRepository = FilterRepository();
+final oneBlogerRepository = OneBlogerRepository();
 
 Future<void> init() async {
   sl.registerFactory(() => SlidingUpCubit());
@@ -21,6 +22,7 @@ Future<void> init() async {
   sl.registerFactory(() => CardCubit(cardRepository));
   sl.registerFactory(() => BlogersCubit(blogersRepository));
   sl.registerFactory(() => FilterCubit(filterRepository));
+  sl.registerFactory(() => OneBlogerCubit(oneBlogerRepository));
   sl.registerFactory(() => BottomNavigationControllerSelect());
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);

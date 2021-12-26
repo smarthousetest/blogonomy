@@ -1,6 +1,7 @@
 import 'package:blogonomy/auth/auth_page.dart';
 import 'package:blogonomy/cubit/bottom_navigation_bar.dart';
 import 'package:blogonomy/cubit/locator_services.dart';
+import 'package:blogonomy/cubit/network/bloger_find_model.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/filters_model.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
@@ -25,6 +26,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'cubit/network/auth_cubit.dart';
 
 FiltersModels filterModels = FiltersModels();
+BlogerFindModel blogerFindModel = BlogerFindModel();
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -55,6 +57,8 @@ class MyApp extends StatelessWidget {
           BlocProvider<CardCubit>(create: (context) => sl<CardCubit>()),
           BlocProvider<BlogersCubit>(create: (context) => sl<BlogersCubit>()),
           BlocProvider<FilterCubit>(create: (context) => sl<FilterCubit>()),
+          BlocProvider<OneBlogerCubit>(
+              create: (context) => sl<OneBlogerCubit>()),
           BlocProvider<BottomNavigationControllerSelect>(
               create: (context) => sl<BottomNavigationControllerSelect>()),
           BlocProvider<AuthCubit>(
