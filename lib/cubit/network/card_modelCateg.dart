@@ -141,6 +141,8 @@ class OneBlogerModel {
     this.location,
     this.hashtag,
     this.taggedUser,
+    this.sexRatio,
+    this.ageGroupRatio,
   });
 
   String? id;
@@ -155,37 +157,64 @@ class OneBlogerModel {
   Location? location;
   List<Hashtag>? hashtag;
   List<TaggedUser>? taggedUser;
+  SexRatio? sexRatio;
+  Map<String, int>? ageGroupRatio;
 
   factory OneBlogerModel.fromJson(Map<String, dynamic> json) => OneBlogerModel(
-        id: json["id"],
-        instagramId: json["instagramId"],
-        userName: json["userName"],
-        fullName: json["fullName"],
-        picUrl: json["picUrl"],
-        numFollowers: json["numFollowers"],
-        absoluteLikes: json["absoluteLikes"],
-        absoluteComments: json["absoluteComments"],
-        er: json["er"].toDouble(),
-        location: Location.fromJson(json["location"]),
-        hashtag:
-            List<Hashtag>.from(json["hashtag"].map((x) => Hashtag.fromJson(x))),
-        taggedUser: List<TaggedUser>.from(
-            json["taggedUser"].map((x) => TaggedUser.fromJson(x))),
+        id: json["id"] == null ? null : json["id"],
+        instagramId: json["instagramId"] == null ? null : json["instagramId"],
+        userName: json["userName"] == null ? null : json["userName"],
+        fullName: json["fullName"] == null ? null : json["fullName"],
+        picUrl: json["picUrl"] == null ? null : json["picUrl"],
+        numFollowers:
+            json["numFollowers"] == null ? null : json["numFollowers"],
+        absoluteLikes:
+            json["absoluteLikes"] == null ? null : json["absoluteLikes"],
+        absoluteComments:
+            json["absoluteComments"] == null ? null : json["absoluteComments"],
+        er: json["er"] == null ? null : json["er"].toDouble(),
+        location: json["location"] == null
+            ? null
+            : Location.fromJson(json["location"]),
+        hashtag: json["hashtag"] == null
+            ? null
+            : List<Hashtag>.from(
+                json["hashtag"].map((x) => Hashtag.fromJson(x))),
+        taggedUser: json["taggedUser"] == null
+            ? null
+            : List<TaggedUser>.from(
+                json["taggedUser"].map((x) => TaggedUser.fromJson(x))),
+        sexRatio: json["sexRatio"] == null
+            ? null
+            : SexRatio.fromJson(json["sexRatio"]),
+        ageGroupRatio: json["ageGroupRatio"] == null
+            ? null
+            : Map.from(json["ageGroupRatio"])
+                .map((k, v) => MapEntry<String, int>(k, v)),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "instagramId": instagramId,
-        "userName": userName,
-        "fullName": fullName,
-        "picUrl": picUrl,
-        "numFollowers": numFollowers,
-        "absoluteLikes": absoluteLikes,
-        "absoluteComments": absoluteComments,
-        "er": er,
-        "location": location?.toJson(),
-        "hashtag": List<dynamic>.from(hashtag!.map((x) => x.toJson())),
-        "taggedUser": List<dynamic>.from(taggedUser!.map((x) => x.toJson())),
+        "id": id == null ? null : id,
+        "instagramId": instagramId == null ? null : instagramId,
+        "userName": userName == null ? null : userName,
+        "fullName": fullName == null ? null : fullName,
+        "picUrl": picUrl == null ? null : picUrl,
+        "numFollowers": numFollowers == null ? null : numFollowers,
+        "absoluteLikes": absoluteLikes == null ? null : absoluteLikes,
+        "absoluteComments": absoluteComments == null ? null : absoluteComments,
+        "er": er == null ? null : er,
+        "location": location == null ? null : location?.toJson(),
+        "hashtag": hashtag == null
+            ? null
+            : List<dynamic>.from(hashtag!.map((x) => x.toJson())),
+        "taggedUser": taggedUser == null
+            ? null
+            : List<dynamic>.from(taggedUser!.map((x) => x.toJson())),
+        "sexRatio": sexRatio == null ? null : sexRatio?.toJson(),
+        "ageGroupRatio": ageGroupRatio == null
+            ? null
+            : Map.from(ageGroupRatio!)
+                .map((k, v) => MapEntry<String, dynamic>(k, v)),
       };
 }
 
@@ -199,13 +228,13 @@ class Hashtag {
   int? count;
 
   factory Hashtag.fromJson(Map<String, dynamic> json) => Hashtag(
-        name: json["name"],
-        count: json["count"],
+        name: json["name"] == null ? null : json["name"],
+        count: json["count"] == null ? null : json["count"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "count": count,
+        "name": name == null ? null : name,
+        "count": count == null ? null : count,
       };
 }
 
@@ -219,13 +248,33 @@ class Location {
   String? slag;
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
-        name: json["name"],
-        slag: json["slag"],
+        name: json["name"] == null ? null : json["name"],
+        slag: json["slag"] == null ? null : json["slag"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "slag": slag,
+        "name": name == null ? null : name,
+        "slag": slag == null ? null : slag,
+      };
+}
+
+class SexRatio {
+  SexRatio({
+    this.men,
+    this.women,
+  });
+
+  int? men;
+  int? women;
+
+  factory SexRatio.fromJson(Map<String, dynamic> json) => SexRatio(
+        men: json["men"] == null ? null : json["men"],
+        women: json["women"] == null ? null : json["women"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "men": men == null ? null : men,
+        "women": women == null ? null : women,
       };
 }
 
@@ -239,12 +288,12 @@ class TaggedUser {
   int? coun;
 
   factory TaggedUser.fromJson(Map<String, dynamic> json) => TaggedUser(
-        name: json["name"],
-        coun: json["coun"],
+        name: json["name"] == null ? null : json["name"],
+        coun: json["coun"] == null ? null : json["coun"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "coun": coun,
+        "name": name == null ? null : name,
+        "coun": coun == null ? null : coun,
       };
 }
