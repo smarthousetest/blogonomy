@@ -268,62 +268,65 @@ class ProfileState extends State<Profile> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-          child: Container(
-            height: 104.0,
-            margin: const EdgeInsets.only(left: 20.0, right: 21.0),
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 0,
-                  blurRadius: 25,
-                  // changes position of shadow
-                ),
-              ],
-              border: Border.all(
-                color: const Color(0xFFF0F0FF),
-                width: 1,
-              ),
-              borderRadius: BorderRadius.circular(32.0),
-              color: const Color(0xFFFFFFFF),
-              // gradient: const LinearGradient(
-              //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-              // ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 24, right: 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Image.asset(
-                      'assets/images/info.png',
-                      width: 27,
-                      height: 27,
-                      color: Colors.green,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      "Подсказки",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Spacer(
-                    flex: 1,
-                  ),
-                  Image.asset(
-                    'assets/images/arrow.png',
-                    height: 30,
-                    width: 30,
-                    color: Colors.blue,
+        GestureDetector(
+          onTap: () => Navigator.pushNamed(context, '/d'),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+            child: Container(
+              height: 104.0,
+              margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0,
+                    blurRadius: 25,
+                    // changes position of shadow
                   ),
                 ],
+                border: Border.all(
+                  color: const Color(0xFFF0F0FF),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(32.0),
+                color: const Color(0xFFFFFFFF),
+                // gradient: const LinearGradient(
+                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                // ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24, right: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Image.asset(
+                        'assets/images/info.png',
+                        width: 27,
+                        height: 27,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        "Подсказки",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Image.asset(
+                      'assets/images/arrow.png',
+                      height: 30,
+                      width: 30,
+                      color: Colors.blue,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

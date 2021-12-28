@@ -7,6 +7,7 @@ import 'package:blogonomy/cubit/network/filters_model.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:blogonomy/screens/about.dart';
 import 'package:blogonomy/screens/confid.dart';
+import 'package:blogonomy/screens/help.dart';
 //import 'package:blogonomy/screens/auth_screen.dart';
 import 'package:blogonomy/screens/notifications.dart';
 //import 'package:blogonomy/librur/bottom_bar.dart';
@@ -74,7 +75,7 @@ class MyApp extends StatelessWidget {
             '/a': (BuildContext context) => Notifications(),
             '/b': (BuildContext context) => Confid(),
             '/c': (BuildContext context) => const About(),
-            //      '/d': (BuildContext context) => AuthScreen(),
+            '/d': (BuildContext context) => HelpPage(),
           },
         ));
   }

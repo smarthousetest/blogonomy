@@ -78,6 +78,9 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                             Spacer(
                               flex: 1,
                             ),
+                            SizedBox(
+                              width: 40,
+                            ),
                             Container(
                               alignment: Alignment.center,
                               height: 25.0,
