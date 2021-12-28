@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
 import 'package:blogonomy/cubit/network/card_stateCateg.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pie_chart/pie_chart.dart' as prefix;
 
 class BlogerProfileScreen extends StatefulWidget {
   @override
@@ -42,6 +42,31 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
       if (state is OneBlogerLoadedState) {
         String? location = state.loadedBloger.location?.name.toString();
         location = location!.substring(location.lastIndexOf(',') + 1);
+
+        List? widgets1 = [];
+        //   List? widgets2 = [];
+
+        for (var item in state.loadedBloger?.ageGroupRatio.entries) {
+          widgets1.add(
+            Text("${item.key}: ${item.value}%",
+                style: TextStyle(
+                  fontFamily: 'Roboto-Bold.ttf',
+                  fontSize: 14.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400,
+                )),
+          );
+        }
+
+        // for (var item in state.loadedBloger?.ageGroupRatio.entries) {
+        //   widgets2.add(
+        //     Container(
+        //       width: item.value.roundToDouble(),
+        //       height: 20,
+        //       color: Colors.blue,
+        //     ),
+        //   );
+        // }
 
         return StatefulBuilder(// StatefulBuilder
             builder: (context, setState) {
@@ -544,6 +569,146 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                         ],
                       )
                     : Container(),
+                const SizedBox(height: 16),
+                Container(
+                    padding: EdgeInsets.only(top: 26, bottom: 24),
+                    margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 0,
+                          blurRadius: 25,
+                          // changes position of shadow
+                        ),
+                      ],
+                      border: Border.all(
+                        color: const Color(0xFFF0F0FF),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(32.0),
+                      color: const Color(0xFFFFFFFF),
+                      // gradient: const LinearGradient(
+                      //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                      // ),
+                    ),
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Гендер',
+                            style: TextStyle(
+                              fontFamily: 'Roboto-Bold.ttf',
+                              fontSize: 18.0,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                          prefix.PieChart(
+                            dataMap: {
+                              "Women": state.loadedBloger?.sexRatio.women
+                                  .roundToDouble(),
+                              "Men": state.loadedBloger?.sexRatio.men
+                                  .roundToDouble()
+                            },
+                            animationDuration: Duration(milliseconds: 800),
+                            chartLegendSpacing: 32,
+                            chartRadius:
+                                MediaQuery.of(context).size.width / 3.2,
+                            colorList: [
+                              Colors.blue,
+                              Color(0xFFBBDEFB),
+                            ],
+                            initialAngleInDegree: 90,
+                            legendOptions: prefix.LegendOptions(
+                              showLegends: false,
+                            ),
+                            chartValuesOptions: prefix.ChartValuesOptions(
+                              showChartValueBackground: false,
+                              showChartValues: false,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    "${state.loadedBloger?.sexRatio.women}%",
+                                    style: TextStyle(
+                                      fontFamily: 'Roboto-Bold.ttf',
+                                      fontSize: 16.0,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                  Text("Women",
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto-Bold.ttf',
+                                        fontSize: 15.0,
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFFB1B1D1),
+                                      ))
+                                ],
+                              ),
+                              VerticalDivider(),
+                              Column(
+                                children: [
+                                  Text(
+                                    "${state.loadedBloger?.sexRatio.men}%",
+                                    style: TextStyle(
+                                      fontFamily: 'Roboto-Bold.ttf',
+                                      fontSize: 16.0,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xFFBBDEFB),
+                                    ),
+                                  ),
+                                  Text("Men",
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto-Bold.ttf',
+                                        fontSize: 15.0,
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFFB1B1D1),
+                                      ))
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Divider(),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Возраст',
+                            style: TextStyle(
+                              fontFamily: 'Roboto-Bold.ttf',
+                              fontSize: 18.0,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              child: Column(
+                                children:
+                                    List.generate(widgets1.length, (index) {
+                                  return widgets1[index];
+                                }),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+                const SizedBox(height: 16),
               ],
             ),
           )));

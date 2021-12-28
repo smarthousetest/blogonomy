@@ -14,7 +14,8 @@ class CardApi {
     final response = await http.post(
         Uri.parse(
             'https://service-blogonomy.maksatlabs.ru/api/info/AboutCategories'),
-        headers: {"Content-Type": "application/json"});
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"public": true}));
     print("a");
     print(response.body);
     print("a");
