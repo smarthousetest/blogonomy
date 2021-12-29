@@ -10,12 +10,14 @@ import '../../main.dart';
 
 class CardApi {
   Future<List<CardModel>> getCard() async {
+    bool? public = podborkaBool.public;
+
     print("object");
     final response = await http.post(
         Uri.parse(
             'https://service-blogonomy.maksatlabs.ru/api/info/AboutCategories'),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"public": true}));
+        body: jsonEncode({"public": public}));
     print("a");
     print(response.body);
     print("a");
@@ -29,7 +31,7 @@ class CardApi {
 }
 
 class BlogersApi {
-  Future<List<BlogersModel>> getBloger() async {
+  Future<List<BlogersModel>> getBloger(int page) async {
     print("запрос2");
 
     List<String>? id = filterModels.id?.map((e) => e.id).toList() ?? null;
@@ -47,8 +49,8 @@ class BlogersApi {
     String maxnumFollowers = filterModels.numFollowersmax ?? "";
 
     var body = {
-      "size": 50,
-      "page": 1,
+      "size": 10,
+      "page": page,
       "categoryIds": id,
       "absoluteCommentsFilter": {"max": maxComments, "min": minComments},
       "absoluteLikesFilter": {"max": maxLikes, "min": minLikes},
@@ -279,6 +281,139 @@ class OneBlogerApi {
       return OneBlogerModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Error fetching one blogger');
+    }
+  }
+}
+
+class Podborka {
+  Future<String?> create(String name, bool public) async {
+    print(name);
+    print(public);
+    final response = await http.post(
+        Uri.parse(
+            "https://service-blogonomy.maksatlabs.ru/api/Category/Create"),
+        body: json.encode({"name": name, "public": public}),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json"
+        });
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> id = jsonDecode(response.body);
+      return "${id["id"]}";
+    }
+  }
+
+  Future<String?> setbloggers(String id) async {
+    List? bloggerIds = [];
+    int page = 1;
+    List? onepromej;
+
+    Future getlist() async {
+      List<BlogersModel> loaded2 = await BlogersApi().getBloger(page);
+      if (loaded2.isEmpty == false) {
+        onepromej = loaded2.map((e) => e.id).toList();
+        bloggerIds.addAll(onepromej!);
+
+        if (onepromej?.length == 10) {
+          page++;
+          await getlist();
+        }
+      }
+    }
+
+    await getlist();
+
+    final response = await http.post(
+        Uri.parse(
+            "https://service-blogonomy.maksatlabs.ru/api/BloggerCategory/Add"),
+        body: json.encode({"categoryId": id, "bloggerIds": bloggerIds}),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json"
+        });
+    if (response.statusCode == 200) {
+      return "OK";
+    }
+  }
+
+  Future<String?> update(String id, String name, bool public) async {
+    print(id);
+    print(name);
+    print(public);
+
+    final response = await http.post(
+        Uri.parse(
+            "https://service-blogonomy.maksatlabs.ru/api/Category/Update"),
+        body: json.encode({"id": id, "name": name, "public": public}),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json"
+        });
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return "ok";
+    }
+  }
+
+  Future<String?> delete(String id) async {
+    print(id);
+    final response = await http.post(
+        Uri.parse(
+            "https://service-blogonomy.maksatlabs.ru/api/Category/Delete"),
+        body: json.encode({
+          "ids": [id]
+        }),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json"
+        });
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return "ok";
+    }
+  }
+}
+
+class FilterOneApi {
+  Future<List<FilterOneModel>> getFilterOne(String bloggerId) async {
+    final response = await http.post(
+        Uri.parse(
+            'https://service-blogonomy.maksatlabs.ru/api/Info/AboutBloggerCategories'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"bloggerId": bloggerId}));
+    print(response.body);
+    if (response.statusCode == 200) {
+      final List<dynamic> filteroneJson = json.decode(response.body);
+      return filteroneJson
+          .map((json) => FilterOneModel.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Error fetching filter one');
+    }
+  }
+
+  Future<String> setFilterOne(String bloggerId, List categoryIds) async {
+    print(bloggerId);
+    print(categoryIds);
+
+    final response = await http.post(
+        Uri.parse(
+            'https://service-blogonomy.maksatlabs.ru/api/BloggerCategory/RedefineBloggerCategories'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"bloggerId": bloggerId, "categoryIds": categoryIds}));
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return "OK";
+    } else {
+      throw Exception('Error fetching filter one');
     }
   }
 }

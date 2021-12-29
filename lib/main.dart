@@ -4,6 +4,7 @@ import 'package:blogonomy/cubit/locator_services.dart';
 import 'package:blogonomy/cubit/network/bloger_find_model.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/filters_model.dart';
+import 'package:blogonomy/cubit/network/podborka_bool.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:blogonomy/screens/about.dart';
 import 'package:blogonomy/screens/confid.dart';
@@ -27,6 +28,7 @@ import 'cubit/network/auth_cubit.dart';
 
 FiltersModels filterModels = FiltersModels();
 BlogerFindModel blogerFindModel = BlogerFindModel();
+PodborkaBool podborkaBool = PodborkaBool();
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -55,7 +57,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<SlidingUpCubit4>(
               create: (context) => sl<SlidingUpCubit4>()),
           BlocProvider<CardCubit>(create: (context) => sl<CardCubit>()),
+          BlocProvider<CardCubit2>(create: (context) => sl<CardCubit2>()),
           BlocProvider<BlogersCubit>(create: (context) => sl<BlogersCubit>()),
+          BlocProvider<BlogersCubit2>(create: (context) => sl<BlogersCubit2>()),
           BlocProvider<FilterCubit>(create: (context) => sl<FilterCubit>()),
           BlocProvider<OneBlogerCubit>(
               create: (context) => sl<OneBlogerCubit>()),

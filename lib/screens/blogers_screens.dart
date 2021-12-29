@@ -28,6 +28,10 @@ class _BlogersListState extends State<BlogersList> {
     print("Открыл");
     print(filterModels.id);
 
+    if (filterModels.date != "") {
+      filterModels.clearAll();
+    }
+
     BlogersCubit blogersCubit = context.read<BlogersCubit>();
     // blogersCubit.fetchBlogers();
 

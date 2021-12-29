@@ -11,27 +11,34 @@ class CardModel {
   CardModel({
     this.id,
     this.name,
-    this.picUrl,
     this.numBloggers,
+    this.picUrl,
+    this.creationTime,
   });
 
   String? id;
   String? name;
-  String? picUrl;
   int? numBloggers;
+  String? picUrl;
+  DateTime? creationTime;
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
-        id: json["id"],
-        name: json["name"],
-        picUrl: json["picUrl"],
-        numBloggers: json["numBloggers"],
+        id: json["id"] == null ? null : json["id"],
+        name: json["name"] == null ? null : json["name"],
+        numBloggers: json["numBloggers"] == null ? null : json["numBloggers"],
+        picUrl: json["picUrl"] == null ? null : json["picUrl"],
+        creationTime: json["creationTime"] == null
+            ? null
+            : DateTime.parse(json["creationTime"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "picUrl": picUrl,
-        "numBloggers": numBloggers,
+        "id": id == null ? null : id,
+        "name": name == null ? null : name,
+        "numBloggers": numBloggers == null ? null : numBloggers,
+        "picUrl": picUrl == null ? null : picUrl,
+        "creationTime":
+            creationTime == null ? null : creationTime?.toIso8601String(),
       };
 }
 
@@ -295,5 +302,41 @@ class TaggedUser {
   Map<String, dynamic> toJson() => {
         "name": name == null ? null : name,
         "coun": coun == null ? null : coun,
+      };
+}
+
+List<FilterOneModel> filterOneModelFromJson(String str) =>
+    List<FilterOneModel>.from(
+        json.decode(str).map((x) => FilterOneModel.fromJson(x)));
+
+String filterOneModelToJson(List<FilterOneModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class FilterOneModel {
+  FilterOneModel({
+    this.id,
+    this.name,
+    this.public,
+    this.containsBlogger,
+  });
+
+  String? id;
+  String? name;
+  bool? public;
+  bool? containsBlogger;
+
+  factory FilterOneModel.fromJson(Map<String, dynamic> json) => FilterOneModel(
+        id: json["id"] == null ? null : json["id"],
+        name: json["name"] == null ? null : json["name"],
+        public: json["public"] == null ? null : json["public"],
+        containsBlogger:
+            json["containsBlogger"] == null ? null : json["containsBlogger"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id == null ? null : id,
+        "name": name == null ? null : name,
+        "public": public == null ? null : public,
+        "containsBlogger": containsBlogger == null ? null : containsBlogger,
       };
 }

@@ -20,7 +20,9 @@ Future<void> init() async {
   sl.registerFactory(() => SlidingUpCubit3());
   sl.registerFactory(() => SlidingUpCubit4());
   sl.registerFactory(() => CardCubit(cardRepository));
+  sl.registerFactory(() => CardCubit2(cardRepository));
   sl.registerFactory(() => BlogersCubit(blogersRepository));
+  sl.registerFactory(() => BlogersCubit2(blogersRepository));
   sl.registerFactory(() => FilterCubit(filterRepository));
   sl.registerFactory(() => OneBlogerCubit(oneBlogerRepository));
   sl.registerFactory(() => BottomNavigationControllerSelect());

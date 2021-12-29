@@ -1,13 +1,44 @@
 import 'dart:math';
+import 'package:blogonomy/cubit/network/apiCateg.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
 import 'package:blogonomy/cubit/network/card_stateCateg.dart';
+import 'package:blogonomy/main.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pie_chart/pie_chart.dart' as prefix;
+
+class ListItem<String> {
+  bool selected;
+  String data;
+  String id;
+  ListItem({required this.data, required this.selected, required this.id});
+}
+
+List? itemslist = [];
+Future<String> outselected() async {
+  late String? id = blogerFindModel.id;
+  List<FilterOneModel> load = await FilterOneApi().getFilterOne(id!);
+  itemslist = load
+      .map(
+          (e) => ListItem(data: e.name, selected: e.containsBlogger!, id: e.id))
+      .toList();
+  return "ok";
+}
+
+void setselected() async {
+  List? send = [];
+  for (var i = 0; i < itemslist!.length; i++) {
+    if (itemslist?[i].selected == true) {
+      send.add(itemslist?[i].id);
+    }
+  }
+  late String? id = blogerFindModel.id;
+  String whatres = await FilterOneApi().setFilterOne(id!, send);
+}
 
 class BlogerProfileScreen extends StatefulWidget {
   @override
@@ -56,6 +87,24 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                   fontWeight: FontWeight.w400,
                 )),
           );
+        }
+
+        List<BarChartGroupData> barGroups = [];
+
+        int ichet = 0;
+        for (var item in state.loadedBloger?.ageGroupRatio.entries) {
+          barGroups.add(
+            BarChartGroupData(
+              x: ichet,
+              barRods: [
+                BarChartRodData(
+                    y: item.value.roundToDouble(),
+                    colors: [Colors.lightBlueAccent, Colors.blue])
+              ],
+              showingTooltipIndicators: [0],
+            ),
+          );
+          ichet++;
         }
 
         // for (var item in state.loadedBloger?.ageGroupRatio.entries) {
@@ -118,8 +167,24 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                               ),
                             ),
                             Spacer(
-                              flex: 2,
-                            )
+                              flex: 1,
+                            ),
+                            Container(
+                                child: IconButton(
+                                    onPressed: () async {
+                                      showAlertDialogload(context);
+                                      await outselected();
+                                      Navigator.pop(context);
+                                      showAlertDialog(context);
+                                    },
+                                    icon: Icon(
+                                      Icons.library_books_outlined,
+                                      color: Color(0xFF0072FD),
+                                      size: 28,
+                                    ))),
+                            const SizedBox(
+                              width: 10,
+                            ),
                           ],
                         ),
                         const SizedBox(
@@ -692,13 +757,29 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                               color: Colors.black,
                             ),
                           ),
-                          Center(
-                            child: Container(
-                              child: Column(
-                                children:
-                                    List.generate(widgets1.length, (index) {
-                                  return widgets1[index];
-                                }),
+                          // Center(
+                          //   child: Container(
+                          //     child: Column(
+                          //       children:
+                          //           List.generate(widgets1.length, (index) {
+                          //         return widgets1[index];
+                          //       }),
+                          //     ),
+                          //   ),
+                          // ),
+                          AspectRatio(
+                            aspectRatio: 1.7,
+                            child: Card(
+                              child: BarChart(
+                                BarChartData(
+                                  gridData: FlGridData(show: false),
+                                  barTouchData: barTouchData,
+                                  titlesData: titlesData,
+                                  borderData: borderData,
+                                  barGroups: barGroups,
+                                  alignment: BarChartAlignment.spaceAround,
+                                  maxY: 100,
+                                ),
                               ),
                             ),
                           )
@@ -878,4 +959,148 @@ class CurvedBottomClipper extends CustomClipper<Path> {
     // basically that means that clipping will be redrawn on any changes
     return true;
   }
+}
+
+BarTouchData get barTouchData => BarTouchData(
+      enabled: false,
+      touchTooltipData: BarTouchTooltipData(
+        tooltipBgColor: Colors.transparent,
+        tooltipPadding: const EdgeInsets.all(0),
+        tooltipMargin: 8,
+        getTooltipItem: (
+          BarChartGroupData group,
+          int groupIndex,
+          BarChartRodData rod,
+          int rodIndex,
+        ) {
+          return BarTooltipItem(
+            rod.y.round().toString(),
+            const TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
+      ),
+    );
+
+FlTitlesData get titlesData => FlTitlesData(
+      show: true,
+      bottomTitles: SideTitles(
+        showTitles: true,
+        getTextStyles: (context, value) => const TextStyle(
+          color: Color(0xff7589a2),
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
+        margin: 20,
+        getTitles: (double value) {
+          switch (value.toInt()) {
+            case 0:
+              return '13-17';
+            case 1:
+              return '18-24';
+            case 2:
+              return '25-34';
+            case 3:
+              return '35-44';
+            case 4:
+              return '45-54';
+            case 5:
+              return '55-64';
+            case 6:
+              return '65+';
+            default:
+              return '';
+          }
+        },
+      ),
+      leftTitles: SideTitles(showTitles: false),
+      topTitles: SideTitles(showTitles: false),
+      rightTitles: SideTitles(showTitles: false),
+    );
+
+FlBorderData get borderData => FlBorderData(
+      show: false,
+    );
+
+showAlertDialog(BuildContext context) {
+  // set up the button
+  Widget cancelButton = TextButton(
+    child: Text("Отменить"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+  Widget okButton = TextButton(
+    child: Text("Применить"),
+    onPressed: () {
+      setselected();
+
+      Navigator.pop(context);
+    },
+  );
+
+  // set up the AlertDialog
+  var alert = StatefulBuilder(// StatefulBuilder
+      builder: (context, setState) {
+    return AlertDialog(
+      title: Text("Категории"),
+      content: Container(
+        height: 200,
+        child: SingleChildScrollView(
+          child: Column(
+            children: List.generate(itemslist!.length, (int index) {
+              return Column(
+                children: [
+                  CheckboxListTile(
+                    value: itemslist?[index].selected,
+                    onChanged: (value) {
+                      setState(() {
+                        itemslist?[index].selected =
+                            !itemslist?[index].selected;
+                      });
+                    },
+                    title: Text("${itemslist?[index].data}"),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                  ),
+                  Divider(),
+                ],
+              );
+            }),
+          ),
+        ),
+      ),
+      actions: [cancelButton, okButton],
+    );
+  });
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return StatefulBuilder(// StatefulBuilder
+          builder: (context, setState) {
+        return alert;
+      });
+    },
+  );
+}
+
+showAlertDialogload(BuildContext context) {
+  AlertDialog alert = AlertDialog(
+    content: Container(
+        height: 200,
+        width: 100,
+        child: Center(child: CircularProgressIndicator())),
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

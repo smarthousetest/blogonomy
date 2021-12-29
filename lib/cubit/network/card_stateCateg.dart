@@ -15,6 +15,19 @@ class CardLoadedState extends CardState {
 
 class CardErrorState extends CardState {}
 
+abstract class CardState2 {}
+
+class CardEmptyState2 extends CardState2 {}
+
+class CardLoadingState2 extends CardState2 {}
+
+class CardLoadedState2 extends CardState2 {
+  List<dynamic>? loadedCard;
+  CardLoadedState2({this.loadedCard}) {}
+}
+
+class CardErrorState2 extends CardState2 {}
+
 abstract class BlogersState {}
 
 class BlogersEmptyState extends BlogersState {}
@@ -29,6 +42,21 @@ class BlogersLoadedState extends BlogersState {
 }
 
 class BlogersErrorState extends BlogersState {}
+
+abstract class BlogersState2 {}
+
+class BlogersEmptyState2 extends BlogersState2 {}
+
+class BlogersLoadingState2 extends BlogersState2 {}
+
+class BlogersLoadedState2 extends BlogersState2 {
+  List<dynamic>? loadedBlogers;
+  BlogersLoadedState2({this.loadedBlogers}) {
+    print('Blogers loaded  $loadedBlogers');
+  }
+}
+
+class BlogersErrorState2 extends BlogersState2 {}
 
 abstract class FilterState {}
 

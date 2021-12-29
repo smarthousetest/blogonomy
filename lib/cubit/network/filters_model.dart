@@ -13,6 +13,8 @@ class FiltersModels {
   String? numFollowersmin;
   String? numFollowersmax;
 
+  String? date;
+
   FiltersModels(
       {this.id,
       this.absoluteCommentsFilterMin = "",
@@ -22,7 +24,8 @@ class FiltersModels {
       this.ermin = "",
       this.ermax = "",
       this.numFollowersmin = "",
-      this.numFollowersmax = ""});
+      this.numFollowersmax = "",
+      this.date = ""});
 
   void clearAll() {
     id = [];
@@ -34,6 +37,7 @@ class FiltersModels {
     ermax = "";
     numFollowersmin = "";
     numFollowersmax = "";
+    date = "";
   }
 
   void clearId() {
