@@ -50,9 +50,9 @@ dependencies:
   multiselect_formfield: ^0.1.7
   flutter_secure_storage: ^5.0.2
   shared_preferences: ^2.0.11
-  pie_chart: ^5.1.0
-  
+  tutorial_coach_mark: ^1.2.1
   fluttertoast: ^8.0.8
+  pie_chart: ^5.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -103,12 +103,14 @@ flutter:
       - assets/images/image_2021-11-19_00-59-06.png
       - assets/images/image_2021-11-19_01-00-48.png
       - assets/images/back.png
+      - assets/images/notif.png
       - assets/images/logo.png
       - assets/images/arrow.png
       - assets/images/arrow2.png
       - assets/images/shield.png
       - assets/images/info.png
       - assets/images/copy.png
+      - assets/images/menu_blog.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

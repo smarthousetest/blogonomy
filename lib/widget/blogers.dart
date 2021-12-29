@@ -34,7 +34,7 @@ class BlogerState extends State<Blogers> {
                         flex: 1,
                       ),
                       const SizedBox(
-                        width: 20,
+                        width: 30,
                       ),
                       Container(
                         alignment: Alignment.center,

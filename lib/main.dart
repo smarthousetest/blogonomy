@@ -1,6 +1,7 @@
 import 'package:blogonomy/auth/auth_page.dart';
 import 'package:blogonomy/cubit/bottom_navigation_bar.dart';
 import 'package:blogonomy/cubit/locator_services.dart';
+import 'package:blogonomy/cubit/network/admin_cubit.dart';
 import 'package:blogonomy/cubit/network/bloger_find_model.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/filters_model.dart';
@@ -8,6 +9,8 @@ import 'package:blogonomy/cubit/network/podborka_bool.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:blogonomy/screens/about.dart';
 import 'package:blogonomy/screens/confid.dart';
+import 'package:blogonomy/screens/connection.dart';
+import 'package:blogonomy/screens/help.dart';
 //import 'package:blogonomy/screens/auth_screen.dart';
 import 'package:blogonomy/screens/notifications.dart';
 //import 'package:blogonomy/librur/bottom_bar.dart';
@@ -67,6 +70,7 @@ class MyApp extends StatelessWidget {
               create: (context) => sl<BottomNavigationControllerSelect>()),
           BlocProvider<AuthCubit>(
               create: (context) => sl<AuthCubit>()..check()),
+          BlocProvider<AdminCubit>(create: (context) => sl<AdminCubit>()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
@@ -78,7 +82,8 @@ class MyApp extends StatelessWidget {
             '/a': (BuildContext context) => Notifications(),
             '/b': (BuildContext context) => Confid(),
             '/c': (BuildContext context) => const About(),
-            //      '/d': (BuildContext context) => AuthScreen(),
+            '/d': (BuildContext context) => HelpPage(),
+            '/e': (BuildContext context) => Connection(),
           },
         ));
   }

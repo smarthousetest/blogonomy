@@ -148,6 +148,21 @@ class _FirstPageStateState extends State<FirstPage> {
             ),
           ),
         ),
+        SizedBox(
+          height: 16,
+        ),
+        GestureDetector(
+            onTap: () => Navigator.pushNamed(context, '/e'),
+            child: Text(
+              "Обратиться в службу подержки",
+              style: TextStyle(
+                fontFamily: 'Roboto-Bold.ttf',
+                fontSize: 15.0,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w700,
+                color: Colors.blue,
+              ),
+            )),
         const SizedBox(height: 40.0),
       ],
     );
@@ -328,6 +343,21 @@ class SecondPageState extends State<SecondPage> {
             ),
           ),
         ),
+        SizedBox(
+          height: 16,
+        ),
+        GestureDetector(
+            onTap: () => Navigator.pushNamed(context, '/e'),
+            child: Text(
+              "Обратиться в службу подержки",
+              style: TextStyle(
+                fontFamily: 'Roboto-Bold.ttf',
+                fontSize: 15.0,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w700,
+                color: Colors.blue,
+              ),
+            )),
       ])
     ]);
   }
@@ -455,7 +485,22 @@ class ThirdPageState extends State<ThirdPage> {
                   ),
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            GestureDetector(
+                onTap: () => Navigator.pushNamed(context, '/e'),
+                child: Text(
+                  "Обратиться в службу подержки",
+                  style: TextStyle(
+                    fontFamily: 'Roboto-Bold.ttf',
+                    fontSize: 15.0,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.blue,
+                  ),
+                )),
           ],
         ),
       ),

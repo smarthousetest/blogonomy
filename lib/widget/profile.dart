@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:blogonomy/auth/auth_page.dart';
+import 'package:blogonomy/cubit/network/admin_cubit.dart';
+import 'package:blogonomy/cubit/network/admin_state.dart';
+import 'package:blogonomy/cubit/network/auth_cubit.dart';
+import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +16,7 @@ class Profile extends StatefulWidget {
 }
 
 class ProfileState extends State<Profile> {
+  bool _enabled = false;
   @override
   Widget build(BuildContext context) {
     context.read<SlidingUpCubit>().open();
@@ -26,22 +31,64 @@ class ProfileState extends State<Profile> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 60),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 25.0,
-                  child: const Text(
-                    'Профиль',
-                    style: TextStyle(
-                      fontFamily: 'Roboto-Medium.ttf',
-                      fontSize: 21.0,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF24282E),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Spacer(
+                    flex: 6,
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 60, right: 20, left: 70),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 25.0,
+                      child: const Text(
+                        'Профиль',
+                        style: TextStyle(
+                          fontFamily: 'Roboto-Medium.ttf',
+                          fontSize: 21.0,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF24282E),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Spacer(
+                    flex: 3,
+                  ),
+                  BlocBuilder<AdminCubit, AdminState>(
+                      builder: (context, state) {
+                    //var authState = context.read<AuthCubit>().state;
+                    //(authState is LoginedState ||
+                    if (state is NoAdminState)
+                      return Container();
+                    else
+                      return Stack(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Text("admin"),
+                        ),
+                      ]);
+                  }),
+                  Switch(
+                    value: _enabled,
+                    onChanged: (bool value) {
+                      setState(() {
+                        context.read<AdminCubit>().setAdmin();
+                        _enabled = value;
+                      });
+                    },
+                    activeThumbImage:
+                        new NetworkImage('https://nklk.ru/dll_image/1017.png'),
+                    inactiveThumbImage: new NetworkImage(
+                        'https://w7.pngwing.com/pngs/251/239/png-transparent-logo-design-rebranding-typography-letter-a-angle-text-triangle.png'),
+                  ),
+                  Spacer(
+                    flex: 2,
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 60),
@@ -187,7 +234,7 @@ class ProfileState extends State<Profile> {
                       child: Text(
                         "Настройка уведомлений",
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500),
+                            fontSize: 10, fontWeight: FontWeight.w500),
                       ),
                     ),
                     Spacer(
@@ -250,7 +297,7 @@ class ProfileState extends State<Profile> {
                       child: Text(
                         "Политика конфиденциальности",
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500),
+                            fontSize: 10, fontWeight: FontWeight.w500),
                       ),
                     ),
                     Spacer(
@@ -268,62 +315,65 @@ class ProfileState extends State<Profile> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-          child: Container(
-            height: 104.0,
-            margin: const EdgeInsets.only(left: 20.0, right: 21.0),
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 0,
-                  blurRadius: 25,
-                  // changes position of shadow
-                ),
-              ],
-              border: Border.all(
-                color: const Color(0xFFF0F0FF),
-                width: 1,
-              ),
-              borderRadius: BorderRadius.circular(32.0),
-              color: const Color(0xFFFFFFFF),
-              // gradient: const LinearGradient(
-              //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-              // ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 24, right: 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Image.asset(
-                      'assets/images/info.png',
-                      width: 27,
-                      height: 27,
-                      color: Colors.green,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      "Подсказки",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Spacer(
-                    flex: 1,
-                  ),
-                  Image.asset(
-                    'assets/images/arrow.png',
-                    height: 30,
-                    width: 30,
-                    color: Colors.blue,
+        GestureDetector(
+          onTap: () => Navigator.pushNamed(context, '/d'),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+            child: Container(
+              height: 104.0,
+              margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0,
+                    blurRadius: 25,
+                    // changes position of shadow
                   ),
                 ],
+                border: Border.all(
+                  color: const Color(0xFFF0F0FF),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(32.0),
+                color: const Color(0xFFFFFFFF),
+                // gradient: const LinearGradient(
+                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                // ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24, right: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Image.asset(
+                        'assets/images/info.png',
+                        width: 27,
+                        height: 27,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        "Подсказки",
+                        style: TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Image.asset(
+                      'assets/images/arrow.png',
+                      height: 30,
+                      width: 30,
+                      color: Colors.blue,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -373,7 +423,7 @@ class ProfileState extends State<Profile> {
                       child: Text(
                         "О приложении",
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500),
+                            fontSize: 10, fontWeight: FontWeight.w500),
                       ),
                     ),
                     Spacer(

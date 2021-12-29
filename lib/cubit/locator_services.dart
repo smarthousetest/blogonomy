@@ -1,5 +1,6 @@
 import 'package:blogonomy/Repository/card_repositoriesCateg.dart';
 import 'package:blogonomy/cubit/bottom_navigation_bar.dart';
+import 'package:blogonomy/cubit/network/admin_cubit.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ Future<void> init() async {
   sl.registerFactory(() => FilterCubit(filterRepository));
   sl.registerFactory(() => OneBlogerCubit(oneBlogerRepository));
   sl.registerFactory(() => BottomNavigationControllerSelect());
+  sl.registerFactory(() => AdminCubit());
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
 
