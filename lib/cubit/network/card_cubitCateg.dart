@@ -28,6 +28,27 @@ class CardCubit extends Cubit<CardState> {
   }
 }
 
+class CardCubit2 extends Cubit<CardState2> {
+  final CardRepository cardRepository;
+
+  CardCubit2(this.cardRepository) : super(CardLoadedState2());
+
+  Future<void> fetchCard() async {
+    try {
+      emit(CardLoadingState2());
+      List<CardModel> _loaded = await cardRepository.getAllCards();
+      print("приватная  $_loaded");
+      emit(CardLoadedState2(loadedCard: _loaded));
+    } catch (_) {
+      emit(CardErrorState2());
+    }
+  }
+
+  Future<void> clearCard() async {
+    emit(CardEmptyState2());
+  }
+}
+
 class BlogersCubit extends Cubit<BlogersState> {
   final BlogersRepository blogersRepository;
 
@@ -48,6 +69,28 @@ class BlogersCubit extends Cubit<BlogersState> {
 
   Future<void> clearBlogers() async {
     emit(BlogersEmptyState());
+  }
+}
+
+class BlogersCubit2 extends Cubit<BlogersState2> {
+  final BlogersRepository blogersRepository;
+
+  BlogersCubit2(this.blogersRepository) : super(BlogersLoadedState2());
+
+  Future<void> fetchBlogers() async {
+    try {
+      emit(BlogersLoadingState2());
+      final List<BlogersModel> _loaded2 =
+          await blogersRepository.getAllBlogers();
+      print("приватная  $_loaded2");
+      emit(BlogersLoadedState2(loadedBlogers: _loaded2));
+    } catch (_) {
+      emit(BlogersErrorState2());
+    }
+  }
+
+  Future<void> clearBlogers() async {
+    emit(BlogersEmptyState2());
   }
 }
 

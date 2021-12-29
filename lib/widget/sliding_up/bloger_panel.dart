@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:blogonomy/cubit/bottom_navigation_bar.dart';
+import 'package:blogonomy/cubit/network/apiCateg.dart';
+import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:blogonomy/main.dart';
@@ -7,6 +11,9 @@ import 'package:blogonomy/widget/blogers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
+TextEditingController textEditingController = TextEditingController();
+TextEditingController textEditingController2 = TextEditingController();
 
 class SlidingUp2 extends StatefulWidget {
   const SlidingUp2({Key? key}) : super(key: key);
@@ -127,6 +134,7 @@ class _SlidingUpState3 extends State<SlidingUp3> {
                   children: [
                     Form(
                       child: TextFormField(
+                        controller: textEditingController,
                         decoration: const InputDecoration(
                           hintText: 'Название подборки',
                           hintStyle: TextStyle(
@@ -157,12 +165,15 @@ class _SlidingUpState3 extends State<SlidingUp3> {
                                 const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                         ))),
-                        onPressed: () {
-                          // FilterCubit filterCubit = context.read<FilterCubit>();
-                          // filterCubit.fetchFilter();
+                        onPressed: () async {
+                          showAlertDialog(context);
+                          String name = textEditingController.text;
 
-                          // BlogersCubit blogersCubit = context.read<BlogersCubit>();
-                          // blogersCubit.fetchBlogers();
+                          String? idpodborka =
+                              await Podborka().create(name, false);
+
+                          String? createpodborka =
+                              await Podborka().setbloggers(idpodborka!);
 
                           context.read<SlidingUpCubit2>().close();
                           context.read<SlidingUpCubit3>().close();
@@ -170,6 +181,7 @@ class _SlidingUpState3 extends State<SlidingUp3> {
                           context
                               .read<BottomNavigationControllerSelect>()
                               .select(0);
+                          Navigator.pop(context);
                         },
                         child: const SizedBox(
                           height: 52,
@@ -224,6 +236,8 @@ class _SlidingUpState4 extends State<SlidingUp4> {
       topRight: Radius.circular(32.0),
     );
 
+    textEditingController2.text = filterModels.id![0].name;
+
     return SlidingUpPanel(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(30),
@@ -256,8 +270,9 @@ class _SlidingUpState4 extends State<SlidingUp4> {
                   children: [
                     Form(
                       child: TextFormField(
+                        controller: textEditingController2,
                         decoration: const InputDecoration(
-                          hintText: 'Тут будет имя подборки',
+                          hintText: 'Новое имя подборки',
                           hintStyle: TextStyle(
                             fontFamily: 'Roboto-Regular.ttf',
                             fontSize: 15.0,
@@ -286,8 +301,21 @@ class _SlidingUpState4 extends State<SlidingUp4> {
                                 const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                         ))),
-                        onPressed: () {
-                          context.read<SlidingUpCubit3>().close();
+                        onPressed: () async {
+                          String name = textEditingController2.text;
+
+                          String? updatepodborka = await Podborka()
+                              .update(filterModels.id![0].id, name, false);
+
+                          textEditingController2.text = "";
+
+                          context.read<SlidingUpCubit4>().close();
+                          Navigator.pop(context);
+                          filterModels.clearAll();
+
+                          podborkaBool.public = false;
+                          CardCubit2 cardCubit2 = context.read<CardCubit2>();
+                          cardCubit2.fetchCard();
                         },
                         child: const SizedBox(
                           height: 52,
@@ -301,8 +329,17 @@ class _SlidingUpState4 extends State<SlidingUp4> {
                                 const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                         ))),
-                        onPressed: () {
-                          context.read<SlidingUpCubit3>().close();
+                        onPressed: () async {
+                          String? deletepodborka =
+                              await Podborka().delete(filterModels.id![0].id);
+
+                          context.read<SlidingUpCubit4>().close();
+                          Navigator.pop(context);
+                          filterModels.clearAll();
+
+                          podborkaBool.public = false;
+                          CardCubit2 cardCubit2 = context.read<CardCubit2>();
+                          cardCubit2.fetchCard();
                         },
                         child: const SizedBox(
                           height: 52,
@@ -310,7 +347,7 @@ class _SlidingUpState4 extends State<SlidingUp4> {
                         )),
                     const SizedBox(height: 16),
                     Text(
-                      'Дата создания: 22.12.2021',
+                      'Дата создания: ${filterModels.date}',
                       style: TextStyle(
                         fontFamily: 'Roboto-Bold.ttf',
                         fontSize: 12.0,
@@ -328,4 +365,21 @@ class _SlidingUpState4 extends State<SlidingUp4> {
       },
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  AlertDialog alert = AlertDialog(
+    content: Container(
+        height: 100,
+        width: 100,
+        child: Center(child: CircularProgressIndicator())),
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

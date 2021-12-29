@@ -20,6 +20,7 @@ class Popular extends StatefulWidget {
 class _PopularState extends State<Popular> {
   @override
   Widget build(BuildContext context) {
+    podborkaBool.public = true;
     CardCubit cardCubit = context.read<CardCubit>();
     cardCubit.fetchCard();
 
@@ -52,8 +53,6 @@ class _PopularState extends State<Popular> {
                                 name: state.loadedCard?[index].name);
 
                             filterModels.id!.add(one);
-
-                            // fetchCarde();
 
                             print("filterModels: ${filterModels.id}");
                             filterModels.ermin = "";

@@ -73,6 +73,7 @@ class BlogersPanel extends StatefulWidget {
 class BlogersPanelState extends State<BlogersPanel> {
   @override
   void initState() {
+    podborkaBool.public = true;
     fetchCarde();
 
     FilterCubit filterCubit = context.read<FilterCubit>();
