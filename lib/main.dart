@@ -1,6 +1,7 @@
 import 'package:blogonomy/auth/auth_page.dart';
 import 'package:blogonomy/cubit/bottom_navigation_bar.dart';
 import 'package:blogonomy/cubit/locator_services.dart';
+import 'package:blogonomy/cubit/network/admin_cubit.dart';
 import 'package:blogonomy/cubit/network/bloger_find_model.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/filters_model.dart';
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
               create: (context) => sl<BottomNavigationControllerSelect>()),
           BlocProvider<AuthCubit>(
               create: (context) => sl<AuthCubit>()..check()),
+          BlocProvider<AdminCubit>(create: (context) => sl<AdminCubit>()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

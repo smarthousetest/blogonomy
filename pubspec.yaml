@@ -110,6 +110,7 @@ flutter:
       - assets/images/shield.png
       - assets/images/info.png
       - assets/images/copy.png
+      - assets/images/menu_blog.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

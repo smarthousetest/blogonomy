@@ -62,7 +62,7 @@ class BlogerView extends StatelessWidget {
                 radius: 25,
               ),
               Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.only(left: 10, right: 5),
                   child: SizedBox(
                     width: 140,
                     child: Text(
@@ -80,9 +80,8 @@ class BlogerView extends StatelessWidget {
                 flex: 1,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 30),
+                padding: const EdgeInsets.only(right: 20),
                 child: Positioned(
-                    child: SizedBox(
                   child: Text(
                     '${er.round()}',
                     style: TextStyle(
@@ -93,7 +92,7 @@ class BlogerView extends StatelessWidget {
                       color: Color(0xFF394759),
                     ),
                   ),
-                )),
+                ),
               ),
             ],
           ),

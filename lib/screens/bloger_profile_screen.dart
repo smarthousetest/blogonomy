@@ -1,7 +1,10 @@
 import 'dart:math';
+import 'package:blogonomy/cubit/network/admin_cubit.dart';
+import 'package:blogonomy/cubit/network/admin_state.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
 import 'package:blogonomy/cubit/network/card_stateCateg.dart';
+import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -122,7 +125,26 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                             ),
                             Spacer(
                               flex: 2,
-                            )
+                            ),
+                            BlocBuilder<AdminCubit, AdminState>(
+                                builder: (context, state) {
+                              //var authState = context.read<AuthCubit>().state;
+                              //(authState is LoginedState ||
+                              if (state is NoAdminState)
+                                return Container(
+                                    child: IconButton(
+                                  onPressed: () {
+                                    context.read<SlidingUpCubit2>().open();
+                                  },
+                                  icon: Image.asset(
+                                    'assets/images/menu_blog.png',
+                                    color: Colors.blue,
+                                  ),
+                                  color: Colors.blue,
+                                ));
+                              else
+                                return Container();
+                            }),
                           ],
                         ),
                         const SizedBox(
@@ -709,6 +731,88 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                       ),
                     )),
                 const SizedBox(height: 16),
+                BlocBuilder<AdminCubit, AdminState>(builder: (context, state) {
+                  //var authState = context.read<AuthCubit>().state;
+                  //(authState is LoginedState ||
+                  if (state is NoAdminState)
+                    return Container();
+                  else
+                    return Container(
+                        padding: EdgeInsets.only(
+                            left: 16, right: 16, bottom: 16, top: 24),
+                        margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 0,
+                              blurRadius: 25,
+                              // changes position of shadow
+                            ),
+                          ],
+                          border: Border.all(
+                            color: const Color(0xFFF0F0FF),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(32.0),
+                          color: const Color(0xFFFFFFFF),
+                          // gradient: const LinearGradient(
+                          //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                          // ),
+                        ),
+                        child: Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                        child: Container(
+                                      width: 100,
+                                      height: 100,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                              "Вы уверены что хотите удалить?"),
+                                          Spacer(
+                                            flex: 1,
+                                          ),
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Spacer(
+                                                  flex: 1,
+                                                ),
+                                                GestureDetector(
+                                                  child: Text("Да"),
+                                                ),
+                                                Spacer(
+                                                  flex: 1,
+                                                ),
+                                                GestureDetector(
+                                                  child: Text("Нет"),
+                                                ),
+                                                Spacer(
+                                                  flex: 1,
+                                                ),
+                                              ]),
+                                          Spacer(
+                                            flex: 1,
+                                          )
+                                        ],
+                                      ),
+                                    ));
+                                  });
+                            },
+                            child: Text(
+                              "Удалить блогера",
+                              style: TextStyle(fontSize: 15, color: Colors.red),
+                            ),
+                          ),
+                        ));
+                }),
               ],
             ),
           )));
