@@ -178,38 +178,20 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                             Spacer(
                               flex: 2,
                             ),
-                            BlocBuilder<AdminCubit, AdminState>(
-                                builder: (context, state) {
-                              //var authState = context.read<AuthCubit>().state;
-                              //(authState is LoginedState ||
-                              if (state is NoAdminState)
-                                return Container(
-                                    child: IconButton(
-                                  onPressed: () {
-                                    context.read<SlidingUpCubit2>().open();
-                                  },
-                                  icon: Image.asset(
-                                    'assets/images/menu_blog.png',
-                                    color: Colors.blue,
-                                  ),
-                                  color: Colors.blue,
-                                ));
-                              else
-                                return Container();
-                            }),
                             Container(
                                 child: IconButton(
-                                    onPressed: () async {
-                                      showAlertDialogload(context);
-                                      await outselected();
-                                      Navigator.pop(context);
-                                      showAlertDialog(context);
-                                    },
-                                    icon: Icon(
-                                      Icons.library_books_outlined,
-                                      color: Color(0xFF0072FD),
-                                      size: 28,
-                                    ))),
+                              onPressed: () async {
+                                showAlertDialogload(context);
+                                await outselected();
+                                Navigator.pop(context);
+                                showAlertDialog(context);
+                              },
+                              icon: Image.asset(
+                                'assets/images/menu_blog.png',
+                                color: Colors.blue,
+                              ),
+                              color: Colors.blue,
+                            )),
                             const SizedBox(
                               width: 10,
                             ),
@@ -870,6 +852,12 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                                                   flex: 1,
                                                 ),
                                                 GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                    context
+                                                        .read<AdminCubit>()
+                                                        .deleteAdmin();
+                                                  },
                                                   child: Text("Да"),
                                                 ),
                                                 Spacer(

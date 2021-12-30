@@ -72,7 +72,7 @@ class _BlogersListState extends State<BlogersList> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 4 / 5,
+                height: MediaQuery.of(context).size.height - 250,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
                     physics: ClampingScrollPhysics(),
