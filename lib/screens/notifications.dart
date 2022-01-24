@@ -15,61 +15,43 @@ class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 70),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: Image.asset(
-                    "assets/images/arrow2.png",
-                    height: 30,
-                    width: 30,
-                    color: Colors.blue,
-                  ),
-                ),
-                SizedBox(
-                  width: 100,
-                ),
-                const Text(
-                  "Уведомления",
-                  style: TextStyle(
-                    fontFamily: 'Roboto-Medium.ttf',
-                    fontSize: 21.0,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF24282E),
-                  ),
-                ),
-                SizedBox(
-                  width: 160,
-                )
-              ],
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: Colors.white,
+          title: const Text(
+            "Уведомления",
+            style: TextStyle(
+              fontFamily: 'Roboto-Medium.ttf',
+              fontSize: 21.0,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF24282E),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: ListTile(
-                title: const Text(
-                  "Новые блогеры в подборках",
-                  style: TextStyle(
-                    fontFamily: 'Roboto-Medium.ttf',
-                    fontSize: 20.0,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF24282E),
-                  ),
+          ),
+          iconTheme: IconThemeData(color: Colors.blue),
+        ),
+        body: Column(
+          children: [
+            ListTile(
+              title: const Text(
+                "Новые блогеры в подборках",
+                style: TextStyle(
+                  fontFamily: 'Roboto-Medium.ttf',
+                  fontSize: 20.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF24282E),
                 ),
-                trailing: Switch(
-                    value: isSwitch,
-                    onChanged: (bool x) {
-                      setState(() {
-                        isSwitch = x;
-                      });
-                    }),
               ),
+              trailing: Switch(
+                  value: isSwitch,
+                  onChanged: (bool x) {
+                    setState(() {
+                      isSwitch = x;
+                    });
+                  }),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20),

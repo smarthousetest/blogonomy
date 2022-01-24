@@ -3,18 +3,17 @@ import 'package:flutter_appauth/flutter_appauth.dart';
 class AppAuth {
   bool _isBusy = false;
   final FlutterAppAuth _appAuth = FlutterAppAuth();
-  static const String clientId = "mvc";
+  static const String clientId = "spa";
   static const String redirectUrl = "com.blogonomy.mobile:/auth";
-  static const String issuer = 'https://passport-blogonomy.maksatlabs.ru';
+  static const String issuer = 'https://passport-blogonomy.maksatlabs.ru/';
   static const String discoveryUrl =
       'https://passport-blogonomy.maksatlabs.ru/.well-known/openid-configuration';
-
   static const List<String> scopes = <String>[
     'openid',
     //'profile',
-    //  'email',
+    // 'email',
     'offline_access',
-    'api1'
+    'demo_api'
   ];
   static String? accessToken;
 //  static String? refreshToken;
@@ -27,8 +26,7 @@ class AppAuth {
       // ignore: prefer_const_constructors
       AuthorizationServiceConfiguration(
     authorizationEndpoint:
-        'https://passport-blogonomy.maksatlabs.ru/Account/Login',
-    tokenEndpoint:
-        'https://passport-blogonomy.maksatlabs.ru/Account/Login/token',
+        'https://passport-blogonomy.maksatlabs.ru/connect/authorize',
+    tokenEndpoint: 'https://passport-blogonomy.maksatlabs.ru/connect/token',
   );
 }

@@ -49,9 +49,9 @@ class BlogerView extends StatelessWidget {
                   padding: EdgeInsets.all(20.0),
                   child: Text(
                     '$id',
+                    textScaleFactor: MediaQuery.of(context).textScaleFactor,
                     style: TextStyle(
                       fontFamily: 'Roboto-Bold.ttf',
-                      fontSize: 24.0,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w700,
                       color: Color(0xFF394759),
@@ -63,17 +63,14 @@ class BlogerView extends StatelessWidget {
               ),
               Padding(
                   padding: EdgeInsets.only(left: 10, right: 5),
-                  child: SizedBox(
-                    width: 140,
-                    child: Text(
-                      '$userName',
-                      style: TextStyle(
-                        fontFamily: 'Roboto-Bold.ttf',
-                        fontSize: 18.0,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF394759),
-                      ),
+                  child: Text(
+                    '$userName',
+                    textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                    style: TextStyle(
+                      fontFamily: 'Roboto-Bold.ttf',
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF394759),
                     ),
                   )),
               Spacer(
@@ -84,9 +81,9 @@ class BlogerView extends StatelessWidget {
                 child: Positioned(
                   child: Text(
                     '${er.round()}',
+                    textScaleFactor: MediaQuery.of(context).textScaleFactor,
                     style: TextStyle(
                       fontFamily: 'Roboto-Bold.ttf',
-                      fontSize: 20.0,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w700,
                       color: Color(0xFF394759),

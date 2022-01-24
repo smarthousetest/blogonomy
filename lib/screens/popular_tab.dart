@@ -32,7 +32,6 @@ class _PopularState extends State<Popular> {
         return RefreshIndicator(
             child: Column(children: [
               Container(
-                height: MediaQuery.of(context).size.height * 3 / 5,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
                     physics: ClampingScrollPhysics(),

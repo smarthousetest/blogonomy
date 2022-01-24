@@ -56,9 +56,10 @@ class CardView extends StatelessWidget {
                           top: 0.0,
                           child: Text(
                             '$name',
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor,
                             style: const TextStyle(
                               fontFamily: 'Roboto-Bold.ttf',
-                              fontSize: 24.0,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w700,
                               color: Color(0xFF394759),
@@ -70,9 +71,10 @@ class CardView extends StatelessWidget {
                           bottom: 0.0,
                           child: Text(
                             numberOfBloggers.toString(),
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor,
                             style: const TextStyle(
                               fontFamily: 'Roboto-Regular.ttf',
-                              fontSize: 15.0,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w400,
                               color: Color(0xFF394759),
@@ -95,6 +97,8 @@ class CardView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                           child: Image.network(
                             '$image',
+                            fit: BoxFit.cover,
+                            alignment: FractionalOffset.topCenter,
                           ),
                         )),
                   ),

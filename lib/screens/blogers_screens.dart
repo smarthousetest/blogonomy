@@ -71,37 +71,33 @@ class _BlogersListState extends State<BlogersList> {
                   },
                 ),
               ),
-              Container(
-                height: MediaQuery.of(context).size.height - 250,
-                width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                    physics: ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: state.loadedBlogers?.length,
-                    itemBuilder: (context, index) {
-                      i++;
-                      return GestureDetector(
-                        onTap: () {
-                          blogerFindModel = BlogerFindModel(
-                              id: "${state.loadedBlogers?[index].id}");
+              ListView.builder(
+                  physics: ClampingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: state.loadedBlogers?.length,
+                  itemBuilder: (context, index) {
+                    i++;
+                    return GestureDetector(
+                      onTap: () {
+                        blogerFindModel = BlogerFindModel(
+                            id: "${state.loadedBlogers?[index].id}");
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BlogerProfileScreen()));
-                        },
-                        child: BlogerView(
-                            id: '$i',
-                            userName: '${state.loadedBlogers?[index].userName}',
-                            //   fullName: '${state.loadedBlogers?[index].fullName}',
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BlogerProfileScreen()));
+                      },
+                      child: BlogerView(
+                          id: '$i',
+                          userName: '${state.loadedBlogers?[index].userName}',
+                          //   fullName: '${state.loadedBlogers?[index].fullName}',
 
-                            picUrl: '${state.loadedBlogers?[index].picUrl}',
-                            // picUrl:
-                            //     'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
-                            er: state.loadedBlogers?[index].er ?? 1),
-                      );
-                    }),
-              )
+                          picUrl: '${state.loadedBlogers?[index].picUrl}',
+                          // picUrl:
+                          //     'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
+                          er: state.loadedBlogers?[index].er ?? 1),
+                    );
+                  })
             ]),
             onRefresh: blogersCubit.fetchBlogers);
       }

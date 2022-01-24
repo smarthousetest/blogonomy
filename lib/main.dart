@@ -122,18 +122,20 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     print(MediaQuery.of(context).size.height);
+    print(MediaQuery.of(context).size.width);
     return BlocBuilder<BottomNavigationControllerSelect, int>(
       builder: (context, select) => Scaffold(
           body: _widgetOptions.elementAt(select),
           bottomNavigationBar: FloatingNavbar(
               width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 20,
               elevation: 5,
               margin: const EdgeInsets.only(left: 18, right: 18),
               selectedBackgroundColor: Colors.blue,
               backgroundColor: Colors.white,
               unselectedItemColor: Colors.black,
               selectedItemColor: Colors.white,
-              itemBorderRadius: 28,
+              itemBorderRadius: 23,
               // iconSize: 50,
               items: [
                 FloatingNavbarItem(
