@@ -14,7 +14,8 @@ class CardRepository {
 
 class BlogersRepository {
   BlogersApi blogersdApi = BlogersApi();
-  Future<List<BlogersModel>> getAllBlogers() => blogersdApi.getBloger(1);
+  Future<List<BlogersModel>> getAllBlogers(int page) =>
+      blogersdApi.getBloger(page);
 }
 
 class FilterRepository {

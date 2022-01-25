@@ -14,8 +14,6 @@ class AdminCubit extends Cubit<AdminState> {
       //здесь если пользователь не админ
       emit(AdminInState());
     }
-    print("c = $c");
-    print("state = $state");
     c = !c;
   }
 

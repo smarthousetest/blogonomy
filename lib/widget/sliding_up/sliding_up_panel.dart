@@ -20,13 +20,9 @@ class _SlidingUpState extends State<SlidingUp> {
   @override
   Widget build(BuildContext context) {
     context.read<SlidingUpCubit>().stream.listen((ev) {
-      print("first $ev");
       if (ev is OpenState) {
-        print("second $ev");
         panelController.open();
-        print(panelController.isPanelOpen);
       } else if (ev is CloseState) {
-        print("third $ev");
         panelController.close();
       }
     });

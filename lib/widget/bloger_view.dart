@@ -83,7 +83,7 @@ class BlogerView extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 20),
                 child: Positioned(
                   child: Text(
-                    '${er.round()}',
+                    '${er.toStringAsFixed(1)}',
                     style: TextStyle(
                       fontFamily: 'Roboto-Bold.ttf',
                       fontSize: 20.0,

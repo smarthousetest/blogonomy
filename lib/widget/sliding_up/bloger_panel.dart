@@ -27,10 +27,7 @@ class _SlidingUpState extends State<SlidingUp2> {
   @override
   Widget build(BuildContext context) {
     context.read<SlidingUpCubit2>().stream.listen((ev) {
-      print("first $ev");
       if (ev is OpenState) {
-        print("second $ev");
-
         pc.open();
       } else if (ev is CloseState) {
         pc.close();

@@ -58,7 +58,7 @@ class _PopularState extends State<Popular> {
                             filterModels.ermin = "";
                             filterModels.ermax = "";
 
-                            blogersCubit.fetchBlogers();
+                            //     blogersCubit.fetchBlogers();
 
                             FilterCubit filterCubit =
                                 context.read<FilterCubit>();

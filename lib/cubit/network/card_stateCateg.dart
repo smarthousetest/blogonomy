@@ -32,11 +32,18 @@ abstract class BlogersState {}
 
 class BlogersEmptyState extends BlogersState {}
 
-class BlogersLoadingState extends BlogersState {}
+class BlogersInitial extends BlogersState {}
+
+class BlogersLoadingState extends BlogersState {
+  final List<BlogersModel> oldblogers;
+  final bool isFirstFetch;
+
+  BlogersLoadingState(this.oldblogers, {this.isFirstFetch = false});
+}
 
 class BlogersLoadedState extends BlogersState {
-  List<dynamic>? loadedBlogers;
-  BlogersLoadedState({this.loadedBlogers}) {
+  List<BlogersModel> loadedBlogers;
+  BlogersLoadedState(this.loadedBlogers) {
     print('Blogers loaded  $loadedBlogers');
   }
 }

@@ -50,21 +50,58 @@ class CardCubit2 extends Cubit<CardState2> {
 }
 
 class BlogersCubit extends Cubit<BlogersState> {
+  BlogersCubit(this.blogersRepository) : super(BlogersInitial());
   final BlogersRepository blogersRepository;
 
-  BlogersCubit(this.blogersRepository) : super(BlogersLoadedState());
+  int page = 1;
 
-  Future<void> fetchBlogers() async {
-    print("-------------------------------------------------------");
-    try {
-      emit(BlogersLoadingState());
-      final List<BlogersModel> _loaded2 =
-          await blogersRepository.getAllBlogers();
-      print("приватная  $_loaded2");
-      emit(BlogersLoadedState(loadedBlogers: _loaded2));
-    } catch (_) {
-      emit(BlogersErrorState());
+  Future<void> fetchBlogers({String pagen = "1"}) async {
+    var oldPosts = <BlogersModel>[];
+
+    print("size-1");
+
+    if (pagen != "scrool") {
+      page = 1;
+      oldPosts.clear();
+
+      print("size-2");
+      emit(BlogersEmptyState());
+
+      print("size-3");
     }
+
+    print("size-4");
+    if (state is BlogersLoadingState) return;
+
+    print("size-5");
+    final currentState = state;
+
+    print("size-6");
+    if (currentState is BlogersLoadedState) {
+      oldPosts = currentState.loadedBlogers;
+
+      print("size-6+");
+    }
+
+    print("size-7");
+    emit(BlogersLoadingState(oldPosts, isFirstFetch: page == 1));
+
+    print("size-8");
+    blogersRepository.getAllBlogers(page).then((newPosts) {
+      print("size-9");
+      page++;
+
+      print("size-10");
+      final posts = (state as BlogersLoadingState).oldblogers;
+
+      print("size-11");
+      posts.addAll(newPosts);
+
+      print("size-12");
+      emit(BlogersLoadedState(posts));
+
+      print("size-13");
+    });
   }
 
   Future<void> clearBlogers() async {
@@ -77,11 +114,11 @@ class BlogersCubit2 extends Cubit<BlogersState2> {
 
   BlogersCubit2(this.blogersRepository) : super(BlogersLoadedState2());
 
-  Future<void> fetchBlogers() async {
+  Future<void> fetchBlogers({int page = 1}) async {
     try {
       emit(BlogersLoadingState2());
       final List<BlogersModel> _loaded2 =
-          await blogersRepository.getAllBlogers();
+          await blogersRepository.getAllBlogers(page);
       print("приватная  $_loaded2");
       emit(BlogersLoadedState2(loadedBlogers: _loaded2));
     } catch (_) {

@@ -92,11 +92,17 @@ class CardView extends StatelessWidget {
                         width: 70,
                         height: 70,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Image.network(
-                            '$image',
-                          ),
-                        )),
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: image != "null"
+                                ? Image.network(
+                                    '$image',
+                                    fit: BoxFit.cover,
+                                    alignment: Alignment.topCenter,
+                                  )
+                                : Icon(
+                                    Icons.image_not_supported,
+                                    color: Colors.white,
+                                  ))),
                   ),
                 ),
               ],

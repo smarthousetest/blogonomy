@@ -71,7 +71,6 @@ class PodborkaState extends State<Podborka> {
                 Container(
                     child: IconButton(
                   onPressed: () {
-                    print("HEllol");
                     context.read<SlidingUpCubit4>().open();
                   },
                   icon: Icon(Icons.edit),
