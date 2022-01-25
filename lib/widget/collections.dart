@@ -45,50 +45,54 @@ class _CollectionsPageState extends State<CollectionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Категории',
+          style: TextStyle(
+            fontFamily: 'Roboto-Medium.ttf',
+            fontSize: 18.0,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF24282E),
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: LayoutBuilder(
+              builder: (context, constraints) =>
+                  CustomSlidingSegmentedControl<int>(
+                radius: 30,
+                padding: 8,
+                innerPadding: 4,
+                fixedWidth: (constraints.maxWidth - 8) / 2,
+                backgroundColor: const Color(0xFFF0F2FE),
+                thumbColor: const Color(0xFFFFFFFF),
+                children: children,
+                initialValue: selectedValue,
+                onValueChanged: (value) {
+                  setState(() {
+                    selectedValue = value;
+                  });
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
       body: SafeArea(
           child: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: const Color(0xFFFFFFFF)),
               child: ListView(children: [
-                const SizedBox(height: 42.0),
-                Container(
-                  alignment: Alignment.center,
-                  height: 20.0,
-                  child: const Text(
-                    'Категории',
-                    style: TextStyle(
-                      fontFamily: 'Roboto-Medium.ttf',
-                      fontSize: 18.0,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF24282E),
-                    ),
-                  ),
+                SizedBox(
+                  height: 20,
                 ),
-                const SizedBox(height: 34.0),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: LayoutBuilder(
-                    builder: (context, constraints) =>
-                        CustomSlidingSegmentedControl<int>(
-                      radius: 30,
-                      padding: 8,
-                      innerPadding: 4,
-                      fixedWidth: (constraints.maxWidth - 8) / 2,
-                      backgroundColor: const Color(0xFFF0F2FE),
-                      thumbColor: const Color(0xFFFFFFFF),
-                      children: children,
-                      initialValue: selectedValue,
-                      onValueChanged: (value) {
-                        setState(() {
-                          selectedValue = value;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 26.0),
                 Container(
                   child: images[selectedValue],
                 )

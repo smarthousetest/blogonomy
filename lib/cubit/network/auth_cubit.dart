@@ -91,12 +91,19 @@ class AuthCubit extends Cubit<AuthState> {
     if (currentState is LoginedState) {}
 
     //emit(InProcessState());
-
+    print("result");
+    print(
+      AppAuth.clientId,
+    );
+    print(
+      AppAuth.redirectUrl,
+    );
     final AuthorizationTokenResponse? result =
         await appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(
         AppAuth.clientId,
         AppAuth.redirectUrl,
+        //clientSecret: AppAuth.clientSecret,
         serviceConfiguration: AppAuth.serviceConfiguration,
         scopes: AppAuth.scopes,
         //preferEphemeralSession: preferEphemeralSession,
@@ -116,6 +123,7 @@ class AuthCubit extends Cubit<AuthState> {
     } else {
       await saveTokens(result.accessToken, result.refreshToken, result.idToken,
           result.accessTokenExpirationDateTime);
+      print("accessToken = ${result.accessToken}");
     }
 
     emit(LoginedState());
@@ -162,5 +170,17 @@ class AuthCubit extends Cubit<AuthState> {
       print(error);
       print(ee);
     }
+  }
+
+  Future<void> GetCategoryUser() async {
+    final response = await http.post(
+        Uri.parse(
+            "https://service-blogonomy.maksatlabs.ru/api/Category/GetCategoryUser"),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json"
+        });
+
+    print(response.body);
   }
 }

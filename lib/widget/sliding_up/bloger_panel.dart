@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:blogonomy/cubit/bottom_navigation_bar.dart';
 import 'package:blogonomy/cubit/network/apiCateg.dart';
+import 'package:blogonomy/cubit/network/auth_cubit.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
@@ -179,6 +180,7 @@ class _SlidingUpState3 extends State<SlidingUp3> {
                               .read<BottomNavigationControllerSelect>()
                               .select(0);
                           Navigator.pop(context);
+                          AuthCubit().GetCategoryUser();
                         },
                         child: const SizedBox(
                           height: 52,

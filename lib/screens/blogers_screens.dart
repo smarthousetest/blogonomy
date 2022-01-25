@@ -88,6 +88,7 @@ class _BlogersListState extends State<BlogersList> {
                   });
                 },
               ),
+<<<<<<< HEAD
             ),
             Container(
               height: MediaQuery.of(context).size.height - 360,
@@ -131,6 +132,39 @@ class _BlogersListState extends State<BlogersList> {
             )
           ]),
           onRefresh: blogersCubit.fetchBlogers);
+=======
+              ListView.builder(
+                  physics: ClampingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: state.loadedBlogers?.length,
+                  itemBuilder: (context, index) {
+                    i++;
+                    return GestureDetector(
+                      onTap: () {
+                        blogerFindModel = BlogerFindModel(
+                            id: "${state.loadedBlogers?[index].id}");
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BlogerProfileScreen()));
+                      },
+                      child: BlogerView(
+                          id: '$i',
+                          userName: '${state.loadedBlogers?[index].userName}',
+                          //   fullName: '${state.loadedBlogers?[index].fullName}',
+
+                          picUrl: '${state.loadedBlogers?[index].picUrl}',
+                          // picUrl:
+                          //     'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
+                          er: state.loadedBlogers?[index].er ?? 1),
+                    );
+                  })
+            ]),
+            onRefresh: blogersCubit.fetchBlogers);
+      }
+      return Text("Error");
+>>>>>>> c4899f718c697bf0a92e73edcc223a47fb798a13
     });
   }
 

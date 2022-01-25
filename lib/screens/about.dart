@@ -12,40 +12,25 @@ class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 70),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: Image.asset(
-                    "assets/images/arrow2.png",
-                    height: 30,
-                    width: 30,
-                    color: Colors.blue,
-                  ),
-                ),
-                SizedBox(
-                  width: 100,
-                ),
-                const Text(
-                  "О приложении",
-                  style: TextStyle(
-                    fontFamily: 'Roboto-Medium.ttf',
-                    fontSize: 21.0,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF24282E),
-                  ),
-                ),
-                SizedBox(
-                  width: 160,
-                )
-              ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "О приложении",
+            style: TextStyle(
+              fontFamily: 'Roboto-Medium.ttf',
+              fontSize: 21.0,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF24282E),
             ),
+          ),
+          centerTitle: true,
+          iconTheme: IconThemeData(color: Colors.blue),
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
+        body: Column(
+          children: [
             Padding(
               padding: EdgeInsets.only(top: 30, left: 40),
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [

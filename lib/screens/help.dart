@@ -106,7 +106,7 @@ class _MyHomePageState extends State<HelpPage> {
                         ),
                       ),
                       const SizedBox(
-                        width: 190,
+                        width: 100,
                       )
                     ],
                   ),

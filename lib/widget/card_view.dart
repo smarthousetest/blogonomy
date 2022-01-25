@@ -56,9 +56,10 @@ class CardView extends StatelessWidget {
                           top: 0.0,
                           child: Text(
                             '$name',
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor,
                             style: const TextStyle(
                               fontFamily: 'Roboto-Bold.ttf',
-                              fontSize: 24.0,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w700,
                               color: Color(0xFF394759),
@@ -70,9 +71,10 @@ class CardView extends StatelessWidget {
                           bottom: 0.0,
                           child: Text(
                             numberOfBloggers.toString(),
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor,
                             style: const TextStyle(
                               fontFamily: 'Roboto-Regular.ttf',
-                              fontSize: 15.0,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w400,
                               color: Color(0xFF394759),
@@ -92,6 +94,7 @@ class CardView extends StatelessWidget {
                         width: 70,
                         height: 70,
                         child: ClipRRect(
+<<<<<<< HEAD
                             borderRadius: BorderRadius.circular(10.0),
                             child: image != "null"
                                 ? Image.network(
@@ -103,6 +106,15 @@ class CardView extends StatelessWidget {
                                     Icons.image_not_supported,
                                     color: Colors.white,
                                   ))),
+=======
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Image.network(
+                            '$image',
+                            fit: BoxFit.cover,
+                            alignment: FractionalOffset.topCenter,
+                          ),
+                        )),
+>>>>>>> c4899f718c697bf0a92e73edcc223a47fb798a13
                   ),
                 ),
               ],
