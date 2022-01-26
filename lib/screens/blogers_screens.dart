@@ -20,6 +20,7 @@ void setupScrollController(context) {
   scrollController.addListener(() {
     if (scrollController.position.atEdge) {
       if (scrollController.position.pixels != 0) {
+        print("state----start");
         BlocProvider.of<BlogersCubit>(context).fetchBlogers(pagen: "scrool");
       }
     }
@@ -35,6 +36,7 @@ class _BlogersListState extends State<BlogersList> {
   @override
   Widget build(BuildContext context) {
     setupScrollController(context);
+
     BlocProvider.of<BlogersCubit>(context).fetchBlogers();
 
     print("Открыл");
@@ -45,6 +47,10 @@ class _BlogersListState extends State<BlogersList> {
     }
 
     return BlocBuilder<BlogersCubit, BlogersState>(builder: (context, state) {
+      print("======================");
+      print("state- $state");
+      print("======================");
+
       if (state is BlogersLoadingState && state.isFirstFetch) {
         return _loadingIndicator();
       }
@@ -63,6 +69,7 @@ class _BlogersListState extends State<BlogersList> {
       }
 
       BlogersCubit blogersCubit = context.read<BlogersCubit>();
+
       return RefreshIndicator(
           child: Column(children: [
             Padding(
@@ -88,11 +95,9 @@ class _BlogersListState extends State<BlogersList> {
                   });
                 },
               ),
-<<<<<<< HEAD
             ),
-            Container(
-              height: MediaQuery.of(context).size.height - 360,
-              width: MediaQuery.of(context).size.width,
+            Expanded(
+              flex: 1,
               child: ListView.builder(
                   controller: scrollController,
                   physics: ClampingScrollPhysics(),
@@ -132,39 +137,6 @@ class _BlogersListState extends State<BlogersList> {
             )
           ]),
           onRefresh: blogersCubit.fetchBlogers);
-=======
-              ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: state.loadedBlogers?.length,
-                  itemBuilder: (context, index) {
-                    i++;
-                    return GestureDetector(
-                      onTap: () {
-                        blogerFindModel = BlogerFindModel(
-                            id: "${state.loadedBlogers?[index].id}");
-
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BlogerProfileScreen()));
-                      },
-                      child: BlogerView(
-                          id: '$i',
-                          userName: '${state.loadedBlogers?[index].userName}',
-                          //   fullName: '${state.loadedBlogers?[index].fullName}',
-
-                          picUrl: '${state.loadedBlogers?[index].picUrl}',
-                          // picUrl:
-                          //     'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
-                          er: state.loadedBlogers?[index].er ?? 1),
-                    );
-                  })
-            ]),
-            onRefresh: blogersCubit.fetchBlogers);
-      }
-      return Text("Error");
->>>>>>> c4899f718c697bf0a92e73edcc223a47fb798a13
     });
   }
 

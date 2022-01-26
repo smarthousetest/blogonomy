@@ -52,55 +52,34 @@ class CardCubit2 extends Cubit<CardState2> {
 class BlogersCubit extends Cubit<BlogersState> {
   BlogersCubit(this.blogersRepository) : super(BlogersInitial());
   final BlogersRepository blogersRepository;
-
   int page = 1;
 
   Future<void> fetchBlogers({String pagen = "1"}) async {
     var oldPosts = <BlogersModel>[];
 
-    print("size-1");
-
     if (pagen != "scrool") {
       page = 1;
       oldPosts.clear();
-
-      print("size-2");
       emit(BlogersEmptyState());
-
-      print("size-3");
+      print("state-clear");
     }
 
-    print("size-4");
     if (state is BlogersLoadingState) return;
 
-    print("size-5");
     final currentState = state;
-
-    print("size-6");
     if (currentState is BlogersLoadedState) {
       oldPosts = currentState.loadedBlogers;
-
-      print("size-6+");
     }
 
-    print("size-7");
     emit(BlogersLoadingState(oldPosts, isFirstFetch: page == 1));
 
-    print("size-8");
     blogersRepository.getAllBlogers(page).then((newPosts) {
-      print("size-9");
+      // if (newPosts.isEmpty == false) {
       page++;
-
-      print("size-10");
       final posts = (state as BlogersLoadingState).oldblogers;
-
-      print("size-11");
       posts.addAll(newPosts);
-
-      print("size-12");
       emit(BlogersLoadedState(posts));
-
-      print("size-13");
+      //}
     });
   }
 
