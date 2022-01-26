@@ -20,6 +20,7 @@ void setupScrollController(context) {
   scrollController.addListener(() {
     if (scrollController.position.atEdge) {
       if (scrollController.position.pixels != 0) {
+        print("state----start");
         BlocProvider.of<BlogersCubit>(context).fetchBlogers(pagen: "scrool");
       }
     }
@@ -35,6 +36,7 @@ class _BlogersListState extends State<BlogersList> {
   @override
   Widget build(BuildContext context) {
     setupScrollController(context);
+
     BlocProvider.of<BlogersCubit>(context).fetchBlogers();
 
     print("Открыл");
@@ -45,6 +47,10 @@ class _BlogersListState extends State<BlogersList> {
     }
 
     return BlocBuilder<BlogersCubit, BlogersState>(builder: (context, state) {
+      print("======================");
+      print("state- $state");
+      print("======================");
+
       if (state is BlogersLoadingState && state.isFirstFetch) {
         return _loadingIndicator();
       }
@@ -63,6 +69,7 @@ class _BlogersListState extends State<BlogersList> {
       }
 
       BlogersCubit blogersCubit = context.read<BlogersCubit>();
+
       return RefreshIndicator(
           child: Column(children: [
             Padding(
@@ -89,9 +96,8 @@ class _BlogersListState extends State<BlogersList> {
                 },
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height - 360,
-              width: MediaQuery.of(context).size.width,
+            Expanded(
+              flex: 1,
               child: ListView.builder(
                   controller: scrollController,
                   physics: ClampingScrollPhysics(),

@@ -182,18 +182,6 @@ class BlogerState extends State<Blogers> {
             ),
           ),
         ),
-        body: SafeArea(
-            child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: const Color(0xFFFFFFFF)),
-                child: ListView(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Container(
-                      child: BlogersList(),
-                    ),
-                  )
-                ]))));
+        body: SafeArea(child: BlogersList()));
   }
 }
