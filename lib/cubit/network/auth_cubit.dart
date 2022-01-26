@@ -174,16 +174,4 @@ class AuthCubit extends Cubit<AuthState> {
       print(ee);
     }
   }
-
-  Future<void> GetCategoryUser() async {
-    final response = await http.post(
-        Uri.parse(
-            "https://service-blogonomy.maksatlabs.ru/api/Category/GetCategoryUser"),
-        headers: {
-          "Accept": "application/json",
-          "content-type": "application/json"
-        });
-
-    print(response.body);
-  }
 }

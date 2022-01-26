@@ -444,4 +444,17 @@ class FilterOneApi {
       throw Exception('Error fetching filter one');
     }
   }
+
+  Future<void> GetCategoryUser() async {
+    Map<String, String> headers = {"content-type": "application/json"};
+    if (AppAuth.accessToken != null && AppAuth.accessToken!.isNotEmpty) {
+      headers.addAll({'Authorization': 'Bearer ${AppAuth.accessToken}'});
+    }
+    final response = await http.post(
+        Uri.parse(
+            "https://service-blogonomy.maksatlabs.ru/api/Category/GetCategoryUser"),
+        headers: headers);
+    print("headers = $headers");
+    print("podborka = ${response.body}");
+  }
 }
