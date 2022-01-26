@@ -27,7 +27,7 @@ class AuthPage extends StatelessWidget {
                   return SlidingUp();
                 }
                 if (state is LogoutedState) {
-                  return CollectionsPage();
+                  return AuthPage();
                 }
                 if (state is EmptyState) {
                   return SlidingUp();

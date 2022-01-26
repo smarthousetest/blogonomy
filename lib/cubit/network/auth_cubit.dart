@@ -75,12 +75,15 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> logOut() async {
     //  emit(InProcessState());
+    print("Logout");
     await secureStorage.delete(key: refreshTokenKey);
     await secureStorage.delete(key: accessTokenKey);
     await sharedPreferences.remove(accessTokenExpirationDateTimeKey);
     await sharedPreferences.remove(idTokenKey);
     AppAuth.accessToken = null;
+
     emit(LogoutedState());
+    print("Logout ended");
   }
 
   Future<void> signIn() async {
