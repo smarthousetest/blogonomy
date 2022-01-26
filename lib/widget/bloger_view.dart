@@ -80,8 +80,12 @@ class BlogerView extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 20),
                 child: Positioned(
                   child: Text(
+<<<<<<< HEAD
+                    '${er.toStringAsFixed(1)}',
+=======
                     '${er.round()}',
                     textScaleFactor: MediaQuery.of(context).textScaleFactor,
+>>>>>>> c4899f718c697bf0a92e73edcc223a47fb798a13
                     style: TextStyle(
                       fontFamily: 'Roboto-Bold.ttf',
                       fontStyle: FontStyle.normal,

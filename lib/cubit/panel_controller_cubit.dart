@@ -56,25 +56,21 @@ class SlidingUpCubit2 extends Cubit<BaseState> {
 
   Future<void> open() async {
     if (state is OpenState) emit(CloseState());
-    print("1");
     emit(OpenState());
   }
 
   Future<void> hide() async {
     if (state is HideState) return;
-    print("2");
     emit(HideState());
   }
 
   Future<void> show() async {
     if (state is HideState) return;
-    print("3");
     emit(ShowState());
   }
 
   Future<void> close() async {
     if (state is CloseState) return;
-    print("4");
     emit(CloseState());
   }
 }
@@ -84,25 +80,21 @@ class SlidingUpCubit3 extends Cubit<BaseState> {
 
   Future<void> open() async {
     if (state is OpenState) emit(CloseState());
-    print("1");
     emit(OpenState());
   }
 
   Future<void> hide() async {
     if (state is HideState) return;
-    print("2");
     emit(HideState());
   }
 
   Future<void> show() async {
     if (state is HideState) return;
-    print("3");
     emit(ShowState());
   }
 
   Future<void> close() async {
     if (state is CloseState) return;
-    print("4");
     emit(CloseState());
   }
 }
@@ -112,25 +104,21 @@ class SlidingUpCubit4 extends Cubit<BaseState> {
 
   Future<void> open() async {
     if (state is OpenState) emit(CloseState());
-    print("1");
     emit(OpenState());
   }
 
   Future<void> hide() async {
     if (state is HideState) return;
-    print("2");
     emit(HideState());
   }
 
   Future<void> show() async {
     if (state is HideState) return;
-    print("3");
     emit(ShowState());
   }
 
   Future<void> close() async {
     if (state is CloseState) return;
-    print("4");
     emit(CloseState());
   }
 }

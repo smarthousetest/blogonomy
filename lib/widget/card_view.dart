@@ -94,6 +94,19 @@ class CardView extends StatelessWidget {
                         width: 70,
                         height: 70,
                         child: ClipRRect(
+<<<<<<< HEAD
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: image != "null"
+                                ? Image.network(
+                                    '$image',
+                                    fit: BoxFit.cover,
+                                    alignment: Alignment.topCenter,
+                                  )
+                                : Icon(
+                                    Icons.image_not_supported,
+                                    color: Colors.white,
+                                  ))),
+=======
                           borderRadius: BorderRadius.circular(10.0),
                           child: Image.network(
                             '$image',
@@ -101,6 +114,7 @@ class CardView extends StatelessWidget {
                             alignment: FractionalOffset.topCenter,
                           ),
                         )),
+>>>>>>> c4899f718c697bf0a92e73edcc223a47fb798a13
                   ),
                 ),
               ],

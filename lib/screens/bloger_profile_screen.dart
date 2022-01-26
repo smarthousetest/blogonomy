@@ -81,8 +81,6 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
         location = location!.substring(location.lastIndexOf(',') + 1);
 
         List? widgets1 = [];
-        //   List? widgets2 = [];
-
         for (var item in state.loadedBloger?.ageGroupRatio.entries) {
           widgets1.add(
             Text("${item.key}: ${item.value}%",
@@ -112,16 +110,6 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
           );
           ichet++;
         }
-
-        // for (var item in state.loadedBloger?.ageGroupRatio.entries) {
-        //   widgets2.add(
-        //     Container(
-        //       width: item.value.roundToDouble(),
-        //       height: 20,
-        //       color: Colors.blue,
-        //     ),
-        //   );
-        // }
 
         return StatefulBuilder(// StatefulBuilder
             builder: (context, setState) {
@@ -158,8 +146,43 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                             Spacer(
                               flex: 1,
                             ),
+                            Container(
+                                child: IconButton(
+                                    onPressed: () async {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text('Выполняю обновление!'),
+                                      ));
+
+                                      String? result =
+                                          await OneBlogerApi().updBloger();
+
+                                      if (result == "OK") {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                              'В скором времени информация обновится!'),
+                                        ));
+                                      }
+                                      if (result == "ERR") {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                              'Ошибка! Обратитесь в поддержку.'),
+                                        ));
+                                      }
+                                      Navigator.pop(context);
+                                    },
+                                    icon: Icon(
+                                      Icons.refresh_outlined,
+                                      color: Color(0xFF0072FD),
+                                      size: 28,
+                                    ))),
+                            Spacer(
+                              flex: 1,
+                            ),
                             SizedBox(
-                              width: 40,
+                              width: 20,
                             ),
                             Container(
                               alignment: Alignment.center,
@@ -178,20 +201,36 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                             Spacer(
                               flex: 2,
                             ),
+                            BlocBuilder<AdminCubit, AdminState>(
+                                builder: (context, state) {
+                              if (state is NoAdminState)
+                                return Container(
+                                    child: IconButton(
+                                  onPressed: () {
+                                    context.read<SlidingUpCubit2>().open();
+                                  },
+                                  icon: Image.asset(
+                                    'assets/images/menu_blog.png',
+                                    color: Colors.blue,
+                                  ),
+                                  color: Colors.blue,
+                                ));
+                              else
+                                return Container();
+                            }),
                             Container(
                                 child: IconButton(
-                              onPressed: () async {
-                                showAlertDialogload(context);
-                                await outselected();
-                                Navigator.pop(context);
-                                showAlertDialog(context);
-                              },
-                              icon: Image.asset(
-                                'assets/images/menu_blog.png',
-                                color: Colors.blue,
-                              ),
-                              color: Colors.blue,
-                            )),
+                                    onPressed: () async {
+                                      showAlertDialogload(context);
+                                      await outselected();
+                                      Navigator.pop(context);
+                                      showAlertDialog(context);
+                                    },
+                                    icon: Icon(
+                                      Icons.library_books_outlined,
+                                      color: Color(0xFF0072FD),
+                                      size: 28,
+                                    ))),
                             const SizedBox(
                               width: 10,
                             ),
@@ -315,7 +354,7 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                               ),
                             ),
                             Text(
-                              '${state.loadedBloger?.er?.round()}',
+                              '${state.loadedBloger?.er?.toStringAsFixed(1)}',
                               style: TextStyle(
                                 fontFamily: 'Roboto-Bold.ttf',
                                 fontSize: 20.0,
@@ -852,12 +891,6 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                                                   flex: 1,
                                                 ),
                                                 GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.pop(context);
-                                                    context
-                                                        .read<AdminCubit>()
-                                                        .deleteAdmin();
-                                                  },
                                                   child: Text("Да"),
                                                 ),
                                                 Spacer(

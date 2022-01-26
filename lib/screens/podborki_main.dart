@@ -89,10 +89,6 @@ class PodborkiMain extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: state.loadedCard?.length,
                       itemBuilder: (context, index) {
-                        String image;
-                        image = state.loadedCard?[index].picUrl == null
-                            ? "https://i.ibb.co/nBsmnTq/33.jpg"
-                            : state.loadedCard?[index].picUrl;
                         return GestureDetector(
                           onTap: () {
                             filterModels.clearAll();
@@ -113,7 +109,7 @@ class PodborkiMain extends StatelessWidget {
                           child: CardView(
                               id: '${state.loadedCard?[index].id}',
                               name: '${state.loadedCard?[index].name}',
-                              image: image,
+                              image: state.loadedCard?[index].picUrl,
                               numberOfBloggers:
                                   state.loadedCard?[index].numBloggers ?? 1),
                         );

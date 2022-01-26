@@ -108,6 +108,8 @@ class BlogersApi {
         body: json.encode(body));
 
     if (response.statusCode == 200) {
+      print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+      print(response.body);
       final List<dynamic> blogersJson = json.decode(response.body);
       return blogersJson.map((json) => BlogersModel.fromJson(json)).toList();
     } else {
@@ -284,6 +286,27 @@ class OneBlogerApi {
       throw Exception('Error fetching one blogger');
     }
   }
+
+  Future<String> updBloger() async {
+    late String? id = blogerFindModel.id;
+
+    var body = {
+      "ids": [id],
+    };
+
+    final response = await http.post(
+        Uri.parse('https://service-blogonomy.maksatlabs.ru/api/Blogger/Update'),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(body));
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return "OK";
+    } else {
+      return "ERR";
+    }
+  }
 }
 
 class Podborka {
@@ -327,6 +350,9 @@ class Podborka {
     }
 
     await getlist();
+
+    print("==============");
+    print(bloggerIds);
 
     final response = await http.post(
         Uri.parse(

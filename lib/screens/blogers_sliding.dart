@@ -251,7 +251,6 @@ class BlogersPanelState extends State<BlogersPanel> {
                       ),
                       SliderTheme(
                         data: SliderTheme.of(context).copyWith(
-                          // overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
                           rangeThumbShape: CircleThumbShape(),
                         ),
                         child: RangeSlider(
@@ -319,7 +318,6 @@ class BlogersPanelState extends State<BlogersPanel> {
                       ),
                       SliderTheme(
                         data: SliderTheme.of(context).copyWith(
-                          // overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
                           rangeThumbShape: CircleThumbShape(),
                         ),
                         child: RangeSlider(
@@ -399,7 +397,6 @@ class BlogersPanelState extends State<BlogersPanel> {
                       ),
                       SliderTheme(
                         data: SliderTheme.of(context).copyWith(
-                          // overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
                           rangeThumbShape: CircleThumbShape(),
                         ),
                         child: RangeSlider(

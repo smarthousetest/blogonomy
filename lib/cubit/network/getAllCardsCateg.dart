@@ -16,8 +16,8 @@ class GettAllCards {
 class GettAllBlogers {
   final BlogersRepository blogersRepository;
   GettAllBlogers(this.blogersRepository);
-  Future<List<BlogersModel>> getBlogersBy() async {
-    return await blogersRepository.getAllBlogers();
+  Future<List<BlogersModel>> getBlogersBy(int page) async {
+    return await blogersRepository.getAllBlogers(page);
   }
 }
 
