@@ -76,7 +76,6 @@ class BlogersCubit extends Cubit<BlogersState> {
 
   Future<void> giveBlogers() async {
     blogersRepository.getAllBlogers(page).then((newPosts) {
-<<<<<<< HEAD
       // if (newPosts.isEmpty == false) {
       page++;
       final posts = (state as BlogersLoadingState).oldblogers;
@@ -86,14 +85,6 @@ class BlogersCubit extends Cubit<BlogersState> {
         return print("no new");
       }
       //}
-=======
-      if (newPosts != null) {
-        page++;
-        final posts = (state as BlogersLoadingState).oldblogers;
-        posts.addAll(newPosts);
-        emit(BlogersLoadedState(posts));
-      }
->>>>>>> bf916b3e494f4739f4269c95c5679e82e359c574
     });
   }
 

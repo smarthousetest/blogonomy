@@ -13,15 +13,25 @@ class CardApi {
   Future<List<CardModel>> getCard() async {
     bool? public = podborkaBool.public;
 
+    Map<String, String> headers2 = {"content-type": "application/json"};
+    if (AppAuth.accessToken != null && AppAuth.accessToken!.isNotEmpty) {
+      headers2.addAll({'Authorization': 'Bearer ${AppAuth.accessToken}'});
+    }
+    final response2 = await http.get(
+        Uri.parse(
+            "https://service-blogonomy.maksatlabs.ru/api/Category/GetCategoryUser"),
+        headers: headers2);
+    print("headers = $headers2");
+    print("podborka = ${response2.body}");
+
     print("object");
+
     final response = await http.post(
         Uri.parse(
             'https://service-blogonomy.maksatlabs.ru/api/info/AboutCategories'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"public": public}));
-    print("a");
-    print(response.body);
-    print("a");
+
     if (response.statusCode == 200) {
       final List<dynamic> cardJson = json.decode(response.body);
       return cardJson.map((json) => CardModel.fromJson(json)).toList();
