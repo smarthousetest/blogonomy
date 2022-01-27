@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:blogonomy/cubit/network/bloger_find_model.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
+import 'package:blogonomy/cubit/network/card_modelCateg.dart';
 import 'package:blogonomy/cubit/network/card_stateCateg.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:blogonomy/main.dart';
@@ -41,6 +44,16 @@ class PodborkaState extends State<Podborka> {
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0,
+          leading: IconButton(
+              onPressed: () {
+                filterModels.clearAll();
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.chevron_left_outlined,
+                color: Color(0xFF0072FD),
+                size: 38,
+              )),
           actions: [
             Container(
                 child: IconButton(
@@ -55,17 +68,7 @@ class PodborkaState extends State<Podborka> {
         )),
         body: SafeArea(
             child: Stack(children: [
-          Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: const Color(0xFFFFFFFF)),
-              child: ListView(children: [
-                const SizedBox(height: 4.0),
-                Padding(
-                  padding: const EdgeInsets.only(left: 1.0, right: 1.0),
-                  child: Container(child: PodborkaList()),
-                )
-              ])),
+          PodborkaList(),
           SlidingUp4(),
         ])));
   }
@@ -79,54 +82,91 @@ class PodborkaList extends StatefulWidget {
 }
 
 class _PodborkaListState extends State<PodborkaList> {
+  final scrollController = ScrollController();
+
+  void setupScrollController(BuildContext context) {
+    print("dddd1");
+    scrollController.addListener(() {
+      print("dddd2 ");
+      if (scrollController.position.atEdge) {
+        print("dddd3");
+        if (scrollController.position.pixels != 0) {
+          print("dddd4");
+          BlogersCubit2 blogersCubit = context.read<BlogersCubit2>();
+          blogersCubit.fetchBlogers(pagen: "scrool");
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    BlogersCubit2 blogersCubit2 = context.read<BlogersCubit2>();
-    blogersCubit2.fetchBlogers();
+    setupScrollController(context);
+    BlocProvider.of<BlogersCubit2>(context).fetchBlogers();
 
     return BlocBuilder<BlogersCubit2, BlogersState2>(builder: (context, state) {
+      if (state is BlogersLoadingState2 && state.isFirstFetch) {
+        return _loadingIndicator();
+      }
+
+      List<BlogersModel> blogers = [];
+      bool isLoading = false;
+
       if (state is BlogersLoadingState2) {
-        return Center(child: CircularProgressIndicator());
+        blogers = state.oldblogers as List<BlogersModel>;
+        isLoading = true;
+      } else if (state is BlogersLoadedState2) {
+        blogers = state.loadedBlogers as List<BlogersModel>;
       }
-      if (state is BlogersLoadedState2) {
-        print("BlogersLoadedState");
-        var i = 0;
 
-        return RefreshIndicator(
-            child: Column(children: [
-              Container(
-                child: ListView.builder(
-                    physics: PageScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: state.loadedBlogers?.length,
-                    itemBuilder: (context, index) {
-                      i++;
-                      return GestureDetector(
-                        onTap: () {
-                          blogerFindModel = BlogerFindModel(
-                              id: "${state.loadedBlogers?[index].id}");
+      BlogersCubit2 blogersCubit = context.read<BlogersCubit2>();
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BlogerProfileScreen()));
-                        },
-                        child: BlogerView(
-                            id: '$i',
-                            userName: '${state.loadedBlogers?[index].userName}',
-                            //   fullName: '${state.loadedBlogers?[index].fullName}',
+      return RefreshIndicator(
+          child: Expanded(
+            flex: 1,
+            child: ListView.builder(
+                controller: scrollController,
+                physics: ClampingScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: blogers.length + (isLoading ? 1 : 0),
+                itemBuilder: (context, index) {
+                  if (index < blogers.length)
+                    return GestureDetector(
+                      onTap: () {
+                        blogerFindModel =
+                            BlogerFindModel(id: "${blogers[index].id}");
 
-                            picUrl: '${state.loadedBlogers?[index].picUrl}',
-                            // picUrl:
-                            //     'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
-                            er: state.loadedBlogers?[index].er ?? 1),
-                      );
-                    }),
-              )
-            ]),
-            onRefresh: blogersCubit2.fetchBlogers);
-      }
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BlogerProfileScreen()));
+                      },
+                      child: BlogerView(
+                          id: '${index + 1}',
+                          userName: '${blogers[index].userName}',
+                          //   fullName: '${state.loadedBlogers?[index].fullName}',
+
+                          picUrl: '${blogers[index].picUrl}',
+                          // picUrl:
+                          //     'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
+                          er: blogers[index].er ?? 1),
+                    );
+                  else {
+                    Timer(Duration(milliseconds: 300), () {
+                      scrollController
+                          .jumpTo(scrollController.position.maxScrollExtent);
+                    });
+
+                    return _loadingIndicator();
+                  }
+                }),
+          ),
+          onRefresh: blogersCubit.fetchBlogers);
       return Text("Error");
     });
+  }
+
+  Widget _loadingIndicator() {
+    return Center(child: CircularProgressIndicator());
   }
 }
