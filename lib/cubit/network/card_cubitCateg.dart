@@ -87,20 +87,37 @@ class BlogersCubit extends Cubit<BlogersState> {
 }
 
 class BlogersCubit2 extends Cubit<BlogersState2> {
+  BlogersCubit2(this.blogersRepository) : super(BlogersInitial2());
   final BlogersRepository blogersRepository;
+  int page = 1;
 
-  BlogersCubit2(this.blogersRepository) : super(BlogersLoadedState2());
+  Future<void> fetchBlogers({String pagen = "1"}) async {
+    if (state is BlogersLoadingState2) return;
+    var oldPosts = <BlogersModel>[];
 
-  Future<void> fetchBlogers({int page = 1}) async {
-    try {
-      emit(BlogersLoadingState2());
-      final List<BlogersModel> _loaded2 =
-          await blogersRepository.getAllBlogers(page);
-      print("приватная  $_loaded2");
-      emit(BlogersLoadedState2(loadedBlogers: _loaded2));
-    } catch (_) {
-      emit(BlogersErrorState2());
+    print("fetcj");
+
+    if (pagen != "scrool") {
+      page = 1;
+      oldPosts.clear();
+      emit(BlogersEmptyState2());
+      print("state-clear");
     }
+
+    final currentState = state;
+    if (currentState is BlogersLoadedState2) {
+      oldPosts = currentState.loadedBlogers;
+    }
+    emit(BlogersLoadingState2(oldPosts, isFirstFetch: page == 1));
+
+    blogersRepository.getAllBlogers(page).then((newPosts) {
+      if (newPosts != null) {
+        page++;
+        final posts = (state as BlogersLoadingState2).oldblogers;
+        posts.addAll(newPosts);
+        emit(BlogersLoadedState2(posts));
+      }
+    });
   }
 
   Future<void> clearBlogers() async {
