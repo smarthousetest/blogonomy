@@ -14,6 +14,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
+final scrollController = ScrollController();
+
+void setupScrollController(context) {
+  scrollController.addListener(() {
+    if (scrollController.position.atEdge) {
+      if (scrollController.position.pixels != 0) {
+        print("state----start");
+
+        BlocProvider.of<BlogersCubit>(context).fetchBlogers(pagen: "scrool");
+      }
+    }
+  });
+}
+
 class BlogersList extends StatefulWidget {
   @override
   State<BlogersList> createState() => _BlogersListState();

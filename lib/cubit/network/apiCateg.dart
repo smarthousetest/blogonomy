@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:blogonomy/cubit/network/app_auth.dart';
 import 'package:blogonomy/cubit/network/auth_mode.dart';
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
 import 'package:blogonomy/screens/sliding_up_panel_screens.dart';
@@ -312,14 +313,15 @@ class Podborka {
   Future<String?> create(String name, bool public) async {
     print(name);
     print(public);
+    Map<String, String> headers = {"content-type": "application/json"};
+    if (AppAuth.accessToken != null && AppAuth.accessToken!.isNotEmpty) {
+      headers.addAll({'Authorization': 'Bearer ${AppAuth.accessToken}'});
+    }
     final response = await http.post(
         Uri.parse(
             "https://service-blogonomy.maksatlabs.ru/api/Category/Create"),
         body: json.encode({"name": name, "public": public}),
-        headers: {
-          "Accept": "application/json",
-          "content-type": "application/json"
-        });
+        headers: headers);
 
     print(response.body);
 
@@ -333,7 +335,7 @@ class Podborka {
     List? bloggerIds = [];
     int page = 1;
     List? onepromej;
-
+    print("id = $id");
     Future getlist() async {
       List<BlogersModel> loaded2 = await BlogersApi().getBloger(page);
       if (loaded2.isEmpty == false) {
@@ -355,7 +357,7 @@ class Podborka {
     final response = await http.post(
         Uri.parse(
             "https://service-blogonomy.maksatlabs.ru/api/BloggerCategory/Add"),
-        body: json.encode({"categoryId": id, "bloggerIds": bloggerIds}),
+        body: json.encode({"bloggerIds": bloggerIds, "categoryId": id}),
         headers: {
           "Accept": "application/json",
           "content-type": "application/json"
@@ -441,5 +443,18 @@ class FilterOneApi {
     } else {
       throw Exception('Error fetching filter one');
     }
+  }
+
+  Future<void> GetCategoryUser() async {
+    Map<String, String> headers = {"content-type": "application/json"};
+    if (AppAuth.accessToken != null && AppAuth.accessToken!.isNotEmpty) {
+      headers.addAll({'Authorization': 'Bearer ${AppAuth.accessToken}'});
+    }
+    final response = await http.post(
+        Uri.parse(
+            "https://service-blogonomy.maksatlabs.ru/api/Category/GetCategoryUser"),
+        headers: headers);
+    print("headers = $headers");
+    print("podborka = ${response.body}");
   }
 }

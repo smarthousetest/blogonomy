@@ -27,8 +27,38 @@ class PodborkaState extends State<Podborka> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: (AppBar(
+          title: Container(
+            alignment: Alignment.center,
+            child: const Text(
+              'Блогеры',
+              style: TextStyle(
+                fontFamily: 'Roboto-Medium.ttf',
+                fontSize: 18.0,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF24282E),
+              ),
+            ),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          actions: [
+            Container(
+                child: IconButton(
+              onPressed: () {
+                context.read<SlidingUpCubit4>().open();
+              },
+              icon: Icon(Icons.edit),
+              color: Colors.blue,
+            )),
+          ],
+          iconTheme: IconThemeData(color: Colors.blue),
+        )),
         body: SafeArea(
             child: Stack(children: [
+<<<<<<< HEAD
       Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
@@ -92,6 +122,21 @@ class PodborkaState extends State<Podborka> {
           ])),
       SlidingUp4(),
     ])));
+=======
+          Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: const Color(0xFFFFFFFF)),
+              child: ListView(children: [
+                const SizedBox(height: 4.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 1.0, right: 1.0),
+                  child: Container(child: PodborkaList()),
+                )
+              ])),
+          SlidingUp4(),
+        ])));
+>>>>>>> e286df18cb3daa233b5b6719e9af3f10a23e9781
   }
 }
 

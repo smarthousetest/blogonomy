@@ -23,7 +23,7 @@ class ProfileState extends State<Profile> {
     return Stack(
       children: [
         Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             appBar: AppBar(
               title: const Text(
                 'Профиль',
@@ -453,37 +453,48 @@ class ProfileState extends State<Profile> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 55.0,
-                  width: 600,
-                  margin:
-                      const EdgeInsets.only(left: 33.0, right: 35.0, top: 20),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Выйти',
-                      style: TextStyle(
-                        fontFamily: 'Roboto-Bold.ttf',
-                        fontSize: 15.0,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF006FFD),
-                      ),
-                    ),
-                    style: ButtonStyle(
-                      elevation: MaterialStateProperty.all(0),
-                      backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFFFFFFFF)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          side: BorderSide(color: Color(0xFF006FFD)),
-                          borderRadius: BorderRadius.circular(32.0),
+                BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
+                  if (state is LoginedState) {
+                    return Container(
+                      height: 55.0,
+                      width: 600,
+                      margin: const EdgeInsets.only(
+                          left: 35.0, right: 35.0, top: 20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          print("ggggyggy");
+                          context.read<AuthCubit>().logOut();
+                        },
+                        child: const Text(
+                          'Выйти',
+                          style: TextStyle(
+                            fontFamily: 'Roboto-Bold.ttf',
+                            fontSize: 15.0,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF006FFD),
+                          ),
+                        ),
+                        style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(0),
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color(0xFFFFFFFF)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              side: BorderSide(color: Color(0xFF006FFD)),
+                              borderRadius: BorderRadius.circular(32.0),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
-                SizedBox(
+                    );
+                  } else if (state is LogoutedState) {
+                    return const Text('data');
+                  } else
+                    return (Text(""));
+                }),
+                const SizedBox(
                   height: 20,
                 )
               ]),

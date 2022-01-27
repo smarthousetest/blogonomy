@@ -76,12 +76,15 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> logOut() async {
     //  emit(InProcessState());
+    print("Logout");
     await secureStorage.delete(key: refreshTokenKey);
     await secureStorage.delete(key: accessTokenKey);
     await sharedPreferences.remove(accessTokenExpirationDateTimeKey);
     await sharedPreferences.remove(idTokenKey);
     AppAuth.accessToken = null;
+
     emit(LogoutedState());
+    print("Logout ended");
   }
 
   Future<void> signIn() async {
@@ -171,17 +174,5 @@ class AuthCubit extends Cubit<AuthState> {
       print(error);
       print(ee);
     }
-  }
-
-  Future<void> GetCategoryUser() async {
-    final response = await http.post(
-        Uri.parse(
-            "https://service-blogonomy.maksatlabs.ru/api/Category/GetCategoryUser"),
-        headers: {
-          "Accept": "application/json",
-          "content-type": "application/json"
-        });
-
-    print(response.body);
   }
 }

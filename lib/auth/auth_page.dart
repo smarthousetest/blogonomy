@@ -16,7 +16,7 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: Stack(children: [
           BlocProvider(
             create: (context) => AuthCubit(),
@@ -27,7 +27,7 @@ class AuthPage extends StatelessWidget {
                   return SlidingUp();
                 }
                 if (state is LogoutedState) {
-                  return CollectionsPage();
+                  return AuthPage();
                 }
                 if (state is EmptyState) {
                   return SlidingUp();

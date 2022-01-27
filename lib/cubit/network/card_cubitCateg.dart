@@ -1,4 +1,5 @@
 import 'package:blogonomy/Repository/card_repositoriesCateg.dart';
+import 'package:blogonomy/cubit/locator_services.dart';
 import 'package:blogonomy/cubit/network/auth_mode.dart';
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
 import 'package:blogonomy/cubit/network/card_stateCateg.dart';
@@ -70,14 +71,29 @@ class BlogersCubit extends Cubit<BlogersState> {
       oldPosts = currentState.loadedBlogers;
     }
     emit(BlogersLoadingState(oldPosts, isFirstFetch: page == 1));
+    giveBlogers();
+  }
 
+  Future<void> giveBlogers() async {
     blogersRepository.getAllBlogers(page).then((newPosts) {
+<<<<<<< HEAD
+      // if (newPosts.isEmpty == false) {
+      page++;
+      final posts = (state as BlogersLoadingState).oldblogers;
+      posts.addAll(newPosts);
+      emit(BlogersLoadedState(posts));
+      if (newPosts == null) {
+        return print("no new");
+      }
+      //}
+=======
       if (newPosts != null) {
         page++;
         final posts = (state as BlogersLoadingState).oldblogers;
         posts.addAll(newPosts);
         emit(BlogersLoadedState(posts));
       }
+>>>>>>> bf916b3e494f4739f4269c95c5679e82e359c574
     });
   }
 
