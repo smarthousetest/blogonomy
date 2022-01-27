@@ -1,9 +1,0 @@
-diff a/lib/cubit/network/auth_cubit.dart b/lib/cubit/network/auth_cubit.dart	(rejected hunks)
-@@ -37,6 +37,7 @@
- 
-     final storedRefreshToken = await secureStorage.read(key: refreshTokenKey);
-     final storedAccessToken = await secureStorage.read(key: accessTokenKey);
-+
-     if (storedRefreshToken == null) {
-       emit(LogoutedState());
-       return;
