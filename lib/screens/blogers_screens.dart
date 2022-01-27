@@ -14,31 +14,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
-final scrollController = ScrollController();
-
-void setupScrollController(context) {
-  scrollController.addListener(() {
-    if (scrollController.position.atEdge) {
-      if (scrollController.position.pixels != 0) {
-        print("state----start");
-        BlocProvider.of<BlogersCubit>(context).fetchBlogers(pagen: "scrool");
-      }
-    }
-  });
-}
-
 class BlogersList extends StatefulWidget {
   @override
   State<BlogersList> createState() => _BlogersListState();
 }
 
 class _BlogersListState extends State<BlogersList> {
+  final scrollController = ScrollController();
+
+  void setupScrollController(BuildContext context) {
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          BlogersCubit blogersCubit = context.read<BlogersCubit>();
+          blogersCubit.fetchBlogers(pagen: "scrool");
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     setupScrollController(context);
-
     BlocProvider.of<BlogersCubit>(context).fetchBlogers();
 
+    print("state - $context");
     print("Открыл");
     print(filterModels.id);
 
@@ -52,9 +52,6 @@ class _BlogersListState extends State<BlogersList> {
       print("======================");
 
       if (state is BlogersLoadingState && state.isFirstFetch) {
-        return _loadingIndicator();
-      }
-      if (state is BlogersEmptyState) {
         return _loadingIndicator();
       }
 
@@ -137,6 +134,7 @@ class _BlogersListState extends State<BlogersList> {
             )
           ]),
           onRefresh: blogersCubit.fetchBlogers);
+      return Text("Error");
     });
   }
 

@@ -55,6 +55,7 @@ class BlogersCubit extends Cubit<BlogersState> {
   int page = 1;
 
   Future<void> fetchBlogers({String pagen = "1"}) async {
+    if (state is BlogersLoadingState) return;
     var oldPosts = <BlogersModel>[];
 
     if (pagen != "scrool") {
@@ -64,22 +65,19 @@ class BlogersCubit extends Cubit<BlogersState> {
       print("state-clear");
     }
 
-    if (state is BlogersLoadingState) return;
-
     final currentState = state;
     if (currentState is BlogersLoadedState) {
       oldPosts = currentState.loadedBlogers;
     }
-
     emit(BlogersLoadingState(oldPosts, isFirstFetch: page == 1));
 
     blogersRepository.getAllBlogers(page).then((newPosts) {
-      // if (newPosts.isEmpty == false) {
-      page++;
-      final posts = (state as BlogersLoadingState).oldblogers;
-      posts.addAll(newPosts);
-      emit(BlogersLoadedState(posts));
-      //}
+      if (newPosts != null) {
+        page++;
+        final posts = (state as BlogersLoadingState).oldblogers;
+        posts.addAll(newPosts);
+        emit(BlogersLoadedState(posts));
+      }
     });
   }
 
