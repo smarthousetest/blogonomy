@@ -44,6 +44,16 @@ class PodborkaState extends State<Podborka> {
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0,
+          leading: IconButton(
+              onPressed: () {
+                filterModels.clearAll();
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.chevron_left_outlined,
+                color: Color(0xFF0072FD),
+                size: 38,
+              )),
           actions: [
             Container(
                 child: IconButton(
@@ -58,85 +68,9 @@ class PodborkaState extends State<Podborka> {
         )),
         body: SafeArea(
             child: Stack(children: [
-<<<<<<< HEAD
-      Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: const Color(0xFFFFFFFF)),
-          child: ListView(children: [
-            const SizedBox(height: 42.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  width: 10,
-                ),
-                Container(
-                    child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          filterModels.clearAll();
-                        },
-                        icon: Icon(
-                          Icons.chevron_left_outlined,
-                          color: Color(0xFF0072FD),
-                          size: 38,
-                        ))),
-                Spacer(
-                  flex: 1,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Блогеры',
-                    style: TextStyle(
-                      fontFamily: 'Roboto-Medium.ttf',
-                      fontSize: 18.0,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF24282E),
-                    ),
-                  ),
-                ),
-                Spacer(
-                  flex: 1,
-                ),
-                Container(
-                    child: IconButton(
-                  onPressed: () {
-                    context.read<SlidingUpCubit4>().open();
-                  },
-                  icon: Icon(Icons.edit),
-                  color: Colors.blue,
-                )),
-                const SizedBox(
-                  width: 20,
-                ),
-              ],
-            ),
-            const SizedBox(height: 4.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 1.0, right: 1.0),
-              child: Container(height: 300, child: PodborkaList()),
-            )
-          ])),
-      SlidingUp4(),
-    ])));
-=======
-          Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: const Color(0xFFFFFFFF)),
-              child: ListView(children: [
-                const SizedBox(height: 4.0),
-                Padding(
-                  padding: const EdgeInsets.only(left: 1.0, right: 1.0),
-                  child: Container(child: PodborkaList()),
-                )
-              ])),
+          PodborkaList(),
           SlidingUp4(),
         ])));
->>>>>>> e286df18cb3daa233b5b6719e9af3f10a23e9781
   }
 }
 
