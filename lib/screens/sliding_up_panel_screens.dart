@@ -38,9 +38,11 @@ class _SlidingState extends State<Sliding> with SingleTickerProviderStateMixin {
             onNext: () => _tabController.index = 1,
           ),
           SecondPage(
-            onNext: () => _tabController.index = 2,
+            onNext: () => _tabController.index = 0,
           ),
-          ThirdPage()
+          ThirdPage(
+            onNext: () => _tabController.index = 1,
+          )
         ],
       ),
     );
@@ -364,6 +366,9 @@ class SecondPageState extends State<SecondPage> {
 }
 
 class ThirdPage extends StatefulWidget {
+  final VoidCallback onNext;
+
+  const ThirdPage({Key? key, required this.onNext}) : super(key: key);
   @override
   State<ThirdPage> createState() => ThirdPageState();
 }
@@ -381,6 +386,14 @@ class ThirdPageState extends State<ThirdPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Row(
+              children: [
+                IconButton(
+                    alignment: Alignment.topLeft,
+                    onPressed: widget.onNext,
+                    icon: const Icon(Icons.arrow_back_rounded)),
+              ],
+            ),
             Container(
               height: 52.0,
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),

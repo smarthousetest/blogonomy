@@ -23,7 +23,7 @@ class ProfileState extends State<Profile> {
     return Stack(
       children: [
         Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             appBar: AppBar(
               title: const Text(
                 'Профиль',
@@ -492,7 +492,7 @@ class ProfileState extends State<Profile> {
                   } else if (state is LogoutedState) {
                     return const Text('data');
                   } else
-                    return (Text("av"));
+                    return (Text(""));
                 }),
                 const SizedBox(
                   height: 20,

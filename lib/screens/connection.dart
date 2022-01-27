@@ -12,7 +12,7 @@ class _HelpState extends State<Connection> {
     return Material(
       child: Padding(
         padding: const EdgeInsets.only(top: 70),
-        child: Column(
+        child: ListView(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,

@@ -21,6 +21,7 @@ void setupScrollController(context) {
     if (scrollController.position.atEdge) {
       if (scrollController.position.pixels != 0) {
         print("state----start");
+
         BlocProvider.of<BlogersCubit>(context).fetchBlogers(pagen: "scrool");
       }
     }
