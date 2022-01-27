@@ -83,6 +83,10 @@ class AuthCubit extends Cubit<AuthState> {
     await sharedPreferences.remove(idTokenKey);
     AppAuth.accessToken = null;
 
+    await appAuth.endSession(EndSessionRequest(
+        //   idTokenHint: '<idToken>',
+        postLogoutRedirectUrl: 'com.blogonomy.mobile:/exit'));
+    //    serviceConfiguration: AuthorizationServiceConfiguration(authorizationEndpoint: '<authorization_endpoint>',  tokenEndpooint: '<token_endpoint>', endSessionEndpoint: '<end_session_endpoint>'));
     emit(LogoutedState());
     print("Logout ended");
   }
