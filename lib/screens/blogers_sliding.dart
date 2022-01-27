@@ -94,10 +94,18 @@ class BlogersPanelState extends State<BlogersPanel> {
         return Center(child: CircularProgressIndicator());
       }
       if (state is FilterLoadedState) {
+        if (filterModels.absoluteCommentsFilterMax == "" &&
+            filterModels.absoluteCommentsFilterMin == "") {
+          print("gggg");
+        }
+
         if (state.loadedFilter?.filter?[4].roundToDouble() >
                 currentRangeValueser.start.round() ||
             state.loadedFilter?.filter?[5].roundToDouble() <
-                currentRangeValueser.end.round()) {
+                currentRangeValueser.end.round() ||
+            filterModels.ermax == "") {
+          filterModels.ermax == "";
+          filterModels.ermin == "";
           currentRangeValueser = RangeValues(
               state.loadedFilter?.filter?[4].roundToDouble(),
               state.loadedFilter?.filter?[5].roundToDouble() == 0.0
@@ -108,7 +116,10 @@ class BlogersPanelState extends State<BlogersPanel> {
         if (state.loadedFilter?.filter?[2].roundToDouble() >
                 currentRangeValueslikes.start.round() ||
             state.loadedFilter?.filter?[3].roundToDouble() <
-                currentRangeValueslikes.end.round()) {
+                currentRangeValueslikes.end.round() ||
+            filterModels.absoluteLikesFilterMax == "") {
+          filterModels.absoluteLikesFilterMax == "";
+          filterModels.absoluteLikesFilterMin == "";
           currentRangeValueslikes = RangeValues(
               state.loadedFilter?.filter?[2].roundToDouble(),
               state.loadedFilter?.filter?[3].roundToDouble());
@@ -117,7 +128,10 @@ class BlogersPanelState extends State<BlogersPanel> {
         if (state.loadedFilter?.filter?[0].roundToDouble() >
                 currentRangeValuescomments.start.round() ||
             state.loadedFilter?.filter?[1].roundToDouble() <
-                currentRangeValuescomments.end.round()) {
+                currentRangeValuescomments.end.round() ||
+            filterModels.absoluteCommentsFilterMax == "") {
+          filterModels.absoluteCommentsFilterMax == "";
+          filterModels.absoluteCommentsFilterMin == "";
           currentRangeValuescomments = RangeValues(
               state.loadedFilter?.filter?[0].roundToDouble(),
               state.loadedFilter?.filter?[1].roundToDouble());
@@ -126,7 +140,10 @@ class BlogersPanelState extends State<BlogersPanel> {
         if (state.loadedFilter?.filter?[6].roundToDouble() >
                 currentRangeValuessubscribers.start.round() ||
             state.loadedFilter?.filter?[7].roundToDouble() <
-                currentRangeValuessubscribers.end.round()) {
+                currentRangeValuessubscribers.end.round() ||
+            filterModels.numFollowersmax == "") {
+          filterModels.numFollowersmax == "";
+          filterModels.numFollowersmin == "";
           currentRangeValuessubscribers = RangeValues(
               state.loadedFilter?.filter?[6].roundToDouble(),
               state.loadedFilter?.filter?[7].roundToDouble());
@@ -467,6 +484,7 @@ class BlogersPanelState extends State<BlogersPanel> {
                                   .toList(),
                               onTap: (value) {
                                 setState(() {
+                                  filterModels.clearsettings();
                                   filterModels.id!.remove(value);
                                   print(
                                       "filterModels.id: -${filterModels.id}-");

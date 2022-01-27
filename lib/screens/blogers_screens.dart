@@ -98,6 +98,7 @@ class _BlogersListState extends State<BlogersList> {
                     .toList(),
                 onTap: (value) {
                   setState(() {
+                    filterModels.clearsettings();
                     filterModels.id!.remove(value);
                     print("filterModels.id: -${filterModels.id}-");
 

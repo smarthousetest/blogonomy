@@ -40,6 +40,18 @@ class FiltersModels {
     date = "";
   }
 
+  void clearsettings() {
+    absoluteCommentsFilterMin = "";
+    absoluteCommentsFilterMax = "";
+    absoluteLikesFilterMin = "";
+    absoluteLikesFilterMax = "";
+    ermin = "";
+    ermax = "";
+    numFollowersmin = "";
+    numFollowersmax = "";
+    date = "";
+  }
+
   void clearId() {
     id = [];
   }
