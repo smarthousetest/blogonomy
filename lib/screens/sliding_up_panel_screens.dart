@@ -38,10 +38,11 @@ class _SlidingState extends State<Sliding> with SingleTickerProviderStateMixin {
             onNext: () => _tabController.index = 1,
           ),
           SecondPage(
-            onNext: () => _tabController.index = 0,
+            onNext: () => _tabController.index = 2,
+            onBack: () => _tabController.index = 0,
           ),
           ThirdPage(
-            onNext: () => _tabController.index = 1,
+            onNext: () => _tabController.index = 0,
           )
         ],
       ),
@@ -174,13 +175,14 @@ class _FirstPageStateState extends State<FirstPage> {
 class SecondPage extends StatefulWidget {
   final VoidCallback onNext;
   String? mail;
-
+  final VoidCallback onBack;
   setMail(String mail) {
     this.mail = mail;
     print(mail);
   }
 
-  SecondPage({Key? key, required this.onNext}) : super(key: key);
+  SecondPage({Key? key, required this.onNext, required this.onBack})
+      : super(key: key);
   @override
   State<SecondPage> createState() => SecondPageState();
 }
@@ -229,7 +231,7 @@ class SecondPageState extends State<SecondPage> {
     return Stack(children: <Widget>[
       IconButton(
           alignment: Alignment.topLeft,
-          onPressed: widget.onNext,
+          onPressed: widget.onBack,
           icon: const Icon(Icons.arrow_back_rounded)),
       Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Center(

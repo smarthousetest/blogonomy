@@ -37,7 +37,7 @@ class CardCubit2 extends Cubit<CardState2> {
   Future<void> fetchCard() async {
     try {
       emit(CardLoadingState2());
-      List<CardModel> _loaded = await cardRepository.getAllCards();
+      List<CardModel> _loaded = await cardRepository.getAllCards2();
       print("приватная  $_loaded");
       emit(CardLoadedState2(loadedCard: _loaded));
     } catch (_) {

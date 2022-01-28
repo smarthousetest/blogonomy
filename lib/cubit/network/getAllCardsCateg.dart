@@ -11,6 +11,10 @@ class GettAllCards {
   Future<List<CardModel>> getCardBy() async {
     return await cardRepository.getAllCards();
   }
+
+  Future<List<CardModel>> getCardBy2() async {
+    return await cardRepository.getAllCards2();
+  }
 }
 
 class GettAllBlogers {

@@ -302,7 +302,7 @@ class ProfileState extends State<Profile> {
                                 "Политика конфиденциальности",
                                 textScaleFactor: MediaQuery.of(context)
                                     .textScaleFactor
-                                    .clamp(1.0, 1.5),
+                                    .clamp(0.5, 1.5),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                 ),

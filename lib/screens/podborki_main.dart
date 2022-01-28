@@ -21,6 +21,7 @@ class PodborkiMain extends StatelessWidget {
     podborkaBool.public = false;
     CardCubit2 cardCubit2 = context.read<CardCubit2>();
     cardCubit2.fetchCard();
+
     return BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
       if (state is LoginedState) {
         return BlocBuilder<CardCubit2, CardState2>(builder: (context, state) {
@@ -86,10 +87,9 @@ class PodborkiMain extends StatelessWidget {
               return RefreshIndicator(
                   child: Column(children: [
                     Container(
-                      height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       child: ListView.builder(
-                          physics: AlwaysScrollableScrollPhysics(),
+                          physics: ClampingScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: state.loadedCard?.length,
                           itemBuilder: (context, index) {

@@ -83,10 +83,11 @@ class AuthCubit extends Cubit<AuthState> {
     await sharedPreferences.remove(idTokenKey);
     AppAuth.accessToken = null;
 
-    await appAuth.endSession(EndSessionRequest(
-        //   idTokenHint: '<idToken>',
-        postLogoutRedirectUrl: 'com.blogonomy.mobile:/exit'));
-    //    serviceConfiguration: AuthorizationServiceConfiguration(authorizationEndpoint: '<authorization_endpoint>',  tokenEndpooint: '<token_endpoint>', endSessionEndpoint: '<end_session_endpoint>'));
+    // await appAuth.endSession(EndSessionRequest(
+    //       idTokenHint: '',
+    //       postLogoutRedirectUrl: 'com.blogonomy.mobile:/exit',
+    //       serviceConfiguration:  AuthorizationServiceConfiguration(authorizationEndpoint: 'https://passport-blogonomy.maksatlabs.ru/connect/authorize', endSessionEndpoint: '<end_session_endpoint>', tokenEndpoint: 'https://passport-blogonomy.maksatlabs.ru/connect/token'
+    // ));
     emit(LogoutedState());
     print("Logout ended");
   }

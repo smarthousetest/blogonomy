@@ -180,7 +180,6 @@ class _SlidingUpState3 extends State<SlidingUp3> {
                               .read<BottomNavigationControllerSelect>()
                               .select(0);
                           Navigator.pop(context);
-                          FilterOneApi().GetCategoryUser();
                         },
                         child: const SizedBox(
                           height: 52,

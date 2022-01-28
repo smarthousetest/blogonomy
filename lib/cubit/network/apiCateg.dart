@@ -12,6 +12,22 @@ import '../../main.dart';
 class CardApi {
   Future<List<CardModel>> getCard() async {
     bool? public = podborkaBool.public;
+    final response = await http.post(
+        Uri.parse(
+            'https://service-blogonomy.maksatlabs.ru/api/info/AboutCategories'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"public": public}));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> cardJson = json.decode(response.body);
+      return cardJson.map((json) => CardModel.fromJson(json)).toList();
+    } else {
+      throw Exception('Error fetching users');
+    }
+  }
+
+  Future<List<CardModel>> getCard2() async {
+    bool? public = podborkaBool.public;
 
     Map<String, String> headers2 = {"content-type": "application/json"};
     if (AppAuth.accessToken != null && AppAuth.accessToken!.isNotEmpty) {
@@ -23,17 +39,11 @@ class CardApi {
         headers: headers2);
     print("headers = $headers2");
     print("podborka = ${response2.body}");
-
+    print("code = ${response2.statusCode}");
     print("object");
 
-    final response = await http.post(
-        Uri.parse(
-            'https://service-blogonomy.maksatlabs.ru/api/info/AboutCategories'),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"public": public}));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> cardJson = json.decode(response.body);
+    if (response2.statusCode == 200) {
+      final List<dynamic> cardJson = json.decode(response2.body);
       return cardJson.map((json) => CardModel.fromJson(json)).toList();
     } else {
       throw Exception('Error fetching users');
@@ -453,18 +463,5 @@ class FilterOneApi {
     } else {
       throw Exception('Error fetching filter one');
     }
-  }
-
-  Future<void> GetCategoryUser() async {
-    Map<String, String> headers = {"content-type": "application/json"};
-    if (AppAuth.accessToken != null && AppAuth.accessToken!.isNotEmpty) {
-      headers.addAll({'Authorization': 'Bearer ${AppAuth.accessToken}'});
-    }
-    final response = await http.post(
-        Uri.parse(
-            "https://service-blogonomy.maksatlabs.ru/api/Category/GetCategoryUser"),
-        headers: headers);
-    print("headers = $headers");
-    print("podborka = ${response.body}");
   }
 }

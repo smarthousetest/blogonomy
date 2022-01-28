@@ -36,6 +36,14 @@ Future<void> fetchCarde() async {
   listikload = loaded?.map((value) => value.name!).toList();
 }
 
+Future<void> fetchCarde2() async {
+  loaded = await CardRepository().getAllCards2();
+  listikloaded = loaded
+      ?.map((value) => ListCategotyFilters(id: value.id!, name: value.name!))
+      .toList();
+  listikload = loaded?.map((value) => value.name!).toList();
+}
+
 void outselected() {
   List? itemsSelected = [];
 

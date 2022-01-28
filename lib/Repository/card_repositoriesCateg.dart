@@ -10,6 +10,7 @@ import 'package:dartz/dartz.dart';
 class CardRepository {
   CardApi cardApi = CardApi();
   Future<List<CardModel>> getAllCards() => cardApi.getCard();
+  Future<List<CardModel>> getAllCards2() => cardApi.getCard2();
 }
 
 class BlogersRepository {
