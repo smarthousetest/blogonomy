@@ -283,12 +283,12 @@ class ProfileState extends State<Profile> {
                         // ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 24, right: 24),
+                        padding: const EdgeInsets.only(left: 10, right: 24),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 10),
+                            Expanded(
+                              flex: 1,
                               child: Image.asset(
                                 'assets/images/shield.png',
                                 width: 27,
@@ -296,26 +296,29 @@ class ProfileState extends State<Profile> {
                                 color: Color(0x40200E32),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 20),
+                            Expanded(
+                              flex: 2,
                               child: Text(
                                 "Политика конфиденциальности",
                                 textScaleFactor: MediaQuery.of(context)
                                     .textScaleFactor
-                                    .clamp(0.5, 1.5),
+                                    .clamp(0.1, 1.5),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
-                            Spacer(
+                            Expanded(
                               flex: 1,
-                            ),
-                            Image.asset(
-                              'assets/images/arrow.png',
-                              height: 30,
-                              width: 30,
-                              color: Colors.blue,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 40),
+                                child: Image.asset(
+                                  'assets/images/arrow.png',
+                                  height: 30,
+                                  width: 30,
+                                  color: Colors.blue,
+                                ),
+                              ),
                             ),
                           ],
                         ),
