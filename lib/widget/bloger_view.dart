@@ -15,70 +15,72 @@ class BlogerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          height: 80.0,
-          margin: const EdgeInsets.only(left: 20.0, right: 21.0),
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                spreadRadius: 0,
-                blurRadius: 25,
-                // changes position of shadow
-              ),
-            ],
-            border: Border.all(
-              color: const Color(0xFFF0F0FF),
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(36.0),
-            color: const Color(0xFFFFFFFF),
-            // gradient: const LinearGradient(
-            //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-            // ),
+    return Container(
+      //height: 90,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 10,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text(
-                    '$id',
-                    textScaleFactor: MediaQuery.of(context).textScaleFactor,
-                    style: TextStyle(
-                      fontFamily: 'Roboto-Bold.ttf',
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF394759),
-                    ),
-                  )),
-              CircleAvatar(
-                backgroundImage: NetworkImage('$picUrl'),
-                radius: 25,
+          Container(
+            height: 80.0,
+            margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 0,
+                  blurRadius: 25,
+                  // changes position of shadow
+                ),
+              ],
+              border: Border.all(
+                color: const Color(0xFFF0F0FF),
+                width: 1,
               ),
-              Padding(
-                  padding: EdgeInsets.only(left: 10, right: 5),
-                  child: Text(
-                    '$userName',
-                    textScaleFactor: MediaQuery.of(context).textScaleFactor,
-                    style: TextStyle(
-                      fontFamily: 'Roboto-Bold.ttf',
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF394759),
-                    ),
-                  )),
-              Spacer(
-                flex: 1,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: Positioned(
+              borderRadius: BorderRadius.circular(36.0),
+              color: const Color(0xFFFFFFFF),
+              // gradient: const LinearGradient(
+              //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+              // ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Text(
+                      '$id',
+                      textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                      style: TextStyle(
+                        fontFamily: 'Roboto-Bold.ttf',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF394759),
+                      ),
+                    )),
+                CircleAvatar(
+                  backgroundImage: NetworkImage('$picUrl'),
+                  radius: 25,
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 10, right: 5),
+                    child: Text(
+                      '$userName',
+                      textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                      style: TextStyle(
+                        fontFamily: 'Roboto-Bold.ttf',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF394759),
+                      ),
+                    )),
+                Spacer(
+                  flex: 1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  //   child: Positioned(
                   child: Text(
                     '${er.toStringAsFixed(1)}',
                     textScaleFactor: MediaQuery.of(context).textScaleFactor,
@@ -89,13 +91,14 @@ class BlogerView extends StatelessWidget {
                       color: Color(0xFF394759),
                     ),
                   ),
+                  //  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 24.0)
-      ],
+          const SizedBox(height: 24.0)
+        ],
+      ),
     );
   }
 }

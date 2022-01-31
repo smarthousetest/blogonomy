@@ -84,7 +84,7 @@ class _BlogersListState extends State<BlogersList> {
       return RefreshIndicator(
           child: Column(children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 21.0),
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: MultiSelectChipDisplay(
                 icon: Icon(
                   Icons.close,
@@ -121,17 +121,16 @@ class _BlogersListState extends State<BlogersList> {
                         onTap: () {
                           blogerFindModel =
                               BlogerFindModel(id: "${blogers[index].id}");
-
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => BlogerProfileScreen()));
                         },
+                        // child: Text('${blogers[index].userName}'),
                         child: BlogerView(
                             id: '${index + 1}',
                             userName: '${blogers[index].userName}',
                             //   fullName: '${state.loadedBlogers?[index].fullName}',
-
                             picUrl: '${blogers[index].picUrl}',
                             // picUrl:
                             //     'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
