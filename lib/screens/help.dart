@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:blogonomy/floating_bottom_navigation_bar-1.5.2/src/floating_navbar.dart';
+import 'package:blogonomy/floating_bottom_navigation_bar-1.5.2/src/floating_navbar_item.dart';
 import 'package:blogonomy/screens/podborki_main.dart';
 import 'package:blogonomy/screens/popular_tab.dart';
 import 'package:blogonomy/widget/collections.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 

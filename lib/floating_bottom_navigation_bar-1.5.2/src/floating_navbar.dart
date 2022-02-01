@@ -1,4 +1,4 @@
-import 'package:floating_bottom_navigation_bar/src/floating_navbar_item.dart';
+import 'package:blogonomy/floating_bottom_navigation_bar-1.5.2/src/floating_navbar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
