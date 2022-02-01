@@ -6,6 +6,7 @@ import 'package:blogonomy/screens/podborki_main.dart';
 import 'package:blogonomy/screens/popular_tab.dart';
 import 'package:blogonomy/widget/collections.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
+//import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/material.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
