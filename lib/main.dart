@@ -19,7 +19,6 @@ import 'package:blogonomy/widget/profile.dart';
 import 'package:blogonomy/widget/collections.dart';
 import 'package:blogonomy/widget/sliding_up/bloger_panel.dart';
 import 'package:blogonomy/widget/sliding_up/sliding_up_panel.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:blogonomy/cubit/locator_services.dart' as servic;
 import 'package:flutter/services.dart';
@@ -28,6 +27,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'cubit/network/auth_cubit.dart';
+import 'floating_bottom_navigation_bar-1.5.2/src/floating_navbar.dart';
+import 'floating_bottom_navigation_bar-1.5.2/src/floating_navbar_item.dart';
 
 FiltersModels filterModels = FiltersModels();
 BlogerFindModel blogerFindModel = BlogerFindModel();
