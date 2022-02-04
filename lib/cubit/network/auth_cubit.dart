@@ -47,6 +47,7 @@ class AuthCubit extends Cubit<AuthState> {
       return;
     }
     AppAuth.accessToken = storedAccessToken;
+
     emit(LoginedState());
   }
 

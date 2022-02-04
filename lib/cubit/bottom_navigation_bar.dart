@@ -1,3 +1,4 @@
+import 'package:blogonomy/cubit/network/app_auth.dart';
 import 'package:blogonomy/cubit/network/auth_cubit.dart';
 import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
@@ -13,9 +14,6 @@ class BottomNavigationControllerSelect extends Cubit<int> {
   BottomNavigationControllerSelect() : super(0);
 
   void select(int index) {
-    // BlocBuilder<AuthCubit,AuthState>(builder: (context, state) {
-    //   i
-    // },)
     emit(index);
   }
 }

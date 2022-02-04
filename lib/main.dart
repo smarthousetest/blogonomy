@@ -2,6 +2,8 @@ import 'package:blogonomy/auth/auth_page.dart';
 import 'package:blogonomy/cubit/bottom_navigation_bar.dart';
 import 'package:blogonomy/cubit/locator_services.dart';
 import 'package:blogonomy/cubit/network/admin_cubit.dart';
+import 'package:blogonomy/cubit/network/apiCateg.dart';
+import 'package:blogonomy/cubit/network/app_auth.dart';
 import 'package:blogonomy/cubit/network/bloger_find_model.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/filters_model.dart';
@@ -41,6 +43,8 @@ Future<void> main() async {
   ));
   WidgetsFlutterBinding.ensureInitialized();
   await servic.init();
+  print("accessToken big = ${AppAuth.accessToken}");
+
   runApp(const MyApp());
 }
 
@@ -72,6 +76,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<AuthCubit>(
               create: (context) => sl<AuthCubit>()..check()),
           BlocProvider<AdminCubit>(create: (context) => sl<AdminCubit>()),
+          BlocProvider<AuthApi>(create: (context) => sl<AuthApi>()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

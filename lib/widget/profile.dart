@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:blogonomy/auth/auth_page.dart';
 import 'package:blogonomy/cubit/network/admin_cubit.dart';
 import 'package:blogonomy/cubit/network/admin_state.dart';
+import 'package:blogonomy/cubit/network/app_auth.dart';
 import 'package:blogonomy/cubit/network/auth_cubit.dart';
 import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
@@ -20,7 +21,13 @@ class ProfileState extends State<Profile> {
   bool _enabled = false;
   @override
   Widget build(BuildContext context) {
-    context.read<SlidingUpCubit>().open();
+    print("access token bottom =  ${AppAuth.accessToken}");
+    if (AppAuth.accessToken != null) {
+      context.read<SlidingUpCubit>().close();
+    } else {
+      context.read<SlidingUpCubit>().open();
+    }
+
     return Stack(
       children: [
         Scaffold(
@@ -40,32 +47,38 @@ class ProfileState extends State<Profile> {
               elevation: 0,
               centerTitle: true,
               actions: [
-                BlocBuilder<AdminCubit, AdminState>(builder: (context, state) {
-                  //var authState = context.read<AuthCubit>().state;
-                  //(authState is LoginedState ||
-                  if (state is NoAdminState)
-                    return Container();
-                  else
-                    return Stack(children: [
-                      Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Text("admin"),
-                      ),
-                    ]);
-                }),
-                Switch(
-                  value: _enabled,
-                  onChanged: (bool value) {
-                    setState(() {
-                      context.read<AdminCubit>().setAdmin();
-                      _enabled = value;
+                BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
+                  if (state is LoginedState) {
+                    BlocBuilder<AdminCubit, AdminState>(
+                        builder: (context, state) {
+                      //var authState = context.read<AuthCubit>().state;
+                      //(authState is LoginedState ||
+                      if (state is NoAdminState)
+                        return Container();
+                      else
+                        return Stack(children: [
+                          Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Text("admin"),
+                          ),
+                        ]);
                     });
-                  },
-                  activeThumbImage:
-                      new NetworkImage('https://nklk.ru/dll_image/1017.png'),
-                  inactiveThumbImage: new NetworkImage(
-                      'https://w7.pngwing.com/pngs/251/239/png-transparent-logo-design-rebranding-typography-letter-a-angle-text-triangle.png'),
-                ),
+                    Switch(
+                      value: _enabled,
+                      onChanged: (bool value) {
+                        setState(() {
+                          context.read<AdminCubit>().setAdmin();
+                          _enabled = value;
+                        });
+                      },
+                      activeThumbImage: new NetworkImage(
+                          'https://nklk.ru/dll_image/1017.png'),
+                      inactiveThumbImage: new NetworkImage(
+                          'https://w7.pngwing.com/pngs/251/239/png-transparent-logo-design-rebranding-typography-letter-a-angle-text-triangle.png'),
+                    );
+                  }
+                  return Text("");
+                })
               ],
             ),
             body: BlocBuilder<AuthCubit, AuthState>(

@@ -4,11 +4,13 @@ import 'dart:ui';
 import 'package:blogonomy/auth/auth_page.dart';
 import 'package:blogonomy/cubit/bottom_navigation_bar.dart';
 import 'package:blogonomy/cubit/network/apiCateg.dart';
+import 'package:blogonomy/cubit/network/api_state.dart';
 import 'package:blogonomy/cubit/network/auth_cubit.dart';
 import 'package:blogonomy/cubit/network/auth_mode.dart';
 import 'package:blogonomy/cubit/page_bloc.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:blogonomy/widget/sliding_up/sliding_up_panel.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/src/provider.dart';
 import 'package:quiver/async.dart';
 import 'package:http/http.dart' as http;
@@ -110,47 +112,58 @@ class _FirstPageStateState extends State<FirstPage> {
         ),
         const SizedBox(height: 16.0),
         Container(
-          height: 52.0,
-          width: 600,
-          margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-          child: ElevatedButton(
-            onPressed: () async {
-              String mail = widget.textEditingController.text;
-              final AuthModel authModel = await AuthApi().createMail(mail);
-              first.mail = mail;
-              print("object $mail");
-              setState(() {
-                _authModel = authModel;
-              });
-
-              if (authModel.result == 'empty') {
-                widget.onNext!();
-              }
-              if (authModel.result == 'exist') {
-                context.read<AuthCubit>().signIn();
-              }
-            },
-            child: const Text(
-              'Далее',
-              style: TextStyle(
-                fontFamily: 'Roboto-Bold.ttf',
-                fontSize: 15.0,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFFFFFFFF),
+            height: 52.0,
+            width: 600,
+            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+            child: ElevatedButton(
+              onPressed: () async {
+                String mail = widget.textEditingController.text;
+                final AuthModel authModel = await AuthApi().createMail(mail);
+                first.mail = mail;
+                print("object $mail");
+                setState(() {
+                  _authModel = authModel;
+                });
+                if (authModel.result == 'empty') {
+                  widget.onNext!();
+                }
+                if (authModel.result == 'exist') {
+                  context.read<AuthCubit>().signIn();
+                }
+              },
+              child: BlocBuilder<AuthApi, ApiState>(
+                builder: (context, state) {
+                  print("first $state");
+                  if (state is Loading) {
+                    Center(child: CircularProgressIndicator());
+                  }
+                  if (state is NoLoading) {
+                    const Text(
+                      'Далее',
+                      style: TextStyle(
+                        fontFamily: 'Roboto-Bold.ttf',
+                        fontSize: 15.0,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFFFFFFFF),
+                      ),
+                    );
+                  }
+                  ;
+                  print("second $state");
+                  return Text("");
+                },
               ),
-            ),
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(const Color(0xFF006FFD)),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(const Color(0xFF006FFD)),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32.0),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
+            )),
         SizedBox(
           height: 16,
         ),
@@ -379,6 +392,7 @@ class ThirdPageState extends State<ThirdPage> {
   TextEditingController textEditingController = TextEditingController();
   TextEditingController textEditingController2 = TextEditingController();
   bool yes = true;
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -397,9 +411,10 @@ class ThirdPageState extends State<ThirdPage> {
               ],
             ),
             Container(
-              height: 52.0,
+              height: 73.0,
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: TextFormField(
+                obscureText: true,
                 controller: textEditingController,
                 validator: (val) {
                   if (val!.isEmpty) {
@@ -416,6 +431,7 @@ class ThirdPageState extends State<ThirdPage> {
                     fontWeight: FontWeight.w400,
                     color: Color(0xFFADB3BD),
                   ),
+                  helperText: "Пароль не менее 6 символов и минимум одна цифра",
                   enabledBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Color(0xFFADB3BD), width: 1.0),
@@ -434,6 +450,7 @@ class ThirdPageState extends State<ThirdPage> {
               height: 52.0,
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: TextFormField(
+                obscureText: true,
                 controller: textEditingController2,
                 validator: (val) {
                   if (val!.isEmpty) return 'Поле пустое';
@@ -479,6 +496,7 @@ class ThirdPageState extends State<ThirdPage> {
                   } else {
                     print("UnSuccessfull");
                   }
+                  context.read<AuthCubit>().signIn();
                 },
                 child: const Text(
                   'Готово',
