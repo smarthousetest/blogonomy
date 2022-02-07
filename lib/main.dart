@@ -4,6 +4,7 @@ import 'package:blogonomy/cubit/locator_services.dart';
 import 'package:blogonomy/cubit/network/admin_cubit.dart';
 import 'package:blogonomy/cubit/network/apiCateg.dart';
 import 'package:blogonomy/cubit/network/app_auth.dart';
+import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/cubit/network/bloger_find_model.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/filters_model.dart';
@@ -44,7 +45,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await servic.init();
   print("accessToken big = ${AppAuth.accessToken}");
-
+  if (AppAuth.accessToken != null) {
+    LoginedState();
+  }
   runApp(const MyApp());
 }
 

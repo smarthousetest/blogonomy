@@ -201,23 +201,6 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                             Spacer(
                               flex: 2,
                             ),
-                            BlocBuilder<AdminCubit, AdminState>(
-                                builder: (context, state) {
-                              if (state is NoAdminState)
-                                return Container(
-                                    child: IconButton(
-                                  onPressed: () {
-                                    context.read<SlidingUpCubit2>().open();
-                                  },
-                                  icon: Image.asset(
-                                    'assets/images/menu_blog.png',
-                                    color: Colors.blue,
-                                  ),
-                                  color: Colors.blue,
-                                ));
-                              else
-                                return Container();
-                            }),
                             Container(
                                 child: IconButton(
                                     onPressed: () async {

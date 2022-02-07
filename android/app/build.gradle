@@ -50,9 +50,11 @@ android {
         applicationId "com.blogonomy.release"
         minSdkVersion 18
         targetSdkVersion 30
+        compileSdkVersion 31
         manifestPlaceholders = [appAuthRedirectScheme: 'com.blogonomy.mobile']
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
    signingConfigs {
        release {

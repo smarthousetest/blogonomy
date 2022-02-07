@@ -135,9 +135,12 @@ class _FirstPageStateState extends State<FirstPage> {
                 builder: (context, state) {
                   print("first $state");
                   if (state is Loading) {
-                    Center(child: CircularProgressIndicator());
-                  }
-                  if (state is NoLoading) {
+                    Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ));
+                    print("state in case = $state");
+                  } else if (state is NoLoading) {
                     const Text(
                       'Далее',
                       style: TextStyle(
@@ -148,10 +151,11 @@ class _FirstPageStateState extends State<FirstPage> {
                         color: Color(0xFFFFFFFF),
                       ),
                     );
+                    print("state in case2 = $state");
                   }
                   ;
                   print("second $state");
-                  return Text("");
+                  return Center(child: Text(""));
                 },
               ),
               style: ButtonStyle(
@@ -431,7 +435,8 @@ class ThirdPageState extends State<ThirdPage> {
                     fontWeight: FontWeight.w400,
                     color: Color(0xFFADB3BD),
                   ),
-                  helperText: "Пароль не менее 6 символов и минимум одна цифра",
+                  helperText:
+                      "Пароль не менее 6 символов и минимум одна цифра без пробелов",
                   enabledBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Color(0xFFADB3BD), width: 1.0),
