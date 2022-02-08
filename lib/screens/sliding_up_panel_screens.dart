@@ -73,7 +73,7 @@ class _FirstPageStateState extends State<FirstPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 32.0),
+        const SizedBox(height: 30.0),
         Container(
           alignment: Alignment.center,
           child: const Text(
@@ -86,7 +86,7 @@ class _FirstPageStateState extends State<FirstPage> {
                 color: Color(0xFF24282E)),
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 20),
         Container(
           height: 52.0,
           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -124,24 +124,23 @@ class _FirstPageStateState extends State<FirstPage> {
                 setState(() {
                   _authModel = authModel;
                 });
-                if (authModel.result == 'empty') {
-                  widget.onNext!();
-                }
+
                 if (authModel.result == 'exist') {
                   context.read<AuthCubit>().signIn();
+                  context.read<SlidingUpCubit>().close();
                 }
               },
               child: BlocBuilder<AuthApi, ApiState>(
                 builder: (context, state) {
                   print("first $state");
                   if (state is Loading) {
-                    Center(
+                    print("state in case = $state");
+                    return Center(
                         child: CircularProgressIndicator(
                       color: Colors.white,
                     ));
-                    print("state in case = $state");
                   } else if (state is NoLoading) {
-                    const Text(
+                    return const Text(
                       'Далее',
                       style: TextStyle(
                         fontFamily: 'Roboto-Bold.ttf',
@@ -151,7 +150,6 @@ class _FirstPageStateState extends State<FirstPage> {
                         color: Color(0xFFFFFFFF),
                       ),
                     );
-                    print("state in case2 = $state");
                   }
                   ;
                   print("second $state");
@@ -169,7 +167,22 @@ class _FirstPageStateState extends State<FirstPage> {
               ),
             )),
         SizedBox(
-          height: 16,
+          height: 10,
+        ),
+        GestureDetector(
+            onTap: () => widget.onNext!(),
+            child: Text(
+              "Зарегистрироваться",
+              style: TextStyle(
+                fontFamily: 'Roboto-Bold.ttf',
+                fontSize: 15.0,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w700,
+                color: Colors.blue,
+              ),
+            )),
+        SizedBox(
+          height: 20,
         ),
         GestureDetector(
             onTap: () => Navigator.pushNamed(context, '/e'),

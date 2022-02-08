@@ -159,11 +159,10 @@ class AuthApi extends Cubit<ApiState> {
           "Accept": "application/json",
           "content-type": "application/json"
         });
-
+    emit(Loading());
     print(response.statusCode);
     print("Auth api mail = $mail");
     if (response.statusCode == 200) {
-      emit(Loading());
       print("state in create mail = $state");
       final String responseString = response.body;
 

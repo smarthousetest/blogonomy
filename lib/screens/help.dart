@@ -357,7 +357,7 @@ class _MyHomePageState extends State<HelpPage> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
-                                fontSize: 20.0),
+                                fontSize: 13.0),
                           ),
                         ),
                       ),
@@ -400,7 +400,7 @@ class _MyHomePageState extends State<HelpPage> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
-                                fontSize: 20.0),
+                                fontSize: 13.0),
                           ),
                         ),
                       ),

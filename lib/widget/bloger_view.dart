@@ -69,11 +69,11 @@ class BlogerView extends StatelessWidget {
                       '$userName',
                       textScaleFactor: MediaQuery.of(context).textScaleFactor,
                       style: TextStyle(
-                        fontFamily: 'Roboto-Bold.ttf',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF394759),
-                      ),
+                          fontFamily: 'Roboto-Bold.ttf',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF394759),
+                          fontSize: 13),
                     )),
                 Spacer(
                   flex: 1,

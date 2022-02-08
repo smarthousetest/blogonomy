@@ -138,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
           bottomNavigationBar: FloatingNavbar(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 20,
-              elevation: 5,
+              elevation: 0,
               margin: const EdgeInsets.only(left: 18, right: 18),
               selectedBackgroundColor: Colors.blue,
               backgroundColor: Colors.white,

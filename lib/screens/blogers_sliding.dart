@@ -382,7 +382,7 @@ class BlogersPanelState extends State<BlogersPanel> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Подписчиков",
+                        "Кол-во подписчиков",
                         style: TextStyle(
                           color: Colors.grey,
                           fontFamily: 'Roboto-Bold.ttf',
@@ -517,7 +517,7 @@ class BlogersPanelState extends State<BlogersPanel> {
                             style: TextStyle(
                               color: Colors.blue,
                               fontFamily: 'Roboto-Bold.ttf',
-                              fontSize: 14,
+                              fontSize: 13,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                             )),

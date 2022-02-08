@@ -117,6 +117,7 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
               body: SafeArea(
                   child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
+            physics: ClampingScrollPhysics(),
             child: Column(
               children: [
                 ClipPath(
@@ -188,10 +189,10 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                               alignment: Alignment.center,
                               height: 25.0,
                               child: const Text(
-                                'Инфо о блогере',
+                                'Информация о блогере',
                                 style: TextStyle(
                                   fontFamily: 'Roboto-Medium.ttf',
-                                  fontSize: 21.0,
+                                  fontSize: 18.0,
                                   fontStyle: FontStyle.normal,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xFF24282E),
@@ -1105,7 +1106,7 @@ FlTitlesData get titlesData => FlTitlesData(
         getTextStyles: (context, value) => const TextStyle(
           color: Color(0xff7589a2),
           fontWeight: FontWeight.bold,
-          fontSize: 14,
+          fontSize: 12,
         ),
         margin: 20,
         getTitles: (double value) {
