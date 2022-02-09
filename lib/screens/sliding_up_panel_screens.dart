@@ -119,17 +119,18 @@ class _FirstPageStateState extends State<FirstPage> {
               onPressed: () async {
                 String mail = widget.textEditingController.text;
                 final AuthModel authModel = await AuthApi().createMail(mail);
-                Future.delayed(const Duration(milliseconds: 500));
-                first.mail = mail;
-                print("object $mail");
-                setState(() {
-                  _authModel = authModel;
-                });
+                Future.delayed(Duration(milliseconds: 5000), () {
+                  first.mail = mail;
+                  print("object $mail");
+                  setState(() {
+                    _authModel = authModel;
+                  });
 
-                if (authModel.result == 'exist') {
-                  context.read<AuthCubit>().signIn();
-                  context.read<SlidingUpCubit>().close();
-                }
+                  if (authModel.result == 'exist') {
+                    context.read<AuthCubit>().signIn();
+                    context.read<SlidingUpCubit>().close();
+                  }
+                });
               },
               child: BlocBuilder<AuthApi, ApiState>(
                 builder: (context, state) {

@@ -63,18 +63,21 @@ class BlogerView extends StatelessWidget {
                   backgroundImage: NetworkImage('$picUrl'),
                   radius: 25,
                 ),
-                Padding(
-                    padding: EdgeInsets.only(left: 10, right: 5),
-                    child: Text(
-                      '$userName',
-                      textScaleFactor: MediaQuery.of(context).textScaleFactor,
-                      style: TextStyle(
-                          fontFamily: 'Roboto-Bold.ttf',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF394759),
-                          fontSize: 13),
-                    )),
+                SizedBox(
+                  width: 150,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: 10, right: 5),
+                      child: Text(
+                        '$userName',
+                        textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                        style: TextStyle(
+                            fontFamily: 'Roboto-Bold.ttf',
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF394759),
+                            fontSize: 13),
+                      )),
+                ),
                 Spacer(
                   flex: 1,
                 ),

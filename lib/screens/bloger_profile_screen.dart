@@ -114,721 +114,279 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
         return StatefulBuilder(// StatefulBuilder
             builder: (context, setState) {
           return Scaffold(
+              appBar: AppBar(
+                iconTheme: IconThemeData(color: Colors.blue),
+                toolbarHeight: 100,
+                backgroundColor: Color(0xFFF5F5FF),
+                elevation: 0,
+                actions: [
+                  Column(
+                    children: [
+                      Container(
+                          child: IconButton(
+                              onPressed: () async {
+                                showAlertDialogload(context);
+                                await outselected();
+                                Navigator.pop(context);
+                                showAlertDialog(context);
+                              },
+                              icon: Icon(
+                                Icons.library_books_outlined,
+                                color: Color(0xFF0072FD),
+                                size: 28,
+                              ))),
+                      Container(
+                          child: IconButton(
+                              onPressed: () async {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text('Выполняю обновление!'),
+                                ));
+
+                                String? result =
+                                    await OneBlogerApi().updBloger();
+
+                                if (result == "OK") {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(
+                                        'В скором времени информация обновится!'),
+                                  ));
+                                }
+                                if (result == "ERR") {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content:
+                                        Text('Ошибка! Обратитесь в поддержку.'),
+                                  ));
+                                }
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(
+                                Icons.refresh_outlined,
+                                color: Color(0xFF0072FD),
+                                size: 28,
+                              ))),
+                    ],
+                  ),
+                ],
+                title: Container(
+                  alignment: Alignment.center,
+                  height: 25.0,
+                  child: const Text(
+                    'Информация о блогере',
+                    style: TextStyle(
+                      fontFamily: 'Roboto-Medium.ttf',
+                      fontSize: 18.0,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF24282E),
+                    ),
+                  ),
+                ),
+              ),
               body: SafeArea(
                   child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            physics: ClampingScrollPhysics(),
-            child: Column(
-              children: [
-                ClipPath(
-                  clipper: CurvedBottomClipper(),
-                  child: Container(
-                    color: Color(0xFFF5F5FF),
-                    height: 300.0,
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 32.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                scrollDirection: Axis.vertical,
+                physics: ClampingScrollPhysics(),
+                child: Column(
+                  children: [
+                    ClipPath(
+                      clipper: CurvedBottomClipper(),
+                      child: Container(
+                        color: Color(0xFFF5F5FF),
+                        height: 300.0,
+                        child: Column(
                           children: [
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                                child: IconButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    icon: Icon(
-                                      Icons.chevron_left_outlined,
-                                      color: Color(0xFF0072FD),
-                                      size: 38,
-                                    ))),
-                            Spacer(
-                              flex: 1,
-                            ),
-                            Container(
-                                child: IconButton(
-                                    onPressed: () async {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text('Выполняю обновление!'),
-                                      ));
-
-                                      String? result =
-                                          await OneBlogerApi().updBloger();
-
-                                      if (result == "OK") {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content: Text(
-                                              'В скором времени информация обновится!'),
-                                        ));
-                                      }
-                                      if (result == "ERR") {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content: Text(
-                                              'Ошибка! Обратитесь в поддержку.'),
-                                        ));
-                                      }
-                                      Navigator.pop(context);
-                                    },
-                                    icon: Icon(
-                                      Icons.refresh_outlined,
-                                      color: Color(0xFF0072FD),
-                                      size: 28,
-                                    ))),
-                            Spacer(
-                              flex: 1,
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              height: 25.0,
-                              child: const Text(
-                                'Информация о блогере',
-                                style: TextStyle(
-                                  fontFamily: 'Roboto-Medium.ttf',
-                                  fontSize: 18.0,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xFF24282E),
+                            const SizedBox(height: 32.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(
+                                  width: 10,
                                 ),
-                              ),
-                            ),
-                            Spacer(
-                              flex: 2,
-                            ),
-                            Container(
-                                child: IconButton(
-                                    onPressed: () async {
-                                      showAlertDialogload(context);
-                                      await outselected();
-                                      Navigator.pop(context);
-                                      showAlertDialog(context);
-                                    },
-                                    icon: Icon(
-                                      Icons.library_books_outlined,
-                                      color: Color(0xFF0072FD),
-                                      size: 28,
-                                    ))),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        CircularProfileAvatar(
-                          '${state.loadedBloger?.picUrl}', //sets image path, it should be a URL string. default value is empty string, if path is empty it will display only initials
-                          radius: 48,
-                          borderWidth: 5,
-                          borderColor: Colors.blue,
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Text(
-                          '${state.loadedBloger?.fullName}',
-                          style: TextStyle(
-                            fontFamily: 'Roboto-Bold.ttf',
-                            fontSize: 18.0,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.person_outline,
-                              color: Colors.grey[400],
-                            ),
-                            Text(
-                              '@${state.loadedBloger?.userName}',
-                              style: TextStyle(
-                                fontFamily: 'Roboto-Bold.ttf',
-                                fontSize: 12.0,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Colors.grey[400],
-                            ),
-                            Text(
-                              "$location",
-                              style: TextStyle(
-                                fontFamily: 'Roboto-Bold.ttf',
-                                fontSize: 12.0,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  height: 350,
-                  margin: const EdgeInsets.only(left: 20.0, right: 21.0),
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 0,
-                        blurRadius: 25,
-                        // changes position of shadow
-                      ),
-                    ],
-                    border: Border.all(
-                      color: const Color(0xFFF0F0FF),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(32.0),
-                    color: const Color(0xFFFFFFFF),
-                    // gradient: const LinearGradient(
-                    //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                    // ),
-                  ),
-                  child: Column(
-                    children: [
-                      Stack(children: [
-                        Container(
-                          padding:
-                              EdgeInsets.only(top: 26, bottom: 20, right: 26),
-                          height: 240,
-                          width: MediaQuery.of(context).size.width,
-                          child: LineChart(
-                            mainData(),
-                          ),
-                        ),
-                      ]),
-                      const SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Показатель ER, % ',
-                              style: TextStyle(
-                                fontFamily: 'Roboto-Bold.ttf',
-                                fontSize: 17.0,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFFB1B1D1),
-                              ),
-                            ),
-                            Text(
-                              '${state.loadedBloger?.er?.toStringAsFixed(1)}',
-                              style: TextStyle(
-                                fontFamily: 'Roboto-Bold.ttf',
-                                fontSize: 20.0,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Подписчиков:',
-                              style: TextStyle(
-                                fontFamily: 'Roboto-Bold.ttf',
-                                fontSize: 17.0,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFFB1B1D1),
-                              ),
-                            ),
-                            Text(
-                              '${state.loadedBloger?.numFollowers}',
-                              style: TextStyle(
-                                fontFamily: 'Roboto-Bold.ttf',
-                                fontSize: 20.0,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF394759),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Container(
-                    padding: EdgeInsets.only(top: 26, bottom: 24),
-                    margin: const EdgeInsets.only(left: 20.0, right: 21.0),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 0,
-                          blurRadius: 25,
-                          // changes position of shadow
-                        ),
-                      ],
-                      border: Border.all(
-                        color: const Color(0xFFF0F0FF),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(32.0),
-                      color: const Color(0xFFFFFFFF),
-                      // gradient: const LinearGradient(
-                      //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                      // ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            SvgPicture.asset(
-                              "assets/icons/heart.svg",
-                              color: Colors.grey,
-                            ),
-                            // Icon(
-                            //   Icons.favorite_border_outlined,
-                            //   color: Colors.grey,
-                            // ),
-                            const SizedBox(height: 11),
-                            Text(
-                              '${state.loadedBloger?.absoluteLikes}',
-                              style: TextStyle(
-                                fontFamily: 'Roboto-Bold.ttf',
-                                fontSize: 16.0,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF394759),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            SvgPicture.asset(
-                              "assets/icons/chat.svg",
-                              color: Colors.grey,
-                            ),
-                            // Icon(
-                            //   Icons.chat_outlined,
-                            //   color: Colors.grey,
-                            // ),
-                            const SizedBox(height: 11),
-                            Text(
-                              '${state.loadedBloger?.absoluteComments}',
-                              style: TextStyle(
-                                fontFamily: 'Roboto-Bold.ttf',
-                                fontSize: 16.0,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF394759),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )),
-                const SizedBox(height: 8),
-                state.loadedBloger?.hashtag!.length != 0
-                    ? Column(
-                        children: [
-                          const SizedBox(height: 8),
-                          Container(
-                            padding: EdgeInsets.only(
-                                left: 16, right: 16, bottom: 16, top: 24),
-                            margin:
-                                const EdgeInsets.only(left: 20.0, right: 21.0),
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 0,
-                                  blurRadius: 25,
-                                  // changes position of shadow
+                                Spacer(
+                                  flex: 1,
+                                ),
+                                Spacer(
+                                  flex: 1,
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Spacer(
+                                  flex: 2,
+                                ),
+                                const SizedBox(
+                                  width: 10,
                                 ),
                               ],
-                              border: Border.all(
-                                color: const Color(0xFFF0F0FF),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(32.0),
-                              color: const Color(0xFFFFFFFF),
-                              // gradient: const LinearGradient(
-                              //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                              // ),
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            CircularProfileAvatar(
+                              '${state.loadedBloger?.picUrl}', //sets image path, it should be a URL string. default value is empty string, if path is empty it will display only initials
+                              radius: 48,
+                              borderWidth: 5,
+                              borderColor: Colors.blue,
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              '${state.loadedBloger?.fullName}',
+                              style: TextStyle(
+                                fontFamily: 'Roboto-Bold.ttf',
+                                fontSize: 18.0,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                Icon(
+                                  Icons.person_outline,
+                                  color: Colors.grey[400],
+                                ),
                                 Text(
-                                  'Теги',
+                                  '@${state.loadedBloger?.userName}',
                                   style: TextStyle(
                                     fontFamily: 'Roboto-Bold.ttf',
-                                    fontSize: 18.0,
+                                    fontSize: 12.0,
                                     fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
                                 ),
-                                Divider(),
-                                const SizedBox(height: 2),
-                                AnimatedContainer(
-                                  duration: Duration(seconds: 1),
-                                  child: SingleChildScrollView(
-                                    physics: tegsscrol
-                                        ? AlwaysScrollableScrollPhysics()
-                                        : NeverScrollableScrollPhysics(),
-                                    child: Wrap(
-                                      spacing: 16,
-                                      children: List.generate(
-                                          state.loadedBloger?.hashtag!.length,
-                                          (int index) {
-                                        return Chip(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                            ),
-                                            backgroundColor: Color(0xFFF0F0FF),
-                                            label: Text(
-                                                '${state.loadedBloger?.hashtag?[index].name}',
-                                                style: TextStyle(
-                                                  fontFamily: 'Roboto-Bold.ttf',
-                                                  fontSize: 15.0,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                )));
-                                      }),
-                                    ),
-                                  ),
-                                  height: heightcontainer1,
+                                const SizedBox(
+                                  width: 15,
                                 ),
-                                TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        tegsscrol = false;
-                                        tegsopen = !tegsopen;
-                                        heightcontainer1 = tegsopen
-                                            ? state.loadedBloger?.hashtag!
-                                                    .length *
-                                                25.8
-                                            : 100;
-                                      });
-                                    },
-                                    child: Text(
-                                      !tegsopen ? "Ещё" : "Скрыть",
-                                      style: TextStyle(
-                                        fontFamily: 'Roboto-Bold.ttf',
-                                        fontSize: 14.0,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.blue,
-                                      ),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                        ],
-                      )
-                    : Container(),
-                state.loadedBloger?.taggedUser!.length != 0
-                    ? Column(
-                        children: [
-                          const SizedBox(height: 8),
-                          Container(
-                            padding: EdgeInsets.only(
-                                left: 16, right: 16, bottom: 16, top: 24),
-                            margin:
-                                const EdgeInsets.only(left: 20.0, right: 21.0),
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 0,
-                                  blurRadius: 25,
-                                  // changes position of shadow
+                                Icon(
+                                  Icons.location_on_outlined,
+                                  color: Colors.grey[400],
                                 ),
-                              ],
-                              border: Border.all(
-                                color: const Color(0xFFF0F0FF),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(32.0),
-                              color: const Color(0xFFFFFFFF),
-                              // gradient: const LinearGradient(
-                              //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                              // ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
                                 Text(
-                                  'Люди',
+                                  "$location",
                                   style: TextStyle(
                                     fontFamily: 'Roboto-Bold.ttf',
-                                    fontSize: 18.0,
+                                    fontSize: 12.0,
                                     fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
                                 ),
-                                const SizedBox(height: 6),
-                                Divider(),
-                                const SizedBox(height: 2),
-                                AnimatedContainer(
-                                  duration: Duration(seconds: 1),
-                                  child: SingleChildScrollView(
-                                    physics: peoplesscrol
-                                        ? AlwaysScrollableScrollPhysics()
-                                        : NeverScrollableScrollPhysics(),
-                                    child: Wrap(
-                                      spacing: 10,
-                                      children: List.generate(
-                                          state.loadedBloger?.taggedUser!
-                                              .length, (int index) {
-                                        return Chip(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                            ),
-                                            backgroundColor: Color(0xFFF0F0FF),
-                                            label: Text(
-                                                '${state.loadedBloger?.taggedUser?[index].name}',
-                                                style: TextStyle(
-                                                  fontFamily: 'Roboto-Bold.ttf',
-                                                  fontSize: 15.0,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                )));
-                                      }),
-                                    ),
-                                  ),
-                                  height: heightcontainer2,
-                                ),
-                                TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        peoplesscrol = false;
-                                        peoplesopen = !peoplesopen;
-                                        heightcontainer2 = peoplesopen
-                                            ? state.loadedBloger?.taggedUser!
-                                                    .length *
-                                                26.roundToDouble()
-                                            : 100;
-                                      });
-                                    },
-                                    child: Text(
-                                      !peoplesopen ? "Ещё" : "Скрыть",
-                                      style: TextStyle(
-                                        fontFamily: 'Roboto-Bold.ttf',
-                                        fontSize: 14.0,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.blue,
-                                      ),
-                                    )),
                               ],
                             ),
-                          ),
-                          const SizedBox(height: 8),
-                        ],
-                      )
-                    : Container(),
-                const SizedBox(height: 16),
-                Container(
-                    padding: EdgeInsets.only(top: 26, bottom: 24),
-                    margin: const EdgeInsets.only(left: 20.0, right: 21.0),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 0,
-                          blurRadius: 25,
-                          // changes position of shadow
+                          ],
                         ),
-                      ],
-                      border: Border.all(
-                        color: const Color(0xFFF0F0FF),
-                        width: 1,
                       ),
-                      borderRadius: BorderRadius.circular(32.0),
-                      color: const Color(0xFFFFFFFF),
-                      // gradient: const LinearGradient(
-                      //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                      // ),
                     ),
-                    child: Container(
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 350,
                       margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 0,
+                            blurRadius: 25,
+                            // changes position of shadow
+                          ),
+                        ],
+                        border: Border.all(
+                          color: const Color(0xFFF0F0FF),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(32.0),
+                        color: const Color(0xFFFFFFFF),
+                        // gradient: const LinearGradient(
+                        //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                        // ),
+                      ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Гендер',
-                            style: TextStyle(
-                              fontFamily: 'Roboto-Bold.ttf',
-                              fontSize: 18.0,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
-                          ),
-                          prefix.PieChart(
-                            dataMap: {
-                              "Women": state.loadedBloger?.sexRatio.women
-                                  .roundToDouble(),
-                              "Men": state.loadedBloger?.sexRatio.men
-                                  .roundToDouble()
-                            },
-                            animationDuration: Duration(milliseconds: 800),
-                            chartLegendSpacing: 32,
-                            chartRadius:
-                                MediaQuery.of(context).size.width / 3.2,
-                            colorList: [
-                              Colors.blue,
-                              Color(0xFFBBDEFB),
-                            ],
-                            initialAngleInDegree: 90,
-                            legendOptions: prefix.LegendOptions(
-                              showLegends: false,
-                            ),
-                            chartValuesOptions: prefix.ChartValuesOptions(
-                              showChartValueBackground: false,
-                              showChartValues: false,
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    "${state.loadedBloger?.sexRatio.women}%",
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto-Bold.ttf',
-                                      fontSize: 16.0,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                  Text("Women",
-                                      style: TextStyle(
-                                        fontFamily: 'Roboto-Bold.ttf',
-                                        fontSize: 15.0,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                        color: Color(0xFFB1B1D1),
-                                      ))
-                                ],
+                          Stack(children: [
+                            Container(
+                              padding: EdgeInsets.only(
+                                  top: 26, bottom: 20, right: 26),
+                              height: 240,
+                              width: MediaQuery.of(context).size.width,
+                              child: LineChart(
+                                mainData(),
                               ),
-                              VerticalDivider(),
-                              Column(
-                                children: [
-                                  Text(
-                                    "${state.loadedBloger?.sexRatio.men}%",
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto-Bold.ttf',
-                                      fontSize: 16.0,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFFBBDEFB),
-                                    ),
-                                  ),
-                                  Text("Men",
-                                      style: TextStyle(
-                                        fontFamily: 'Roboto-Bold.ttf',
-                                        fontSize: 15.0,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                        color: Color(0xFFB1B1D1),
-                                      ))
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Divider(),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Возраст',
-                            style: TextStyle(
-                              fontFamily: 'Roboto-Bold.ttf',
-                              fontSize: 18.0,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
                             ),
-                          ),
-                          // Center(
-                          //   child: Container(
-                          //     child: Column(
-                          //       children:
-                          //           List.generate(widgets1.length, (index) {
-                          //         return widgets1[index];
-                          //       }),
-                          //     ),
-                          //   ),
-                          // ),
-                          AspectRatio(
-                            aspectRatio: 1.7,
-                            child: Card(
-                              child: BarChart(
-                                BarChartData(
-                                  gridData: FlGridData(show: false),
-                                  barTouchData: barTouchData,
-                                  titlesData: titlesData,
-                                  borderData: borderData,
-                                  barGroups: barGroups,
-                                  alignment: BarChartAlignment.spaceAround,
-                                  maxY: 100,
+                          ]),
+                          const SizedBox(height: 20),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Показатель ER, % ',
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto-Bold.ttf',
+                                    fontSize: 17.0,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xFFB1B1D1),
+                                  ),
                                 ),
-                              ),
+                                Text(
+                                  '${state.loadedBloger?.er?.toStringAsFixed(1)}',
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto-Bold.ttf',
+                                    fontSize: 20.0,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Подписчиков:',
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto-Bold.ttf',
+                                    fontSize: 17.0,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xFFB1B1D1),
+                                  ),
+                                ),
+                                Text(
+                                  '${state.loadedBloger?.numFollowers}',
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto-Bold.ttf',
+                                    fontSize: 20.0,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF394759),
+                                  ),
+                                ),
+                              ],
                             ),
                           )
                         ],
                       ),
-                    )),
-                const SizedBox(height: 16),
-                BlocBuilder<AdminCubit, AdminState>(builder: (context, state) {
-                  //var authState = context.read<AuthCubit>().state;
-                  //(authState is LoginedState ||
-                  if (state is NoAdminState)
-                    return Container();
-                  else
-                    return Container(
-                        padding: EdgeInsets.only(
-                            left: 16, right: 16, bottom: 16, top: 24),
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                        padding: EdgeInsets.only(top: 26, bottom: 24),
                         margin: const EdgeInsets.only(left: 20.0, right: 21.0),
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -849,62 +407,519 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                           //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
                           // ),
                         ),
-                        child: Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return Dialog(
-                                        child: Container(
-                                      width: 100,
-                                      height: 100,
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                              "Вы уверены что хотите удалить?"),
-                                          Spacer(
-                                            flex: 1,
-                                          ),
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Spacer(
-                                                  flex: 1,
-                                                ),
-                                                GestureDetector(
-                                                  child: Text("Да"),
-                                                ),
-                                                Spacer(
-                                                  flex: 1,
-                                                ),
-                                                GestureDetector(
-                                                  child: Text("Нет"),
-                                                ),
-                                                Spacer(
-                                                  flex: 1,
-                                                ),
-                                              ]),
-                                          Spacer(
-                                            flex: 1,
-                                          )
-                                        ],
-                                      ),
-                                    ));
-                                  });
-                            },
-                            child: Text(
-                              "Удалить блогера",
-                              style: TextStyle(fontSize: 15, color: Colors.red),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/heart.svg",
+                                  color: Colors.grey,
+                                ),
+                                // Icon(
+                                //   Icons.favorite_border_outlined,
+                                //   color: Colors.grey,
+                                // ),
+                                const SizedBox(height: 11),
+                                Text(
+                                  '${state.loadedBloger?.absoluteLikes}',
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto-Bold.ttf',
+                                    fontSize: 16.0,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF394759),
+                                  ),
+                                ),
+                              ],
                             ),
+                            Column(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/chat.svg",
+                                  color: Colors.grey,
+                                ),
+                                // Icon(
+                                //   Icons.chat_outlined,
+                                //   color: Colors.grey,
+                                // ),
+                                const SizedBox(height: 11),
+                                Text(
+                                  '${state.loadedBloger?.absoluteComments}',
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto-Bold.ttf',
+                                    fontSize: 16.0,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF394759),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
+                    const SizedBox(height: 8),
+                    state.loadedBloger?.hashtag!.length != 0
+                        ? Column(
+                            children: [
+                              const SizedBox(height: 8),
+                              Container(
+                                padding: EdgeInsets.only(
+                                    left: 16, right: 16, bottom: 16, top: 24),
+                                margin: const EdgeInsets.only(
+                                    left: 20.0, right: 21.0),
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      spreadRadius: 0,
+                                      blurRadius: 25,
+                                      // changes position of shadow
+                                    ),
+                                  ],
+                                  border: Border.all(
+                                    color: const Color(0xFFF0F0FF),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(32.0),
+                                  color: const Color(0xFFFFFFFF),
+                                  // gradient: const LinearGradient(
+                                  //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                                  // ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Теги',
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto-Bold.ttf',
+                                        fontSize: 18.0,
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Divider(),
+                                    const SizedBox(height: 2),
+                                    AnimatedContainer(
+                                      duration: Duration(seconds: 1),
+                                      child: SingleChildScrollView(
+                                        physics: tegsscrol
+                                            ? AlwaysScrollableScrollPhysics()
+                                            : NeverScrollableScrollPhysics(),
+                                        child: Wrap(
+                                          spacing: 16,
+                                          children: List.generate(
+                                              state.loadedBloger?.hashtag!
+                                                  .length, (int index) {
+                                            return Chip(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                ),
+                                                backgroundColor:
+                                                    Color(0xFFF0F0FF),
+                                                label: Text(
+                                                    '${state.loadedBloger?.hashtag?[index].name}',
+                                                    style: TextStyle(
+                                                      fontFamily:
+                                                          'Roboto-Bold.ttf',
+                                                      fontSize: 15.0,
+                                                      fontStyle:
+                                                          FontStyle.normal,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.black,
+                                                    )));
+                                          }),
+                                        ),
+                                      ),
+                                      height: heightcontainer1,
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            tegsscrol = false;
+                                            tegsopen = !tegsopen;
+                                            heightcontainer1 = tegsopen
+                                                ? state.loadedBloger?.hashtag!
+                                                        .length *
+                                                    25.8
+                                                : 100;
+                                          });
+                                        },
+                                        child: Text(
+                                          !tegsopen ? "Ещё" : "Скрыть",
+                                          style: TextStyle(
+                                            fontFamily: 'Roboto-Bold.ttf',
+                                            fontSize: 14.0,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.blue,
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                            ],
+                          )
+                        : Container(),
+                    state.loadedBloger?.taggedUser!.length != 0
+                        ? Column(
+                            children: [
+                              const SizedBox(height: 8),
+                              Container(
+                                padding: EdgeInsets.only(
+                                    left: 16, right: 16, bottom: 16, top: 24),
+                                margin: const EdgeInsets.only(
+                                    left: 20.0, right: 21.0),
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      spreadRadius: 0,
+                                      blurRadius: 25,
+                                      // changes position of shadow
+                                    ),
+                                  ],
+                                  border: Border.all(
+                                    color: const Color(0xFFF0F0FF),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(32.0),
+                                  color: const Color(0xFFFFFFFF),
+                                  // gradient: const LinearGradient(
+                                  //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                                  // ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Люди',
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto-Bold.ttf',
+                                        fontSize: 18.0,
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Divider(),
+                                    const SizedBox(height: 2),
+                                    AnimatedContainer(
+                                      duration: Duration(seconds: 1),
+                                      child: SingleChildScrollView(
+                                        physics: peoplesscrol
+                                            ? AlwaysScrollableScrollPhysics()
+                                            : NeverScrollableScrollPhysics(),
+                                        child: Wrap(
+                                          spacing: 10,
+                                          children: List.generate(
+                                              state.loadedBloger?.taggedUser!
+                                                  .length, (int index) {
+                                            return Chip(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                ),
+                                                backgroundColor:
+                                                    Color(0xFFF0F0FF),
+                                                label: Text(
+                                                    '${state.loadedBloger?.taggedUser?[index].name}',
+                                                    style: TextStyle(
+                                                      fontFamily:
+                                                          'Roboto-Bold.ttf',
+                                                      fontSize: 15.0,
+                                                      fontStyle:
+                                                          FontStyle.normal,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.black,
+                                                    )));
+                                          }),
+                                        ),
+                                      ),
+                                      height: heightcontainer2,
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            peoplesscrol = false;
+                                            peoplesopen = !peoplesopen;
+                                            heightcontainer2 = peoplesopen
+                                                ? state.loadedBloger
+                                                        ?.taggedUser!.length *
+                                                    26.roundToDouble()
+                                                : 100;
+                                          });
+                                        },
+                                        child: Text(
+                                          !peoplesopen ? "Ещё" : "Скрыть",
+                                          style: TextStyle(
+                                            fontFamily: 'Roboto-Bold.ttf',
+                                            fontSize: 14.0,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.blue,
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                            ],
+                          )
+                        : Container(),
+                    const SizedBox(height: 16),
+                    Container(
+                        padding: EdgeInsets.only(top: 26, bottom: 24),
+                        margin: const EdgeInsets.only(left: 20.0, right: 21.0),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 0,
+                              blurRadius: 25,
+                              // changes position of shadow
+                            ),
+                          ],
+                          border: Border.all(
+                            color: const Color(0xFFF0F0FF),
+                            width: 1,
                           ),
-                        ));
-                }),
-              ],
-            ),
-          )));
+                          borderRadius: BorderRadius.circular(32.0),
+                          color: const Color(0xFFFFFFFF),
+                          // gradient: const LinearGradient(
+                          //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                          // ),
+                        ),
+                        child: Container(
+                          margin:
+                              const EdgeInsets.only(left: 20.0, right: 21.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Гендер',
+                                style: TextStyle(
+                                  fontFamily: 'Roboto-Bold.ttf',
+                                  fontSize: 18.0,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              prefix.PieChart(
+                                dataMap: {
+                                  "Women": state.loadedBloger?.sexRatio.women
+                                      .roundToDouble(),
+                                  "Men": state.loadedBloger?.sexRatio.men
+                                      .roundToDouble()
+                                },
+                                animationDuration: Duration(milliseconds: 800),
+                                chartLegendSpacing: 32,
+                                chartRadius:
+                                    MediaQuery.of(context).size.width / 3.2,
+                                colorList: [
+                                  Colors.blue,
+                                  Color(0xFFBBDEFB),
+                                ],
+                                initialAngleInDegree: 90,
+                                legendOptions: prefix.LegendOptions(
+                                  showLegends: false,
+                                ),
+                                chartValuesOptions: prefix.ChartValuesOptions(
+                                  showChartValueBackground: false,
+                                  showChartValues: false,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "${state.loadedBloger?.sexRatio.women}%",
+                                        style: TextStyle(
+                                          fontFamily: 'Roboto-Bold.ttf',
+                                          fontSize: 16.0,
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                      Text("Women",
+                                          style: TextStyle(
+                                            fontFamily: 'Roboto-Bold.ttf',
+                                            fontSize: 15.0,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color(0xFFB1B1D1),
+                                          ))
+                                    ],
+                                  ),
+                                  VerticalDivider(),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "${state.loadedBloger?.sexRatio.men}%",
+                                        style: TextStyle(
+                                          fontFamily: 'Roboto-Bold.ttf',
+                                          fontSize: 16.0,
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color(0xFFBBDEFB),
+                                        ),
+                                      ),
+                                      Text("Men",
+                                          style: TextStyle(
+                                            fontFamily: 'Roboto-Bold.ttf',
+                                            fontSize: 15.0,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color(0xFFB1B1D1),
+                                          ))
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Divider(),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Возраст',
+                                style: TextStyle(
+                                  fontFamily: 'Roboto-Bold.ttf',
+                                  fontSize: 18.0,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              // Center(
+                              //   child: Container(
+                              //     child: Column(
+                              //       children:
+                              //           List.generate(widgets1.length, (index) {
+                              //         return widgets1[index];
+                              //       }),
+                              //     ),
+                              //   ),
+                              // ),
+                              AspectRatio(
+                                aspectRatio: 1.7,
+                                child: Card(
+                                  child: BarChart(
+                                    BarChartData(
+                                      gridData: FlGridData(show: false),
+                                      barTouchData: barTouchData,
+                                      titlesData: titlesData,
+                                      borderData: borderData,
+                                      barGroups: barGroups,
+                                      alignment: BarChartAlignment.spaceAround,
+                                      maxY: 100,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        )),
+                    const SizedBox(height: 16),
+                    BlocBuilder<AdminCubit, AdminState>(
+                        builder: (context, state) {
+                      //var authState = context.read<AuthCubit>().state;
+                      //(authState is LoginedState ||
+                      if (state is NoAdminState)
+                        return Container();
+                      else
+                        return Container(
+                            padding: EdgeInsets.only(
+                                left: 16, right: 16, bottom: 16, top: 24),
+                            margin:
+                                const EdgeInsets.only(left: 20.0, right: 21.0),
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 0,
+                                  blurRadius: 25,
+                                  // changes position of shadow
+                                ),
+                              ],
+                              border: Border.all(
+                                color: const Color(0xFFF0F0FF),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(32.0),
+                              color: const Color(0xFFFFFFFF),
+                              // gradient: const LinearGradient(
+                              //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                              // ),
+                            ),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                            child: Container(
+                                          width: 100,
+                                          height: 100,
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                  "Вы уверены что хотите удалить?"),
+                                              Spacer(
+                                                flex: 1,
+                                              ),
+                                              Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Spacer(
+                                                      flex: 1,
+                                                    ),
+                                                    GestureDetector(
+                                                      child: Text("Да"),
+                                                    ),
+                                                    Spacer(
+                                                      flex: 1,
+                                                    ),
+                                                    GestureDetector(
+                                                      child: Text("Нет"),
+                                                    ),
+                                                    Spacer(
+                                                      flex: 1,
+                                                    ),
+                                                  ]),
+                                              Spacer(
+                                                flex: 1,
+                                              )
+                                            ],
+                                          ),
+                                        ));
+                                      });
+                                },
+                                child: Text(
+                                  "Удалить блогера",
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.red),
+                                ),
+                              ),
+                            ));
+                    }),
+                  ],
+                ),
+              )));
         });
       }
       return GestureDetector(
