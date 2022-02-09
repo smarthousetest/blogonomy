@@ -163,12 +163,12 @@ class AuthApi extends Cubit<ApiState> {
     print(response.statusCode);
     print("Auth api mail = $mail");
     if (response.statusCode == 200) {
-      print("state in create mail = $state");
+      print("state in create mail1 = $state");
       final String responseString = response.body;
 
       print(responseString);
       emit(NoLoading());
-      print("state in create mail = $state");
+      print("state in create mail2 = $state");
       return authModelFromJson(responseString);
     } else {
       return error;

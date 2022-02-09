@@ -119,6 +119,7 @@ class _FirstPageStateState extends State<FirstPage> {
               onPressed: () async {
                 String mail = widget.textEditingController.text;
                 final AuthModel authModel = await AuthApi().createMail(mail);
+                Future.delayed(const Duration(milliseconds: 500));
                 first.mail = mail;
                 print("object $mail");
                 setState(() {

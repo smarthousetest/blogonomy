@@ -127,7 +127,9 @@ class PodborkiMain extends StatelessWidget {
           return Text("Error");
         });
       } else
-        return (Text("Чтобы добавить подборки - авторизуйтесь"));
+        return Center(
+          child: (Text("Чтобы добавить подборки - авторизуйтесь")),
+        );
     });
   }
 }

@@ -536,20 +536,298 @@ class ProfileState extends State<Profile> {
                         )
                       ]),
                     ]));
-                  } else if (state is LogoutedState) {
-                    return Padding(
-                      padding: EdgeInsets.only(top: 200),
-                      child: const Center(
-                        child: Text("Пожалуйста авторизуйтесь"),
+                  } else if (state is EmptyState || state is LogoutedState) {
+                    return SingleChildScrollView(
+                        child: Column(children: [
+                      ClipPath(
+                        clipper: CurvedBottomClipper(),
+                        child: Container(
+                          color: Color(0x59e0f2f1),
+                          height: 200.0,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 60),
+                                child: Container(
+                                  width: 130,
+                                  child: CircleAvatar(
+                                    radius: 60,
+                                    // backgroundImage: NetworkImage(
+                                    //     'https://aif-s3.aif.ru/images/019/507/eeba36a2a2d37754bab8b462f4262d97.jpg'),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    );
-                  } else if (state is EmptyState) {
-                    return Padding(
-                      padding: EdgeInsets.only(top: 200),
-                      child: Center(
-                        child: Text("Пожалуйста авторизуйтесь"),
-                      ),
-                    );
+                      Column(children: [
+                        Center(
+                          child: Container(
+                            padding: EdgeInsets.only(top: 30, left: 20),
+                            height: 100,
+                            width: 300,
+                            child: Text(
+                              "Что-бы получить доступ к аккаунту, пожалуйста авторизуйтесь",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15),
+                          child: Container(
+                            height: 52.0,
+                            width: 600,
+                            margin:
+                                const EdgeInsets.only(left: 20.0, right: 20.0),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                context.read<SlidingUpCubit>().open();
+                              },
+                              child: const Text(
+                                'Авторизоваться',
+                                style: TextStyle(
+                                  fontFamily: 'Roboto-Bold.ttf',
+                                  fontSize: 15.0,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFFFFFFFF),
+                                ),
+                              ),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color(0xFF006FFD)),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(32.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => Navigator.pushNamed(context, '/b'),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 20),
+                            child: Container(
+                              height: 104.0,
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 21.0),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 0,
+                                    blurRadius: 25,
+                                    // changes position of shadow
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: const Color(0xFFF0F0FF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(32.0),
+                                color: const Color(0xFFFFFFFF),
+                                // gradient: const LinearGradient(
+                                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                                // ),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Image.asset(
+                                        'assets/images/shield.png',
+                                        width: 27,
+                                        height: 27,
+                                        color: Color(0x40200E32),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "Политика конфиденциальности",
+                                        textScaleFactor: MediaQuery.of(context)
+                                            .textScaleFactor
+                                            .clamp(0.1, 1.5),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Image.asset(
+                                        'assets/images/arrow.png',
+                                        height: 30,
+                                        width: 30,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => Navigator.pushNamed(context, '/d'),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 20),
+                            child: Container(
+                              height: 104.0,
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 21.0),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 0,
+                                    blurRadius: 25,
+                                    // changes position of shadow
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: const Color(0xFFF0F0FF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(32.0),
+                                color: const Color(0xFFFFFFFF),
+                                // gradient: const LinearGradient(
+                                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                                // ),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 24, right: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Image.asset(
+                                        'assets/images/info.png',
+                                        width: 27,
+                                        height: 27,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 20),
+                                      child: Text(
+                                        "Подсказки",
+                                        textScaleFactor: MediaQuery.of(context)
+                                            .textScaleFactor,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Spacer(
+                                      flex: 1,
+                                    ),
+                                    Image.asset(
+                                      'assets/images/arrow.png',
+                                      height: 30,
+                                      width: 30,
+                                      color: Colors.blue,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => Navigator.pushNamed(context, '/c'),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 20),
+                            child: Container(
+                              height: 104.0,
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 21.0),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 0,
+                                    blurRadius: 25,
+                                    // changes position of shadow
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: const Color(0xFFF0F0FF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(32.0),
+                                color: const Color(0xFFFFFFFF),
+                                // gradient: const LinearGradient(
+                                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                                // ),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 24, right: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Image.asset(
+                                        'assets/images/copy.png',
+                                        width: 27,
+                                        height: 27,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 20),
+                                      child: Text(
+                                        "О приложении",
+                                        textScaleFactor: MediaQuery.of(context)
+                                            .textScaleFactor,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Spacer(
+                                      flex: 1,
+                                    ),
+                                    Image.asset(
+                                      'assets/images/arrow.png',
+                                      height: 30,
+                                      width: 30,
+                                      color: Colors.blue,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        )
+                      ]),
+                    ]));
                   } else
                     return Text("");
                 },
