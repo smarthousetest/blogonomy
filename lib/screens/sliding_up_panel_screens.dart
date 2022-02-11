@@ -141,18 +141,18 @@ class _FirstPageStateState extends State<FirstPage> {
                 String mail = widget.textEditingController.text;
                 if (formkey1.currentState!.validate()) {
                   final AuthModel authModel = await AuthApi().createMail(mail);
-                  Future.delayed(const Duration(milliseconds: 5000), () {
-                    first.mail = mail;
-                    print("object $mail");
-                    setState(() {
-                      _authModel = authModel;
-                    });
-                    print(" auth Model = ${_authModel!.result}");
-                    if (authModel.result == 'exist') {
-                      context.read<AuthCubit>().signIn();
-                      context.read<SlidingUpCubit>().close();
-                    }
+
+                  first.mail = mail;
+                  print("object $mail");
+                  setState(() {
+                    _authModel = authModel;
                   });
+                  print(" auth Model = ${_authModel!.result}");
+                  if (authModel.result == 'exist') {
+                    context.read<AuthCubit>().signIn();
+                    context.read<SlidingUpCubit>().close();
+                  }
+
                   return;
                 } else {
                   print("UnSuccessfull");
