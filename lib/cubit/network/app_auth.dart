@@ -11,7 +11,7 @@ class AppAuth {
   static const List<String> scopes = <String>[
     'openid',
     // 'profile',
-    // 'email',
+    //  'email',
     // 'roles',
     //'offline_access',
     'demo_api'

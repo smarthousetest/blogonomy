@@ -9,6 +9,7 @@ import 'package:blogonomy/cubit/network/auth_cubit.dart';
 import 'package:blogonomy/cubit/network/auth_mode.dart';
 import 'package:blogonomy/cubit/page_bloc.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
+import 'package:blogonomy/widget/sliding_up/bloger_panel.dart';
 import 'package:blogonomy/widget/sliding_up/sliding_up_panel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/src/provider.dart';
@@ -16,6 +17,8 @@ import 'package:quiver/async.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../widget/sliding_up/bloger_panel.dart';
 
 FirstPage first = FirstPage();
 
@@ -69,6 +72,8 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageStateState extends State<FirstPage> {
   AuthModel? _authModel;
+  bool value = false;
+  GlobalKey<FormState> formkey1 = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -87,26 +92,42 @@ class _FirstPageStateState extends State<FirstPage> {
           ),
         ),
         const SizedBox(height: 20),
-        Container(
-          height: 52.0,
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-          child: TextFormField(
-            controller: widget.textEditingController,
-            decoration: const InputDecoration(
-              hintText: 'Email',
-              hintStyle: TextStyle(
-                fontFamily: 'Roboto-Regular.ttf',
-                fontSize: 15.0,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w400,
-                color: Color(0xFFADB3BD),
+        Form(
+          key: formkey1,
+          child: Container(
+            height: 52.0,
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+            child: TextFormField(
+              validator: (value) {
+                print("value = $value");
+                if (value!.isEmpty) {
+                  return "* Required";
+                }
+                print(" auth Model = ${_authModel?.result}");
+                if (_authModel?.result == "empty") {
+                  return "Аккаунт не найден, нажмите ЗАРЕГИСТРИРОВАТЬСЯ";
+                }
+              },
+              controller: widget.textEditingController,
+              decoration: const InputDecoration(
+                hintText: 'Email',
+                hintStyle: TextStyle(
+                  fontFamily: 'Roboto-Regular.ttf',
+                  fontSize: 15.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFFADB3BD),
+                ),
+                enabledBorder: const OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(32.0))),
               ),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0))),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0))),
             ),
           ),
         ),
@@ -118,27 +139,32 @@ class _FirstPageStateState extends State<FirstPage> {
             child: ElevatedButton(
               onPressed: () async {
                 String mail = widget.textEditingController.text;
-                final AuthModel authModel = await AuthApi().createMail(mail);
-                Future.delayed(Duration(milliseconds: 5000), () {
-                  first.mail = mail;
-                  print("object $mail");
-                  setState(() {
-                    _authModel = authModel;
+                if (formkey1.currentState!.validate()) {
+                  final AuthModel authModel = await AuthApi().createMail(mail);
+                  Future.delayed(const Duration(milliseconds: 5000), () {
+                    first.mail = mail;
+                    print("object $mail");
+                    setState(() {
+                      _authModel = authModel;
+                    });
+                    print(" auth Model = ${_authModel!.result}");
+                    if (authModel.result == 'exist') {
+                      context.read<AuthCubit>().signIn();
+                      context.read<SlidingUpCubit>().close();
+                    }
                   });
-
-                  if (authModel.result == 'exist') {
-                    context.read<AuthCubit>().signIn();
-                    context.read<SlidingUpCubit>().close();
-                  }
-                });
+                  return;
+                } else {
+                  print("UnSuccessfull");
+                }
               },
               child: BlocBuilder<AuthApi, ApiState>(
                 builder: (context, state) {
                   print("first $state");
                   if (state is Loading) {
                     print("state in case = $state");
-                    return Center(
-                        child: CircularProgressIndicator(
+                    return const Center(
+                        child: const CircularProgressIndicator(
                       color: Colors.white,
                     ));
                   } else if (state is NoLoading) {
@@ -155,7 +181,7 @@ class _FirstPageStateState extends State<FirstPage> {
                   }
                   ;
                   print("second $state");
-                  return Center(child: Text(""));
+                  return const Center(child: Text(""));
                 },
               ),
               style: ButtonStyle(
@@ -168,12 +194,17 @@ class _FirstPageStateState extends State<FirstPage> {
                 ),
               ),
             )),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         GestureDetector(
-            onTap: () => widget.onNext!(),
-            child: Text(
+            onTap: () async {
+              String mail = widget.textEditingController.text;
+              final AuthModel authModel = await AuthApi().getCode(mail);
+              widget.onNext!();
+              print("hererererere");
+            },
+            child: const Text(
               "Зарегистрироваться",
               style: TextStyle(
                 fontFamily: 'Roboto-Bold.ttf',
@@ -183,14 +214,14 @@ class _FirstPageStateState extends State<FirstPage> {
                 color: Colors.blue,
               ),
             )),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         GestureDetector(
             onTap: () => Navigator.pushNamed(context, '/e'),
-            child: Text(
+            child: const Text(
               "Обратиться в службу подержки",
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Roboto-Bold.ttf',
                 fontSize: 15.0,
                 fontStyle: FontStyle.normal,
@@ -221,11 +252,13 @@ class SecondPage extends StatefulWidget {
 
 class SecondPageState extends State<SecondPage> {
   SecondPageState({Key? key});
+  AuthModel? _authModel;
+  TextEditingController textEditingController2 = TextEditingController();
   int _start = 60;
   int _current = 60;
   bool wg = true;
   FirstPage firstPage = FirstPage();
-
+  GlobalKey<FormState> formkey2 = GlobalKey<FormState>();
   void startTimer() {
     CountdownTimer countDownTimer = new CountdownTimer(
       new Duration(seconds: _start),
@@ -266,6 +299,49 @@ class SecondPageState extends State<SecondPage> {
           onPressed: widget.onBack,
           icon: const Icon(Icons.arrow_back_rounded)),
       Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        SizedBox(
+          height: 30,
+        ),
+        Form(
+          key: formkey2,
+          child: Container(
+            height: 52.0,
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+            child: TextFormField(
+              validator: (value) {
+                print("value = $value");
+                if (value!.isEmpty) {
+                  return "* Required";
+                }
+                if (!value.contains('@')) return 'Это не E-mail';
+                print(" auth Model = ${_authModel?.result}");
+              },
+              controller: textEditingController2,
+              decoration: const InputDecoration(
+                hintText: 'Email',
+                hintStyle: TextStyle(
+                  fontFamily: 'Roboto-Regular.ttf',
+                  fontSize: 15.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFFADB3BD),
+                ),
+                enabledBorder: const OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(32.0))),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 16,
+        ),
         Center(
           child: Container(
             height: 52.0,
@@ -293,7 +369,7 @@ class SecondPageState extends State<SecondPage> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         wg
@@ -303,10 +379,12 @@ class SecondPageState extends State<SecondPage> {
                 margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                 child: ElevatedButton(
                   onPressed: () async {
-                    String? mail = first.mail;
-                    print("hererererere");
-                    startTimer();
-                    final AuthModel authModel = await AuthApi().getCode(mail!);
+                    if (formkey2.currentState!.validate()) {
+                      print("hererererere");
+                      startTimer();
+                      final AuthModel authModel =
+                          await AuthApi().getCode(textEditingController2.text);
+                    }
                   },
                   child: const Text(
                     'Отправить код',
@@ -324,7 +402,7 @@ class SecondPageState extends State<SecondPage> {
                         MaterialStateProperty.all(const Color(0xFFFFFFFF)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                        side: BorderSide(color: Color(0xFF006FFD)),
+                        side: const BorderSide(color: const Color(0xFF006FFD)),
                         borderRadius: BorderRadius.circular(32.0),
                       ),
                     ),
@@ -345,7 +423,7 @@ class SecondPageState extends State<SecondPage> {
                 )),
                 height: 50,
               ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         Container(
@@ -379,14 +457,14 @@ class SecondPageState extends State<SecondPage> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         GestureDetector(
             onTap: () => Navigator.pushNamed(context, '/e'),
-            child: Text(
+            child: const Text(
               "Обратиться в службу подержки",
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Roboto-Bold.ttf',
                 fontSize: 15.0,
                 fontStyle: FontStyle.normal,
@@ -463,7 +541,7 @@ class ThirdPageState extends State<ThirdPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Container(
@@ -499,7 +577,7 @@ class ThirdPageState extends State<ThirdPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Container(
@@ -512,11 +590,11 @@ class ThirdPageState extends State<ThirdPage> {
                     final AuthModel authModel = await AuthApi()
                         .setPassword(textEditingController2.text);
                     context.read<SlidingUpCubit>().close();
+                    context.read<AuthCubit>().signIn();
                     return;
                   } else {
                     print("UnSuccessfull");
                   }
-                  context.read<AuthCubit>().signIn();
                 },
                 child: const Text(
                   'Готово',
@@ -539,14 +617,14 @@ class ThirdPageState extends State<ThirdPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             GestureDetector(
                 onTap: () => Navigator.pushNamed(context, '/e'),
-                child: Text(
+                child: const Text(
                   "Обратиться в службу подержки",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Roboto-Bold.ttf',
                     fontSize: 15.0,
                     fontStyle: FontStyle.normal,

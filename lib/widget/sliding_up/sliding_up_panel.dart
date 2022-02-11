@@ -33,7 +33,7 @@ class _SlidingUpState extends State<SlidingUp> {
 
     return SlidingUpPanel(
         controller: panelController,
-        maxHeight: 300,
+        maxHeight: 350,
         minHeight: 0,
         backdropColor: Colors.black,
         borderRadius: radius,
