@@ -92,7 +92,7 @@ class _FirstPageStateState extends State<FirstPage> {
             margin: const EdgeInsets.only(left: 20.0, right: 20.0),
             child: ElevatedButton(
               onPressed: () {
-                widget.onNext1!();
+                widget.onNext!();
               },
               child: BlocBuilder<AuthApi, ApiState>(
                 builder: (context, state) {
