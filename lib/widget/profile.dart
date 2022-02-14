@@ -34,7 +34,7 @@ class ProfileState extends State<Profile> {
           body: CustomScrollView(
             slivers: [
               SliverAppBar(
-                backgroundColor: Color(0x59e0f2f1),
+                backgroundColor: Color(0xFFF5F5FF),
                 elevation: 0,
                 title: Text(
                   'Профиль',
@@ -91,7 +91,7 @@ class ProfileState extends State<Profile> {
                       ClipPath(
                         clipper: CurvedBottomClipper(),
                         child: Container(
-                          color: Color(0x59e0f2f1),
+                          color: Color(0xFFF5F5FF),
                           height: 200.0,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -574,7 +574,7 @@ class ProfileState extends State<Profile> {
                             height: 100,
                             width: 300,
                             child: Text(
-                              "Что-бы получить доступ к аккаунту, пожалуйста авторизуйтесь",
+                              "Чтобы получить доступ к аккаунту, пожалуйста авторизуйтесь",
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w500),
                             ),

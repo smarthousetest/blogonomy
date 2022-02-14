@@ -114,79 +114,86 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
         return StatefulBuilder(// StatefulBuilder
             builder: (context, setState) {
           return Scaffold(
-              appBar: AppBar(
-                iconTheme: IconThemeData(color: Colors.blue),
-                toolbarHeight: 100,
-                backgroundColor: Color(0xFFF5F5FF),
-                elevation: 0,
-                actions: [
-                  Column(
-                    children: [
-                      Container(
-                          child: IconButton(
-                              onPressed: () async {
-                                showAlertDialogload(context);
-                                await outselected();
-                                Navigator.pop(context);
-                                showAlertDialog(context);
-                              },
-                              icon: Icon(
-                                Icons.library_books_outlined,
-                                color: Color(0xFF0072FD),
-                                size: 28,
-                              ))),
-                      Container(
-                          child: IconButton(
-                              onPressed: () async {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text('Выполняю обновление!'),
-                                ));
-
-                                String? result =
-                                    await OneBlogerApi().updBloger();
-
-                                if (result == "OK") {
+              body: CustomScrollView(slivers: [
+            SliverAppBar(
+              iconTheme: IconThemeData(color: Colors.blue),
+              toolbarHeight: 100,
+              backgroundColor: Color(0xFFF5F5FF),
+              elevation: 0,
+              actions: [
+                Column(
+                  children: [
+                    Container(
+                        child: IconButton(
+                            onPressed: () async {
+                              showAlertDialogload(context);
+                              await outselected();
+                              Navigator.pop(context);
+                              showAlertDialog(context);
+                            },
+                            icon: Icon(
+                              Icons.library_books_outlined,
+                              color: Color(0xFF0072FD),
+                              size: 28,
+                            ))),
+                    BlocBuilder<AdminCubit, AdminState>(
+                        builder: (context, state) {
+                      if (state is AdminState) {
+                        Container(
+                            child: IconButton(
+                                onPressed: () async {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content: Text(
-                                        'В скором времени информация обновится!'),
+                                    content: Text('Выполняю обновление!'),
                                   ));
-                                }
-                                if (result == "ERR") {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content:
-                                        Text('Ошибка! Обратитесь в поддержку.'),
-                                  ));
-                                }
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(
-                                Icons.refresh_outlined,
-                                color: Color(0xFF0072FD),
-                                size: 28,
-                              ))),
-                    ],
-                  ),
-                ],
-                title: Container(
-                  alignment: Alignment.center,
-                  height: 25.0,
-                  child: const Text(
-                    'Информация о блогере',
-                    style: TextStyle(
-                      fontFamily: 'Roboto-Medium.ttf',
-                      fontSize: 18.0,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF24282E),
-                    ),
+
+                                  String? result =
+                                      await OneBlogerApi().updBloger();
+
+                                  if (result == "OK") {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text(
+                                          'В скором времени информация обновится!'),
+                                    ));
+                                  }
+                                  if (result == "ERR") {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text(
+                                          'Ошибка! Обратитесь в поддержку.'),
+                                    ));
+                                  }
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(
+                                  Icons.refresh_outlined,
+                                  color: Color(0xFF0072FD),
+                                  size: 28,
+                                )));
+                      }
+                      return Text('');
+                    }),
+                  ],
+                ),
+              ],
+              title: Container(
+                alignment: Alignment.center,
+                height: 25.0,
+                child: const Text(
+                  'Информация о блогере',
+                  style: TextStyle(
+                    fontFamily: 'Roboto-Medium.ttf',
+                    fontSize: 18.0,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF24282E),
                   ),
                 ),
               ),
-              body: SafeArea(
-                  child: SingleChildScrollView(
+            ),
+            SliverToBoxAdapter(
+              child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 physics: ClampingScrollPhysics(),
                 child: Column(
@@ -919,7 +926,9 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                     }),
                   ],
                 ),
-              )));
+              ),
+            )
+          ]));
         });
       }
       return GestureDetector(

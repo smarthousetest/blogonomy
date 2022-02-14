@@ -1,3 +1,4 @@
+import 'package:blogonomy/screens/sliding_up_panel_screens.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 
 class AppAuth {
@@ -16,6 +17,8 @@ class AppAuth {
     //'offline_access',
     'demo_api'
   ];
+
+  static String resourse = "email: ${first.mail}";
   static String? accessToken;
 //  static String? refreshToken;
   static String? userInfo;

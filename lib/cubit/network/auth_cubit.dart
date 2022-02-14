@@ -1,8 +1,10 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:blogonomy/cubit/locator_services.dart';
 import 'package:blogonomy/cubit/network/app_auth.dart';
 import 'package:blogonomy/cubit/network/auth_state.dart';
+import 'package:blogonomy/screens/sliding_up_panel_screens.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -108,14 +110,18 @@ class AuthCubit extends Cubit<AuthState> {
     print(
       AppAuth.redirectUrl,
     );
+    final map = <String, String>{"email": '${first.mail}'};
+    final mapOf = Map<String, String>.of(map);
     final AuthorizationTokenResponse? result =
         await appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(
         AppAuth.clientId,
         AppAuth.redirectUrl,
+        additionalParameters: mapOf,
         //clientSecret: AppAuth.clientSecret,
         serviceConfiguration: AppAuth.serviceConfiguration,
         scopes: AppAuth.scopes,
+
         //preferEphemeralSession: preferEphemeralSession,
       ),
     );
