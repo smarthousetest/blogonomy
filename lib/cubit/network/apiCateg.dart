@@ -143,9 +143,7 @@ class BlogersApi {
 AuthApi authApi = AuthApi();
 String? hash;
 
-class AuthApi extends Cubit<ApiState> {
-  AuthApi() : super(NoLoading());
-
+class AuthApi {
   Future<AuthModel> createMail(String mail) async {
     var error;
     print(mail);
@@ -159,16 +157,14 @@ class AuthApi extends Cubit<ApiState> {
           "Accept": "application/json",
           "content-type": "application/json"
         });
-    emit(Loading());
+
     print(response.statusCode);
     print("Auth api mail = $mail");
     if (response.statusCode == 200) {
-      print("state in create mail1 = $state");
       final String responseString = response.body;
 
       print(responseString);
-      emit(NoLoading());
-      print("state in create mail2 = $state");
+
       return authModelFromJson(responseString);
     } else {
       return error;
@@ -253,6 +249,12 @@ class AuthApi extends Cubit<ApiState> {
     } else {
       return error;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }
 

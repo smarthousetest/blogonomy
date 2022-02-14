@@ -4,6 +4,7 @@ import 'package:blogonomy/cubit/network/apiCateg.dart';
 import 'package:blogonomy/cubit/network/api_state.dart';
 import 'package:blogonomy/cubit/network/auth_cubit.dart';
 import 'package:blogonomy/cubit/network/auth_mode.dart';
+import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -94,31 +95,15 @@ class _FirstPageStateState extends State<FirstPage> {
               onPressed: () {
                 widget.onNext!();
               },
-              child: BlocBuilder<AuthApi, ApiState>(
-                builder: (context, state) {
-                  print("first $state");
-                  if (state is Loading) {
-                    print("state in case = $state");
-                    return const Center(
-                        child: const CircularProgressIndicator(
-                      color: Colors.white,
-                    ));
-                  } else if (state is NoLoading) {
-                    return const Text(
-                      'Войти',
-                      style: TextStyle(
-                        fontFamily: 'Roboto-Bold.ttf',
-                        fontSize: 15.0,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFFFFFFFF),
-                      ),
-                    );
-                  }
-                  ;
-                  print("second $state");
-                  return const Center(child: Text(""));
-                },
+              child: const Text(
+                'Войти',
+                style: TextStyle(
+                  fontFamily: 'Roboto-Bold.ttf',
+                  fontSize: 15.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFFFFFFFF),
+                ),
               ),
               style: ButtonStyle(
                 backgroundColor:
@@ -141,31 +126,15 @@ class _FirstPageStateState extends State<FirstPage> {
             onPressed: () async {
               widget.onNext1!();
             },
-            child: BlocBuilder<AuthApi, ApiState>(
-              builder: (context, state) {
-                print("first $state");
-                if (state is Loading) {
-                  print("state in case = $state");
-                  return const Center(
-                      child: const CircularProgressIndicator(
-                    color: Colors.white,
-                  ));
-                } else if (state is NoLoading) {
-                  return const Text(
-                    'Зарегистрироваться',
-                    style: TextStyle(
-                      fontFamily: 'Roboto-Bold.ttf',
-                      fontSize: 15.0,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFFFFFFFF),
-                    ),
-                  );
-                }
-                ;
-                print("second $state");
-                return const Center(child: Text(""));
-              },
+            child: const Text(
+              'Зарегистрироваться',
+              style: TextStyle(
+                fontFamily: 'Roboto-Bold.ttf',
+                fontSize: 15.0,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFFFFFFFF),
+              ),
             ),
             style: ButtonStyle(
               backgroundColor:
@@ -226,6 +195,7 @@ class SecondPageState extends State<SecondPage> {
   bool wg = true;
   FirstPage firstPage = FirstPage();
   GlobalKey<FormState> formkey2 = GlobalKey<FormState>();
+  GlobalKey<FormState> formkey3 = GlobalKey<FormState>();
   void startTimer() {
     CountdownTimer countDownTimer = new CountdownTimer(
       new Duration(seconds: _start),
@@ -309,29 +279,37 @@ class SecondPageState extends State<SecondPage> {
         SizedBox(
           height: 16,
         ),
-        Center(
-          child: Container(
-            height: 52.0,
-            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: TextFormField(
-              controller: textEditingController,
-              decoration: const InputDecoration(
-                hintText: 'Введите код с почты',
-                hintStyle: TextStyle(
-                  fontFamily: 'Roboto-Regular.ttf',
-                  fontSize: 15.0,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFFADB3BD),
+        Form(
+          key: formkey3,
+          child: Center(
+            child: Container(
+              height: 52.0,
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: TextFormField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Введите код с почты";
+                  }
+                },
+                controller: textEditingController,
+                decoration: const InputDecoration(
+                  hintText: 'Введите код с почты',
+                  hintStyle: TextStyle(
+                    fontFamily: 'Roboto-Regular.ttf',
+                    fontSize: 15.0,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFFADB3BD),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0))),
                 ),
-                enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
               ),
             ),
           ),
@@ -399,9 +377,12 @@ class SecondPageState extends State<SecondPage> {
           margin: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: ElevatedButton(
             onPressed: () async {
-              widget.onNext();
-              final AuthModel authModel =
-                  await AuthApi().setCode(textEditingController.text);
+              if (formkey3.currentState!.validate()) {
+                widget.onNext();
+
+                final AuthModel authModel =
+                    await AuthApi().setCode(textEditingController.text);
+              }
             },
             child: const Text(
               'Далее',
@@ -709,7 +690,7 @@ class _FourPageState extends State<FourPage> {
                   print("UnSuccessfull");
                 }
               },
-              child: BlocBuilder<AuthApi, ApiState>(
+              child: BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, state) {
                   print("first $state");
                   if (state is Loading) {
@@ -718,7 +699,7 @@ class _FourPageState extends State<FourPage> {
                         child: const CircularProgressIndicator(
                       color: Colors.white,
                     ));
-                  } else if (state is NoLoading) {
+                  } else if (state is NoLoading || state is EmptyState) {
                     return const Text(
                       'Вход',
                       style: TextStyle(

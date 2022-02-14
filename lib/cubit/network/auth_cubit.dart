@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:blogonomy/cubit/locator_services.dart';
+import 'package:blogonomy/cubit/network/api_state.dart';
 import 'package:blogonomy/cubit/network/app_auth.dart';
 import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/screens/sliding_up_panel_screens.dart';
@@ -110,6 +111,8 @@ class AuthCubit extends Cubit<AuthState> {
     print(
       AppAuth.redirectUrl,
     );
+    emit(Loading());
+
     final map = <String, String>{"email": '${first.mail}'};
     final mapOf = Map<String, String>.of(map);
     final AuthorizationTokenResponse? result =
@@ -141,6 +144,7 @@ class AuthCubit extends Cubit<AuthState> {
           result.accessTokenExpirationDateTime);
       print("accessToken = ${result.accessToken}");
     }
+    emit(NoLoading());
 
     emit(LoginedState());
   }

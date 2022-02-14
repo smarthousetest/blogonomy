@@ -79,7 +79,6 @@ class MyApp extends StatelessWidget {
           BlocProvider<AuthCubit>(
               create: (context) => sl<AuthCubit>()..check()),
           BlocProvider<AdminCubit>(create: (context) => sl<AdminCubit>()),
-          BlocProvider<AuthApi>(create: (context) => sl<AuthApi>()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

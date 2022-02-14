@@ -123,19 +123,22 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
               actions: [
                 Column(
                   children: [
-                    Container(
-                        child: IconButton(
-                            onPressed: () async {
-                              showAlertDialogload(context);
-                              await outselected();
-                              Navigator.pop(context);
-                              showAlertDialog(context);
-                            },
-                            icon: Icon(
-                              Icons.library_books_outlined,
-                              color: Color(0xFF0072FD),
-                              size: 28,
-                            ))),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 23),
+                      child: Container(
+                          child: IconButton(
+                              onPressed: () async {
+                                showAlertDialogload(context);
+                                await outselected();
+                                Navigator.pop(context);
+                                showAlertDialog(context);
+                              },
+                              icon: Icon(
+                                Icons.library_books_outlined,
+                                color: Color(0xFF0072FD),
+                                size: 28,
+                              ))),
+                    ),
                     BlocBuilder<AdminCubit, AdminState>(
                         builder: (context, state) {
                       if (state is AdminState) {
@@ -146,10 +149,8 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                                       .showSnackBar(SnackBar(
                                     content: Text('Выполняю обновление!'),
                                   ));
-
                                   String? result =
                                       await OneBlogerApi().updBloger();
-
                                   if (result == "OK") {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
