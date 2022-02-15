@@ -28,6 +28,7 @@ class _SlidingState extends State<Sliding> with SingleTickerProviderStateMixin {
     return DefaultTabController(
       length: 3,
       child: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: [
           FirstPage(
@@ -39,7 +40,7 @@ class _SlidingState extends State<Sliding> with SingleTickerProviderStateMixin {
             onBack: () => _tabController.index = 0,
           ),
           ThirdPage(
-            onNext: () => _tabController.index = 0,
+            onNext: () => _tabController.index = 1,
           ),
           FourPage(
             onNext: () => 1,
@@ -459,7 +460,7 @@ class ThirdPageState extends State<ThirdPage> {
               ],
             ),
             Container(
-              height: 73.0,
+              height: 87.0,
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: TextFormField(
                 obscureText: true,
@@ -467,6 +468,12 @@ class ThirdPageState extends State<ThirdPage> {
                 validator: (val) {
                   if (val!.isEmpty) {
                     return "Поле пустое";
+                  }
+                  if (val.length < 6) {
+                    return "Пароль меньше 6 символов";
+                  }
+                  if (!val.contains("[0-9]")) {
+                    return ('Парольдолжен содержать хотя бы одну цифру');
                   }
                   return null;
                 },
@@ -480,7 +487,7 @@ class ThirdPageState extends State<ThirdPage> {
                     color: Color(0xFFADB3BD),
                   ),
                   helperText:
-                      "Пароль не менее 6 символов и минимум одна цифра без пробелов",
+                      "Пароль не менее 6 символов \n и минимум одна цифра без пробелов",
                   enabledBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Color(0xFFADB3BD), width: 1.0),
@@ -569,7 +576,7 @@ class ThirdPageState extends State<ThirdPage> {
               ),
             ),
             const SizedBox(
-              height: 16,
+              height: 26,
             ),
             GestureDetector(
                 onTap: () => Navigator.pushNamed(context, '/e'),
@@ -682,15 +689,16 @@ class _FourPageState extends State<FourPage> {
               child: ElevatedButton(
                 onPressed: () async {
                   String mail = widget.textEditingController.text;
-                  if (formkey1.currentState!.validate()) {
-                    final AuthModel authModel =
-                        await AuthApi().createMail(mail);
 
-                    first.mail = mail;
-                    print("object $mail");
-                    setState(() {
-                      _authModel = authModel;
-                    });
+                  AuthModel authModel =
+                      await context.read<AuthApi>().createMail(mail);
+
+                  first.mail = mail;
+                  print("object $mail");
+                  setState(() {
+                    _authModel = authModel;
+                  });
+                  if (formkey1.currentState!.validate()) {
                     print(" auth Model = ${_authModel!.result}");
                     if (authModel.result == 'exist') {
                       context.read<AuthCubit>().signIn();
@@ -706,7 +714,9 @@ class _FourPageState extends State<FourPage> {
                   builder: ((context, state) {
                     print("state on enter = $state");
                     if (state is Loading) {
-                      return CircularProgressIndicator();
+                      return CircularProgressIndicator(
+                        color: Colors.white,
+                      );
                     }
                     return const Text(
                       'Вход',

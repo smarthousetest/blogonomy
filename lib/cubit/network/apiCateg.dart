@@ -145,10 +145,10 @@ AuthApi authApi = AuthApi();
 String? hash;
 
 class AuthApi extends Cubit<ApiState> {
-  AuthApi() : super(Loading());
+  AuthApi() : super(NoLoading());
 
   Future<AuthModel> createMail(String mail) async {
-    emit(NoLoading());
+    emit(Loading());
 
     var error;
     print(mail);
@@ -167,7 +167,7 @@ class AuthApi extends Cubit<ApiState> {
     print("Auth api mail = $mail");
     if (response.statusCode == 200) {
       final String responseString = response.body;
-
+      emit(NoLoading());
       print(responseString);
       return authModelFromJson(responseString);
     } else {
