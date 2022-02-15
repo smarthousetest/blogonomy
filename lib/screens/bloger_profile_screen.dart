@@ -114,7 +114,8 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
         return StatefulBuilder(// StatefulBuilder
             builder: (context, setState) {
           return Scaffold(
-              body: CustomScrollView(slivers: [
+              body:
+                  CustomScrollView(physics: ClampingScrollPhysics(), slivers: [
             SliverAppBar(
               iconTheme: IconThemeData(color: Colors.blue),
               toolbarHeight: 100,
@@ -196,7 +197,6 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
             SliverToBoxAdapter(
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                physics: ClampingScrollPhysics(),
                 child: Column(
                   children: [
                     ClipPath(

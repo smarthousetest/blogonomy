@@ -100,7 +100,7 @@ class AuthCubit extends Cubit<AuthState> {
     //  if (state is InProcessState) return;
 
     final currentState = state;
-
+    print("state in sign = $state");
     if (currentState is LoginedState) {}
 
     //emit(InProcessState());
@@ -111,7 +111,6 @@ class AuthCubit extends Cubit<AuthState> {
     print(
       AppAuth.redirectUrl,
     );
-    emit(Loading());
 
     final map = <String, String>{"email": '${first.mail}'};
     final mapOf = Map<String, String>.of(map);
@@ -144,7 +143,6 @@ class AuthCubit extends Cubit<AuthState> {
           result.accessTokenExpirationDateTime);
       print("accessToken = ${result.accessToken}");
     }
-    emit(NoLoading());
 
     emit(LoginedState());
   }

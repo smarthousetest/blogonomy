@@ -1,12 +1,14 @@
 import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:equatable/equatable.dart';
 
-class Loading extends AuthState {
+abstract class ApiState {}
+
+class Loading extends ApiState {
   @override
   List<Object?> get props => [];
 }
 
-class NoLoading extends AuthState {
+class NoLoading extends ApiState {
   @override
   List<Object?> get props => [];
 }

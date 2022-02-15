@@ -41,7 +41,10 @@ class _SlidingState extends State<Sliding> with SingleTickerProviderStateMixin {
           ThirdPage(
             onNext: () => _tabController.index = 0,
           ),
-          FourPage(onNext: () => 1)
+          FourPage(
+            onNext: () => 1,
+            onBack: () => _tabController.index = 0,
+          )
         ],
       ),
     );
@@ -588,8 +591,9 @@ class ThirdPageState extends State<ThirdPage> {
 }
 
 class FourPage extends StatefulWidget {
-  FourPage({Key? key, this.onNext, this.mail}) : super(key: key);
+  FourPage({Key? key, this.onNext, this.mail, this.onBack}) : super(key: key);
   final VoidCallback? onNext;
+  final VoidCallback? onBack;
   TextEditingController textEditingController = TextEditingController();
   String? mail;
   // getMail(String mail) {
@@ -608,98 +612,102 @@ class _FourPageState extends State<FourPage> {
   GlobalKey<FormState> formkey1 = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 30.0),
-        Container(
-          alignment: Alignment.center,
-          child: const Text(
-            'Авторизация',
-            style: TextStyle(
-                fontFamily: 'Roboto-Bold.ttf',
-                fontSize: 20,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF24282E)),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+            color: Colors.black,
+            alignment: Alignment.topLeft,
+            onPressed: widget.onBack,
+            icon: const Icon(Icons.arrow_back_rounded)),
+        centerTitle: true,
+        title: const Text(
+          'Авторизация',
+          style: TextStyle(
+              fontFamily: 'Roboto-Bold.ttf',
+              fontSize: 20,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF24282E)),
         ),
-        const SizedBox(height: 20),
-        Form(
-          key: formkey1,
-          child: Container(
-            height: 52.0,
-            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: TextFormField(
-              validator: (value) {
-                print("value = $value");
-                if (value!.isEmpty) {
-                  return "* Required";
-                }
-                print(" auth Model = ${_authModel?.result}");
-                if (_authModel?.result == "empty") {
-                  return "Аккаунт не найден, нажмите ЗАРЕГИСТРИРОВАТЬСЯ";
-                }
-              },
-              controller: widget.textEditingController,
-              decoration: const InputDecoration(
-                hintText: 'Email',
-                hintStyle: TextStyle(
-                  fontFamily: 'Roboto-Regular.ttf',
-                  fontSize: 15.0,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFFADB3BD),
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 20),
+          Form(
+            key: formkey1,
+            child: Container(
+              height: 52.0,
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: TextFormField(
+                validator: (value) {
+                  print("value = $value");
+                  if (value!.isEmpty) {
+                    return "* Required";
+                  }
+                  print(" auth Model = ${_authModel?.result}");
+                  if (_authModel?.result == "empty") {
+                    return "Аккаунт не найден, нажмите ЗАРЕГИСТРИРОВАТЬСЯ";
+                  }
+                },
+                controller: widget.textEditingController,
+                decoration: const InputDecoration(
+                  hintText: 'Email',
+                  hintStyle: TextStyle(
+                    fontFamily: 'Roboto-Regular.ttf',
+                    fontSize: 15.0,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFFADB3BD),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xFFADB3BD), width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color(0xFFADB3BD), width: 1.0),
+                      borderRadius:
+                          const BorderRadius.all(const Radius.circular(32.0))),
                 ),
-                enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0))),
-                focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Color(0xFFADB3BD), width: 1.0),
-                    borderRadius:
-                        const BorderRadius.all(const Radius.circular(32.0))),
               ),
             ),
           ),
-        ),
-        const SizedBox(height: 16.0),
-        Container(
-            height: 52.0,
-            width: 600,
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: ElevatedButton(
-              onPressed: () async {
-                String mail = widget.textEditingController.text;
-                if (formkey1.currentState!.validate()) {
-                  final AuthModel authModel = await AuthApi().createMail(mail);
+          const SizedBox(height: 16.0),
+          Container(
+              height: 52.0,
+              width: 600,
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: ElevatedButton(
+                onPressed: () async {
+                  String mail = widget.textEditingController.text;
+                  if (formkey1.currentState!.validate()) {
+                    final AuthModel authModel =
+                        await AuthApi().createMail(mail);
 
-                  first.mail = mail;
-                  print("object $mail");
-                  setState(() {
-                    _authModel = authModel;
-                  });
-                  print(" auth Model = ${_authModel!.result}");
-                  if (authModel.result == 'exist') {
-                    context.read<AuthCubit>().signIn();
-                    context.read<SlidingUpCubit>().close();
+                    first.mail = mail;
+                    print("object $mail");
+                    setState(() {
+                      _authModel = authModel;
+                    });
+                    print(" auth Model = ${_authModel!.result}");
+                    if (authModel.result == 'exist') {
+                      context.read<AuthCubit>().signIn();
+                      context.read<SlidingUpCubit>().close();
+                    }
+
+                    return;
+                  } else {
+                    print("UnSuccessfull");
                   }
-
-                  return;
-                } else {
-                  print("UnSuccessfull");
-                }
-              },
-              child: BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, state) {
-                  print("first $state");
-                  if (state is Loading) {
-                    print("state in case = $state");
-                    return const Center(
-                        child: const CircularProgressIndicator(
-                      color: Colors.white,
-                    ));
-                  } else if (state is NoLoading || state is EmptyState) {
+                },
+                child: BlocBuilder<AuthApi, ApiState>(
+                  builder: ((context, state) {
+                    print("state on enter = $state");
+                    if (state is Loading) {
+                      return CircularProgressIndicator();
+                    }
                     return const Text(
                       'Вход',
                       style: TextStyle(
@@ -710,59 +718,56 @@ class _FourPageState extends State<FourPage> {
                         color: Color(0xFFFFFFFF),
                       ),
                     );
-                  }
-                  ;
-                  print("second $state");
-                  return const Center(child: Text(""));
-                },
-              ),
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(const Color(0xFF006FFD)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32.0),
+                  }),
+                ),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(const Color(0xFF006FFD)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
                   ),
                 ),
-              ),
-            )),
-        // const SizedBox(
-        //   height: 10,
-        // ),
-        // GestureDetector(
-        //     onTap: () async {
-        //       // String mail = widget.textEditingController.text;
-        //       // final AuthModel authModel = await AuthApi().getCode(mail);
-        //       widget.onNext!();
-        //       print("hererererere");
-        //     },
-        //     child: const Text(
-        //       "Зарегистрироваться",
-        //       style: TextStyle(
-        //         fontFamily: 'Roboto-Bold.ttf',
-        //         fontSize: 15.0,
-        //         fontStyle: FontStyle.normal,
-        //         fontWeight: FontWeight.w700,
-        //         color: Colors.blue,
-        //       ),
-        //     )),
-        const SizedBox(
-          height: 20,
-        ),
-        GestureDetector(
-            onTap: () => Navigator.pushNamed(context, '/e'),
-            child: const Text(
-              "Обратиться в службу подержки",
-              style: const TextStyle(
-                fontFamily: 'Roboto-Bold.ttf',
-                fontSize: 15.0,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w700,
-                color: Colors.blue,
-              ),
-            )),
-        const SizedBox(height: 40.0),
-      ],
+              )),
+          // const SizedBox(
+          //   height: 10,
+          // ),
+          // GestureDetector(
+          //     onTap: () async {
+          //       // String mail = widget.textEditingController.text;
+          //       // final AuthModel authModel = await AuthApi().getCode(mail);
+          //       widget.onNext!();
+          //       print("hererererere");
+          //     },
+          //     child: const Text(
+          //       "Зарегистрироваться",
+          //       style: TextStyle(
+          //         fontFamily: 'Roboto-Bold.ttf',
+          //         fontSize: 15.0,
+          //         fontStyle: FontStyle.normal,
+          //         fontWeight: FontWeight.w700,
+          //         color: Colors.blue,
+          //       ),
+          //     )),
+          const SizedBox(
+            height: 20,
+          ),
+          GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/e'),
+              child: const Text(
+                "Обратиться в службу подержки",
+                style: const TextStyle(
+                  fontFamily: 'Roboto-Bold.ttf',
+                  fontSize: 15.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.blue,
+                ),
+              )),
+          const SizedBox(height: 40.0),
+        ],
+      ),
     );
   }
 }

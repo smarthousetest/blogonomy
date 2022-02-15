@@ -32,6 +32,7 @@ class ProfileState extends State<Profile> {
       children: [
         Scaffold(
           body: CustomScrollView(
+            physics: ClampingScrollPhysics(),
             slivers: [
               SliverAppBar(
                 backgroundColor: Color(0xFFF5F5FF),
@@ -87,470 +88,455 @@ class ProfileState extends State<Profile> {
                 builder: (context, state) {
                   if (state is LoginedState) {
                     return SingleChildScrollView(
-                        physics: ClampingScrollPhysics(),
                         child: Column(children: [
-                          ClipPath(
-                            clipper: CurvedBottomClipper(),
-                            child: Container(
-                              color: Color(0xFFF5F5FF),
-                              height: 200.0,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [],
+                      ClipPath(
+                        clipper: CurvedBottomClipper(),
+                        child: Container(
+                          color: Color(0xFFF5F5FF),
+                          height: 200.0,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 60),
+                                child: Container(
+                                  width: 130,
+                                  child: CircleAvatar(
+                                    radius: 60,
+                                    // backgroundImage: NetworkImage(
+                                    //     'https://aif-s3.aif.ru/images/019/507/eeba36a2a2d37754bab8b462f4262d97.jpg'),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 60),
-                                    child: Container(
-                                      width: 130,
-                                      child: CircleAvatar(
-                                        radius: 60,
-                                        // backgroundImage: NetworkImage(
-                                        //     'https://aif-s3.aif.ru/images/019/507/eeba36a2a2d37754bab8b462f4262d97.jpg'),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 20),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                hintText: 'Полное имя',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Roboto-Regular.ttf',
+                                  fontSize: 15.0,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xFFADB3BD),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xFFADB3BD), width: 1.0),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(32.0))),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xFFADB3BD), width: 1.0),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(32.0))),
                               ),
                             ),
                           ),
-                          Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 20, right: 20, top: 20),
-                                child: TextFormField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Полное имя',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Roboto-Regular.ttf',
-                                      fontSize: 15.0,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xFFADB3BD),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFFADB3BD),
-                                            width: 1.0),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(32.0))),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFFADB3BD),
-                                            width: 1.0),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(32.0))),
-                                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20,
+                              right: 20,
+                            ),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                hintText: 'Email',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Roboto-Regular.ttf',
+                                  fontSize: 15.0,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xFFADB3BD),
                                 ),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xFFADB3BD), width: 1.0),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(32.0))),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xFFADB3BD), width: 1.0),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(32.0))),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 20,
-                                  right: 20,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                hintText: 'Мобильный телефон',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Roboto-Regular.ttf',
+                                  fontSize: 15.0,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xFFADB3BD),
                                 ),
-                                child: TextFormField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Email',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Roboto-Regular.ttf',
-                                      fontSize: 15.0,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xFFADB3BD),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFFADB3BD),
-                                            width: 1.0),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(32.0))),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFFADB3BD),
-                                            width: 1.0),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(32.0))),
-                                  ),
-                                ),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xFFADB3BD), width: 1.0),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(32.0))),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xFFADB3BD), width: 1.0),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(32.0))),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/a');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 20),
+                            child: Container(
+                              height: 104.0,
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 21.0),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 0,
+                                    blurRadius: 25,
+                                    // changes position of shadow
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: const Color(0xFFF0F0FF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(32.0),
+                                color: const Color(0xFFFFFFFF),
+                                // gradient: const LinearGradient(
+                                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                                // ),
+                              ),
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 20, right: 20),
-                                child: TextFormField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Мобильный телефон',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Roboto-Regular.ttf',
-                                      fontSize: 15.0,
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xFFADB3BD),
+                                    const EdgeInsets.only(left: 24, right: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 5),
+                                      child: Image.asset(
+                                        'assets/images/notif.png',
+                                        width: 27,
+                                        height: 27,
+                                        color: Colors.yellow,
+                                      ),
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFFADB3BD),
-                                            width: 1.0),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(32.0))),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFFADB3BD),
-                                            width: 1.0),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(32.0))),
-                                  ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 10,
+                                      ),
+                                      child: Text(
+                                        "Настройка уведомлений",
+                                        textScaleFactor: MediaQuery.of(context)
+                                            .textScaleFactor,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Spacer(
+                                      flex: 1,
+                                    ),
+                                    Image.asset(
+                                      'assets/images/arrow.png',
+                                      height: 30,
+                                      width: 30,
+                                      color: Colors.blue,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/a');
-                              },
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => Navigator.pushNamed(context, '/b'),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 20),
+                            child: Container(
+                              height: 104.0,
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 21.0),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 0,
+                                    blurRadius: 25,
+                                    // changes position of shadow
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: const Color(0xFFF0F0FF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(32.0),
+                                color: const Color(0xFFFFFFFF),
+                                // gradient: const LinearGradient(
+                                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                                // ),
+                              ),
                               child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, right: 10, top: 20),
-                                child: Container(
-                                  height: 104.0,
-                                  margin: const EdgeInsets.only(
-                                      left: 20.0, right: 21.0),
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 0,
-                                        blurRadius: 25,
-                                        // changes position of shadow
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Image.asset(
+                                        'assets/images/shield.png',
+                                        width: 27,
+                                        height: 27,
+                                        color: Color(0x40200E32),
                                       ),
-                                    ],
-                                    border: Border.all(
-                                      color: const Color(0xFFF0F0FF),
-                                      width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(32.0),
-                                    color: const Color(0xFFFFFFFF),
-                                    // gradient: const LinearGradient(
-                                    //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                                    // ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 24, right: 24),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 5),
-                                          child: Image.asset(
-                                            'assets/images/notif.png',
-                                            width: 27,
-                                            height: 27,
-                                            color: Colors.yellow,
-                                          ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        "Политика конфиденциальности",
+                                        textScaleFactor: MediaQuery.of(context)
+                                            .textScaleFactor
+                                            .clamp(0.1, 1.5),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 10,
-                                          ),
-                                          child: Text(
-                                            "Настройка уведомлений",
-                                            textScaleFactor:
-                                                MediaQuery.of(context)
-                                                    .textScaleFactor,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ),
-                                        Spacer(
-                                          flex: 1,
-                                        ),
-                                        Image.asset(
-                                          'assets/images/arrow.png',
-                                          height: 30,
-                                          width: 30,
-                                          color: Colors.blue,
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Image.asset(
+                                        'assets/images/arrow.png',
+                                        height: 30,
+                                        width: 30,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () => Navigator.pushNamed(context, '/b'),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => Navigator.pushNamed(context, '/d'),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 20),
+                            child: Container(
+                              height: 104.0,
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 21.0),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 0,
+                                    blurRadius: 25,
+                                    // changes position of shadow
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: const Color(0xFFF0F0FF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(32.0),
+                                color: const Color(0xFFFFFFFF),
+                                // gradient: const LinearGradient(
+                                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                                // ),
+                              ),
                               child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, right: 10, top: 20),
-                                child: Container(
-                                  height: 104.0,
-                                  margin: const EdgeInsets.only(
-                                      left: 20.0, right: 21.0),
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 0,
-                                        blurRadius: 25,
-                                        // changes position of shadow
+                                padding:
+                                    const EdgeInsets.only(left: 24, right: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Image.asset(
+                                        'assets/images/info.png',
+                                        width: 27,
+                                        height: 27,
+                                        color: Colors.green,
                                       ),
-                                    ],
-                                    border: Border.all(
-                                      color: const Color(0xFFF0F0FF),
-                                      width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(32.0),
-                                    color: const Color(0xFFFFFFFF),
-                                    // gradient: const LinearGradient(
-                                    //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                                    // ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 24),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Expanded(
-                                          flex: 1,
-                                          child: Image.asset(
-                                            'assets/images/shield.png',
-                                            width: 27,
-                                            height: 27,
-                                            color: Color(0x40200E32),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 3,
-                                          child: Text(
-                                            "Политика конфиденциальности",
-                                            textScaleFactor:
-                                                MediaQuery.of(context)
-                                                    .textScaleFactor
-                                                    .clamp(0.1, 1.5),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
-                                          child: Image.asset(
-                                            'assets/images/arrow.png',
-                                            height: 30,
-                                            width: 30,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ],
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 20),
+                                      child: Text(
+                                        "Подсказки",
+                                        textScaleFactor: MediaQuery.of(context)
+                                            .textScaleFactor,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ),
-                                  ),
+                                    Spacer(
+                                      flex: 1,
+                                    ),
+                                    Image.asset(
+                                      'assets/images/arrow.png',
+                                      height: 30,
+                                      width: 30,
+                                      color: Colors.blue,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () => Navigator.pushNamed(context, '/d'),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => Navigator.pushNamed(context, '/c'),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 20),
+                            child: Container(
+                              height: 104.0,
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 21.0),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 0,
+                                    blurRadius: 25,
+                                    // changes position of shadow
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: const Color(0xFFF0F0FF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(32.0),
+                                color: const Color(0xFFFFFFFF),
+                                // gradient: const LinearGradient(
+                                //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
+                                // ),
+                              ),
                               child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, right: 10, top: 20),
-                                child: Container(
-                                  height: 104.0,
-                                  margin: const EdgeInsets.only(
-                                      left: 20.0, right: 21.0),
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 0,
-                                        blurRadius: 25,
-                                        // changes position of shadow
+                                padding:
+                                    const EdgeInsets.only(left: 24, right: 24),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Image.asset(
+                                        'assets/images/copy.png',
+                                        width: 27,
+                                        height: 27,
+                                        color: Colors.grey,
                                       ),
-                                    ],
-                                    border: Border.all(
-                                      color: const Color(0xFFF0F0FF),
-                                      width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(32.0),
-                                    color: const Color(0xFFFFFFFF),
-                                    // gradient: const LinearGradient(
-                                    //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                                    // ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 20),
+                                      child: Text(
+                                        "О приложении",
+                                        textScaleFactor: MediaQuery.of(context)
+                                            .textScaleFactor,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Spacer(
+                                      flex: 1,
+                                    ),
+                                    Image.asset(
+                                      'assets/images/arrow.png',
+                                      height: 30,
+                                      width: 30,
+                                      color: Colors.blue,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        BlocBuilder<AuthCubit, AuthState>(
+                            builder: (context, state) {
+                          if (state is LoginedState) {
+                            return Container(
+                              height: 55.0,
+                              width: 600,
+                              margin: const EdgeInsets.only(
+                                  left: 35.0, right: 35.0, top: 20),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  print("ggggyggy");
+                                  context.read<AuthCubit>().logOut();
+                                },
+                                child: const Text(
+                                  'Выйти',
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto-Bold.ttf',
+                                    fontSize: 15.0,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF006FFD),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 24, right: 24),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Image.asset(
-                                            'assets/images/info.png',
-                                            width: 27,
-                                            height: 27,
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 20),
-                                          child: Text(
-                                            "Подсказки",
-                                            textScaleFactor:
-                                                MediaQuery.of(context)
-                                                    .textScaleFactor,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ),
-                                        Spacer(
-                                          flex: 1,
-                                        ),
-                                        Image.asset(
-                                          'assets/images/arrow.png',
-                                          height: 30,
-                                          width: 30,
-                                          color: Colors.blue,
-                                        ),
-                                      ],
+                                ),
+                                style: ButtonStyle(
+                                  elevation: MaterialStateProperty.all(0),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color(0xFFFFFFFF)),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      side:
+                                          BorderSide(color: Color(0xFF006FFD)),
+                                      borderRadius: BorderRadius.circular(32.0),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: () => Navigator.pushNamed(context, '/c'),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, right: 10, top: 20),
-                                child: Container(
-                                  height: 104.0,
-                                  margin: const EdgeInsets.only(
-                                      left: 20.0, right: 21.0),
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 0,
-                                        blurRadius: 25,
-                                        // changes position of shadow
-                                      ),
-                                    ],
-                                    border: Border.all(
-                                      color: const Color(0xFFF0F0FF),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(32.0),
-                                    color: const Color(0xFFFFFFFF),
-                                    // gradient: const LinearGradient(
-                                    //   colors: [Color(0xFFFFFFFF), Color(0xFFF3F3FF)],
-                                    // ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 24, right: 24),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Image.asset(
-                                            'assets/images/copy.png',
-                                            width: 27,
-                                            height: 27,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 20),
-                                          child: Text(
-                                            "О приложении",
-                                            textScaleFactor:
-                                                MediaQuery.of(context)
-                                                    .textScaleFactor,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ),
-                                        Spacer(
-                                          flex: 1,
-                                        ),
-                                        Image.asset(
-                                          'assets/images/arrow.png',
-                                          height: 30,
-                                          width: 30,
-                                          color: Colors.blue,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            BlocBuilder<AuthCubit, AuthState>(
-                                builder: (context, state) {
-                              if (state is LoginedState) {
-                                return Container(
-                                  height: 55.0,
-                                  width: 600,
-                                  margin: const EdgeInsets.only(
-                                      left: 35.0, right: 35.0, top: 20),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      print("ggggyggy");
-                                      context.read<AuthCubit>().logOut();
-                                    },
-                                    child: const Text(
-                                      'Выйти',
-                                      style: TextStyle(
-                                        fontFamily: 'Roboto-Bold.ttf',
-                                        fontSize: 15.0,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w700,
-                                        color: Color(0xFF006FFD),
-                                      ),
-                                    ),
-                                    style: ButtonStyle(
-                                      elevation: MaterialStateProperty.all(0),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              const Color(0xFFFFFFFF)),
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          side: BorderSide(
-                                              color: Color(0xFF006FFD)),
-                                          borderRadius:
-                                              BorderRadius.circular(32.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              } else if (state is LogoutedState) {
-                                return const Text('data');
-                              } else
-                                return (Text(""));
-                            }),
-                            const SizedBox(
-                              height: 20,
-                            )
-                          ]),
-                        ]));
+                            );
+                          } else if (state is LogoutedState) {
+                            return const Text('data');
+                          } else
+                            return (Text(""));
+                        }),
+                        const SizedBox(
+                          height: 20,
+                        )
+                      ]),
+                    ]));
                   } else if (state is EmptyState || state is LogoutedState) {
                     return SingleChildScrollView(
                         physics: ClampingScrollPhysics(),

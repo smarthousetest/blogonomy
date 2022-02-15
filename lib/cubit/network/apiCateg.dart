@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:blogonomy/cubit/network/api_state.dart';
 import 'package:blogonomy/cubit/network/app_auth.dart';
 import 'package:blogonomy/cubit/network/auth_mode.dart';
+import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
 import 'package:blogonomy/screens/sliding_up_panel_screens.dart';
 import 'package:flutter/material.dart';
@@ -143,8 +144,12 @@ class BlogersApi {
 AuthApi authApi = AuthApi();
 String? hash;
 
-class AuthApi {
+class AuthApi extends Cubit<ApiState> {
+  AuthApi() : super(Loading());
+
   Future<AuthModel> createMail(String mail) async {
+    emit(NoLoading());
+
     var error;
     print(mail);
     final response = await http.post(
@@ -157,14 +162,13 @@ class AuthApi {
           "Accept": "application/json",
           "content-type": "application/json"
         });
-
+    print("state in create mail = $state");
     print(response.statusCode);
     print("Auth api mail = $mail");
     if (response.statusCode == 200) {
       final String responseString = response.body;
 
       print(responseString);
-
       return authModelFromJson(responseString);
     } else {
       return error;
