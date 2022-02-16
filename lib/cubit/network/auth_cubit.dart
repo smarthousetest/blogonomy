@@ -123,7 +123,6 @@ class AuthCubit extends Cubit<AuthState> {
         //clientSecret: AppAuth.clientSecret,
         serviceConfiguration: AppAuth.serviceConfiguration,
         scopes: AppAuth.scopes,
-
         //preferEphemeralSession: preferEphemeralSession,
       ),
     );

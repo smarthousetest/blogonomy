@@ -410,7 +410,7 @@ class SecondPageState extends State<SecondPage> {
           ),
         ),
         const SizedBox(
-          height: 16,
+          height: 26,
         ),
         GestureDetector(
             onTap: () => Navigator.pushNamed(context, '/e'),
@@ -443,23 +443,24 @@ class ThirdPageState extends State<ThirdPage> {
   bool yes = true;
 
   final _formKey = GlobalKey<FormState>();
+  final _formKey2 = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                IconButton(
-                    alignment: Alignment.topLeft,
-                    onPressed: widget.onNext,
-                    icon: const Icon(Icons.arrow_back_rounded)),
-              ],
-            ),
-            Container(
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              IconButton(
+                  alignment: Alignment.topLeft,
+                  onPressed: widget.onNext,
+                  icon: const Icon(Icons.arrow_back_rounded)),
+            ],
+          ),
+          Form(
+            key: _formKey,
+            child: Container(
               height: 87.0,
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: TextFormField(
@@ -499,10 +500,13 @@ class ThirdPageState extends State<ThirdPage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            Container(
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Form(
+            key: _formKey2,
+            child: Container(
               height: 52.0,
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: TextFormField(
@@ -535,63 +539,64 @@ class ThirdPageState extends State<ThirdPage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            Container(
-              height: 52.0,
-              width: 600,
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    final AuthModel authModel = await AuthApi()
-                        .setPassword(textEditingController2.text);
-                    context.read<SlidingUpCubit>().close();
-                    context.read<AuthCubit>().signIn();
-                    return;
-                  } else {
-                    print("UnSuccessfull");
-                  }
-                },
-                child: const Text(
-                  'Готово',
-                  style: TextStyle(
-                    fontFamily: 'Roboto-Bold.ttf',
-                    fontSize: 15.0,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFFFFFFFF),
-                  ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Container(
+            height: 52.0,
+            width: 600,
+            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+            child: ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate() &&
+                    _formKey2.currentState!.validate()) {
+                  final AuthModel authModel =
+                      await AuthApi().setPassword(textEditingController2.text);
+                  context.read<SlidingUpCubit>().close();
+                  context.read<AuthCubit>().signIn();
+                  return;
+                } else {
+                  print("UnSuccessfull");
+                }
+              },
+              child: const Text(
+                'Готово',
+                style: TextStyle(
+                  fontFamily: 'Roboto-Bold.ttf',
+                  fontSize: 15.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFFFFFFFF),
                 ),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF006FFD)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32.0),
-                    ),
+              ),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(const Color(0xFF006FFD)),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32.0),
                   ),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 26,
-            ),
-            GestureDetector(
-                onTap: () => Navigator.pushNamed(context, '/e'),
-                child: const Text(
-                  "Обратиться в службу подержки",
-                  style: const TextStyle(
-                    fontFamily: 'Roboto-Bold.ttf',
-                    fontSize: 15.0,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.blue,
-                  ),
-                )),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 26,
+          ),
+          GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/e'),
+              child: const Text(
+                "Обратиться в службу подержки",
+                style: const TextStyle(
+                  fontFamily: 'Roboto-Bold.ttf',
+                  fontSize: 15.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.blue,
+                ),
+              )),
+        ],
       ),
     );
   }
@@ -761,7 +766,7 @@ class _FourPageState extends State<FourPage> {
           //       ),
           //     )),
           const SizedBox(
-            height: 20,
+            height: 30,
           ),
           GestureDetector(
               onTap: () => Navigator.pushNamed(context, '/e'),
