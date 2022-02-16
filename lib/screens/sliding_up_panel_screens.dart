@@ -200,6 +200,8 @@ class SecondPageState extends State<SecondPage> {
   FirstPage firstPage = FirstPage();
   GlobalKey<FormState> formkey2 = GlobalKey<FormState>();
   GlobalKey<FormState> formkey3 = GlobalKey<FormState>();
+  String b = 'ok';
+
   void startTimer() {
     CountdownTimer countDownTimer = new CountdownTimer(
       new Duration(seconds: _start),
@@ -294,6 +296,14 @@ class SecondPageState extends State<SecondPage> {
                   if (value!.isEmpty) {
                     return "Введите код с почты";
                   }
+                  print("b= $b");
+                  if (b != 'ok') {
+                    print("b2= $b");
+                    return 'Код не совпадает';
+                  }
+                  // if (hash == null) {
+                  //   return 'Код не совпадает';
+                  // }
                 },
                 controller: textEditingController,
                 decoration: const InputDecoration(
@@ -381,11 +391,23 @@ class SecondPageState extends State<SecondPage> {
           margin: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: ElevatedButton(
             onPressed: () async {
+              String a = await AuthApi().setCode(textEditingController.text);
+
+              print("a=$a");
+
+              if (a == 'ok') {
+                setState(() {
+                  b = 'ok';
+                });
+              }
+              if (a == 'error') {
+                print("haarerreer");
+                setState(() {
+                  b = 'ee';
+                });
+              }
               if (formkey3.currentState!.validate()) {
                 widget.onNext();
-
-                final AuthModel authModel =
-                    await AuthApi().setCode(textEditingController.text);
               }
             },
             child: const Text(
@@ -441,7 +463,7 @@ class ThirdPageState extends State<ThirdPage> {
   TextEditingController textEditingController = TextEditingController();
   TextEditingController textEditingController2 = TextEditingController();
   bool yes = true;
-
+  RegExp regex = RegExp('(?=.*?[0-9])');
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
   @override
@@ -473,8 +495,8 @@ class ThirdPageState extends State<ThirdPage> {
                   if (val.length < 6) {
                     return "Пароль меньше 6 символов";
                   }
-                  if (!val.contains("[0-9]")) {
-                    return ('Парольдолжен содержать хотя бы одну цифру');
+                  if (!regex.hasMatch(val)) {
+                    return ('Пароль должен содержать хотя бы одну цифру');
                   }
                   return null;
                 },

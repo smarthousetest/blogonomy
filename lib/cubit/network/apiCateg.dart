@@ -204,10 +204,11 @@ class AuthApi extends Cubit<ApiState> {
     }
   }
 
-  Future<AuthModel> setCode(String code) async {
+  Future<String> setCode(String code) async {
     var error;
-
+    //const hash2 = hash;
     print("hash 2 = $hash");
+    var dd = hash;
     print("code = $code");
     final response = await http.post(
         Uri.parse(
@@ -218,13 +219,18 @@ class AuthApi extends Cubit<ApiState> {
           "content-type": "application/json"
         });
     Map<String, dynamic> responseJson = json.decode(response.body);
-    hash = responseJson['hash'];
+
     print("body = ${response.body}");
     print(response.statusCode);
+    if (response.body == '{"result":"mismatch"}') {
+      print("object123132");
+      return 'error';
+    }
     if (response.statusCode == 200) {
       final String responseString = response.body;
-      print("response string $responseString");
-      return authModelFromJson(responseString);
+      print("response string 1 = $responseString");
+      hash = responseJson['hash'];
+      return 'ok';
     } else {
       return error;
     }
