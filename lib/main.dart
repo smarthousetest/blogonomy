@@ -2,6 +2,7 @@ import 'package:blogonomy/auth/auth_page.dart';
 import 'package:blogonomy/cubit/bottom_navigation_bar.dart';
 import 'package:blogonomy/cubit/locator_services.dart';
 import 'package:blogonomy/cubit/network/admin_cubit.dart';
+import 'package:blogonomy/cubit/network/admin_state.dart';
 import 'package:blogonomy/cubit/network/apiCateg.dart';
 import 'package:blogonomy/cubit/network/app_auth.dart';
 import 'package:blogonomy/cubit/network/auth_state.dart';
@@ -27,7 +28,9 @@ import 'package:blogonomy/cubit/locator_services.dart' as servic;
 import 'package:flutter/services.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 import 'cubit/network/auth_cubit.dart';
 import 'floating_bottom_navigation_bar-1.5.2/src/floating_navbar.dart';
@@ -48,6 +51,7 @@ Future<void> main() async {
   if (AppAuth.accessToken != null) {
     LoginedState();
   }
+
   runApp(const MyApp());
 }
 
@@ -78,7 +82,8 @@ class MyApp extends StatelessWidget {
               create: (context) => sl<BottomNavigationControllerSelect>()),
           BlocProvider<AuthCubit>(
               create: (context) => sl<AuthCubit>()..check()),
-          BlocProvider<AdminCubit>(create: (context) => sl<AdminCubit>()),
+          BlocProvider<AdminCubit>(
+              create: (context) => sl<AdminCubit>()..setAdmin()),
           BlocProvider<AuthApi>(create: (context) => sl<AuthApi>()),
         ],
         child: MaterialApp(
@@ -86,7 +91,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: const AuthPage(),
+          home: AuthPage(),
           routes: <String, WidgetBuilder>{
             '/a': (BuildContext context) => Notifications(),
             '/b': (BuildContext context) => Confid(),

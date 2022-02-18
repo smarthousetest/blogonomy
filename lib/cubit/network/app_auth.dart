@@ -13,7 +13,7 @@ class AppAuth {
     'openid',
     // 'profile',
     //  'email',
-    // 'roles',
+    'roles',
     //'offline_access',
     'demo_api'
   ];

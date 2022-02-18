@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:blogonomy/cubit/network/admin_state.dart';
 import 'package:blogonomy/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,12 +23,15 @@ class AdminCubit extends Cubit<AdminState> {
   }
 
   Future<void> checkOnAdmin(check) async {
-    if (a < b) {
+    print("check in admin = $check");
+    if (check == 'Admin') {
       //здесь если пользователь админ
+      print("u are admin");
       emit(AdminInState());
     }
-    if (a > b) {
+    if (check == 'User') {
       //здесь если пользователь не админ
+      print("u are user");
       emit(NoAdminState());
     }
   }

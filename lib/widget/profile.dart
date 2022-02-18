@@ -52,33 +52,46 @@ class ProfileState extends State<Profile> {
                 actions: [
                   BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
                     if (state is LoginedState) {
-                      BlocBuilder<AdminCubit, AdminState>(
+                      return BlocBuilder<AdminCubit, AdminState>(
                           builder: (context, state) {
                         //var authState = context.read<AuthCubit>().state;
                         //(authState is LoginedState ||
+                        print("state in profile = $state");
                         if (state is NoAdminState)
-                          return Container();
+                          return Switch(
+                            value: _enabled,
+                            onChanged: (bool value) {
+                              setState(() {
+                                context.read<AdminCubit>().setAdmin();
+                                _enabled = value;
+                              });
+                            },
+                            activeThumbImage: new NetworkImage(
+                                'https://nklk.ru/dll_image/1017.png'),
+                            inactiveThumbImage: new NetworkImage(
+                                'https://w7.pngwing.com/pngs/251/239/png-transparent-logo-design-rebranding-typography-letter-a-angle-text-triangle.png'),
+                          );
                         else
                           return Stack(children: [
                             Padding(
                               padding: const EdgeInsets.all(0.0),
                               child: Text("admin"),
                             ),
+                            Switch(
+                              value: _enabled,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  context.read<AdminCubit>().setAdmin();
+                                  _enabled = value;
+                                });
+                              },
+                              activeThumbImage: new NetworkImage(
+                                  'https://nklk.ru/dll_image/1017.png'),
+                              inactiveThumbImage: new NetworkImage(
+                                  'https://w7.pngwing.com/pngs/251/239/png-transparent-logo-design-rebranding-typography-letter-a-angle-text-triangle.png'),
+                            )
                           ]);
                       });
-                      Switch(
-                        value: _enabled,
-                        onChanged: (bool value) {
-                          setState(() {
-                            context.read<AdminCubit>().setAdmin();
-                            _enabled = value;
-                          });
-                        },
-                        activeThumbImage: new NetworkImage(
-                            'https://nklk.ru/dll_image/1017.png'),
-                        inactiveThumbImage: new NetworkImage(
-                            'https://w7.pngwing.com/pngs/251/239/png-transparent-logo-design-rebranding-typography-letter-a-angle-text-triangle.png'),
-                      );
                     }
                     return Text("");
                   })

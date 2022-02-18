@@ -2,14 +2,17 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:blogonomy/cubit/locator_services.dart';
+import 'package:blogonomy/cubit/network/admin_cubit.dart';
 import 'package:blogonomy/cubit/network/api_state.dart';
 import 'package:blogonomy/cubit/network/app_auth.dart';
 import 'package:blogonomy/cubit/network/auth_state.dart';
+import 'package:blogonomy/main.dart';
 import 'package:blogonomy/screens/sliding_up_panel_screens.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -24,7 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
   final String accessTokenExpirationDateTimeKey =
       'access_token_expiration_date_time';
   final String idTokenKey = 'id_token';
-
+  Map<String, dynamic>? decodedToken;
   AuthCubit() : super(EmptyState());
 
   Future<void> check() async {
@@ -69,7 +72,9 @@ class AuthCubit extends Cubit<AuthState> {
 
       final idToken = _parseIdToken(result.idToken!);
       final profile = await _getUserDetails(result.accessToken!);
-
+      String yourToken = "${result.accessToken}";
+      decodedToken = JwtDecoder.decode(yourToken);
+      print(decodedToken);
       final userName = idToken['name'];
       //picture = profile['picture'];
     } catch (e, s) {
@@ -126,7 +131,11 @@ class AuthCubit extends Cubit<AuthState> {
         //preferEphemeralSession: preferEphemeralSession,
       ),
     );
-
+    String yourToken = "${result!.accessToken}";
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken);
+    print(decodedToken);
+    print(result.refreshToken);
+    AdminCubit().checkOnAdmin(decodedToken['role']);
     // this code block demonstrates passing in values for the prompt parameter. in this case it prompts the user login even if they have already signed in. the list of supported values depends on the identity provider
     // final AuthorizationTokenResponse result = await _appAuth.authorizeAndExchangeCode(
     //   AuthorizationTokenRequest(_clientId, _redirectUrl,
@@ -160,7 +169,7 @@ class AuthCubit extends Cubit<AuthState> {
       Uri.parse(url),
       headers: {'Authorization': 'Bearer $accessToken'},
     );
-
+    print("response body = ${response.body}");
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {

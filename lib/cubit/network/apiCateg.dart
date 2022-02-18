@@ -205,6 +205,7 @@ class AuthApi extends Cubit<ApiState> {
   }
 
   Future<String> setCode(String code) async {
+    emit(Loading());
     var error;
     //const hash2 = hash;
     print("hash 2 = $hash");
@@ -224,12 +225,14 @@ class AuthApi extends Cubit<ApiState> {
     print(response.statusCode);
     if (response.body == '{"result":"mismatch"}') {
       print("object123132");
+      emit(NoLoading());
       return 'error';
     }
     if (response.statusCode == 200) {
       final String responseString = response.body;
       print("response string 1 = $responseString");
       hash = responseJson['hash'];
+      emit(NoLoading());
       return 'ok';
     } else {
       return error;

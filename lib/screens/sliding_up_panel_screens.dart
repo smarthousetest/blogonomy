@@ -391,7 +391,10 @@ class SecondPageState extends State<SecondPage> {
           margin: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: ElevatedButton(
             onPressed: () async {
-              String a = await AuthApi().setCode(textEditingController.text);
+              String a = await context
+                  .read<AuthApi>()
+                  .setCode(textEditingController.text);
+              //  await AuthApi().setCode(textEditingController.text);
 
               print("a=$a");
 
@@ -410,15 +413,25 @@ class SecondPageState extends State<SecondPage> {
                 widget.onNext();
               }
             },
-            child: const Text(
-              'Далее',
-              style: TextStyle(
-                fontFamily: 'Roboto-Bold.ttf',
-                fontSize: 15.0,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFFFFFFFF),
-              ),
+            child: BlocBuilder<AuthApi, ApiState>(
+              builder: ((context, state) {
+                print("state on enter = $state");
+                if (state is Loading) {
+                  return CircularProgressIndicator(
+                    color: Colors.white,
+                  );
+                }
+                return const Text(
+                  'Далее',
+                  style: TextStyle(
+                    fontFamily: 'Roboto-Bold.ttf',
+                    fontSize: 15.0,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFFFFFFFF),
+                  ),
+                );
+              }),
             ),
             style: ButtonStyle(
               backgroundColor:
