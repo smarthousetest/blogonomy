@@ -1,3 +1,4 @@
+import 'package:blogonomy/cubit/network/apiCateg.dart';
 import 'package:flutter/material.dart';
 
 class Confid extends StatefulWidget {
@@ -26,6 +27,7 @@ class _ConfidState extends State<Confid> {
           backgroundColor: Colors.white,
           elevation: 0,
         ),
+        body: Text("${body}"),
       ),
     );
   }

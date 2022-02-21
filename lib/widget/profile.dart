@@ -4,10 +4,12 @@ import 'dart:math';
 import 'package:blogonomy/auth/auth_page.dart';
 import 'package:blogonomy/cubit/network/admin_cubit.dart';
 import 'package:blogonomy/cubit/network/admin_state.dart';
+import 'package:blogonomy/cubit/network/apiCateg.dart';
 import 'package:blogonomy/cubit/network/app_auth.dart';
 import 'package:blogonomy/cubit/network/auth_cubit.dart';
 import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/cubit/panel_controller_cubit.dart';
+import 'package:blogonomy/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,7 +59,8 @@ class ProfileState extends State<Profile> {
                         //var authState = context.read<AuthCubit>().state;
                         //(authState is LoginedState ||
                         print("state in profile = $state");
-                        if (state is NoAdminState)
+                        if (adminClass.role == 'Admin') {
+                          print("adminClass.role = ${adminClass.role}");
                           return Switch(
                             value: _enabled,
                             onChanged: (bool value) {
@@ -71,26 +74,8 @@ class ProfileState extends State<Profile> {
                             inactiveThumbImage: new NetworkImage(
                                 'https://w7.pngwing.com/pngs/251/239/png-transparent-logo-design-rebranding-typography-letter-a-angle-text-triangle.png'),
                           );
-                        else
-                          return Stack(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(0.0),
-                              child: Text("admin"),
-                            ),
-                            Switch(
-                              value: _enabled,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  context.read<AdminCubit>().setAdmin();
-                                  _enabled = value;
-                                });
-                              },
-                              activeThumbImage: new NetworkImage(
-                                  'https://nklk.ru/dll_image/1017.png'),
-                              inactiveThumbImage: new NetworkImage(
-                                  'https://w7.pngwing.com/pngs/251/239/png-transparent-logo-design-rebranding-typography-letter-a-angle-text-triangle.png'),
-                            )
-                          ]);
+                        } else
+                          return Container();
                       });
                     }
                     return Text("");
@@ -294,7 +279,11 @@ class ProfileState extends State<Profile> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => Navigator.pushNamed(context, '/b'),
+                          onTap: () {
+                            print("object");
+                            Navigator.pushNamed(context, '/b');
+                            context.read<AuthApi>().getConfig();
+                          },
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 10, right: 10, top: 20),

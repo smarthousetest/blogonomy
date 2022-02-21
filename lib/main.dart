@@ -39,7 +39,7 @@ import 'floating_bottom_navigation_bar-1.5.2/src/floating_navbar_item.dart';
 FiltersModels filterModels = FiltersModels();
 BlogerFindModel blogerFindModel = BlogerFindModel();
 PodborkaBool podborkaBool = PodborkaBool();
-
+AdminClass adminClass = AdminClass();
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white,

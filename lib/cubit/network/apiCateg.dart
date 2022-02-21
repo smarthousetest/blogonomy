@@ -143,9 +143,29 @@ class BlogersApi {
 
 AuthApi authApi = AuthApi();
 String? hash;
+String? body;
 
 class AuthApi extends Cubit<ApiState> {
   AuthApi() : super(NoLoading());
+  Future<void> getConfig() async {
+    final url =
+        'https://service-blogonomy.maksatlabs.ru/api/TermsAndPrivacy/Terms';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        "Accept": "application/json",
+        "content-type": "application/json"
+      },
+    );
+    print("response body = ${response.body}");
+    body = response.body;
+    print(body);
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to get user details');
+    }
+  }
 
   Future<AuthModel> createMail(String mail) async {
     emit(Loading());

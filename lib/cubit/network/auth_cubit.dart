@@ -136,6 +136,7 @@ class AuthCubit extends Cubit<AuthState> {
     print(decodedToken);
     print(result.refreshToken);
     AdminCubit().checkOnAdmin(decodedToken['role']);
+    adminClass.role = decodedToken['role'];
     // this code block demonstrates passing in values for the prompt parameter. in this case it prompts the user login even if they have already signed in. the list of supported values depends on the identity provider
     // final AuthorizationTokenResponse result = await _appAuth.authorizeAndExchangeCode(
     //   AuthorizationTokenRequest(_clientId, _redirectUrl,

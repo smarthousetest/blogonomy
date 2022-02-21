@@ -34,3 +34,8 @@ class AppAuth {
     tokenEndpoint: 'https://passport-blogonomy.maksatlabs.ru/connect/token',
   );
 }
+
+class AdminClass {
+  String role;
+  AdminClass({this.role = 'User'});
+}
