@@ -475,10 +475,14 @@ class FilterOneApi {
   Future<List<FilterOneModel>> getFilterOne(String bloggerId) async {
     print(bloggerId);
     print(AppAuth.accessToken);
+    Map<String, String> headers2 = {"content-type": "application/json"};
+    if (AppAuth.accessToken != null && AppAuth.accessToken!.isNotEmpty) {
+      headers2.addAll({'Authorization': 'Bearer ${AppAuth.accessToken}'});
+    }
     final response = await http.post(
         Uri.parse(
             'https://service-blogonomy.maksatlabs.ru/api/Info/AboutBloggerCategories'),
-        headers: {'Authorization': 'Bearer ${AppAuth.accessToken}'},
+        headers: headers2,
         body: jsonEncode({"bloggerId": bloggerId}));
     print("response.body = = = ${response.body}");
     if (response.statusCode == 200) {
@@ -494,11 +498,14 @@ class FilterOneApi {
   Future<String> setFilterOne(String bloggerId, List categoryIds) async {
     print(bloggerId);
     print(categoryIds);
-
+    Map<String, String> headers2 = {"content-type": "application/json"};
+    if (AppAuth.accessToken != null && AppAuth.accessToken!.isNotEmpty) {
+      headers2.addAll({'Authorization': 'Bearer ${AppAuth.accessToken}'});
+    }
     final response = await http.post(
         Uri.parse(
             'https://service-blogonomy.maksatlabs.ru/api/BloggerCategory/RedefineBloggerCategories'),
-        headers: {"Content-Type": "application/json"},
+        headers: headers2,
         body: jsonEncode({"bloggerId": bloggerId, "categoryIds": categoryIds}));
     print(response.body);
 
