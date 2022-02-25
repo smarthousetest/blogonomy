@@ -47,10 +47,6 @@ Future<void> main() async {
   ));
   WidgetsFlutterBinding.ensureInitialized();
   await servic.init();
-  print("accessToken big = ${AppAuth.accessToken}");
-  if (AppAuth.accessToken != null) {
-    LoginedState();
-  }
 
   runApp(const MyApp());
 }
@@ -80,10 +76,8 @@ class MyApp extends StatelessWidget {
               create: (context) => sl<OneBlogerCubit>()),
           BlocProvider<BottomNavigationControllerSelect>(
               create: (context) => sl<BottomNavigationControllerSelect>()),
-          BlocProvider<AuthCubit>(
-              create: (context) => sl<AuthCubit>()..check()),
-          BlocProvider<AdminCubit>(
-              create: (context) => sl<AdminCubit>()..setAdmin()),
+          BlocProvider<AuthCubit>(create: (context) => sl<AuthCubit>()),
+          BlocProvider<AdminCubit>(create: (context) => sl<AdminCubit>()),
           BlocProvider<AuthApi>(create: (context) => sl<AuthApi>()),
         ],
         child: MaterialApp(
@@ -91,7 +85,11 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: AuthPage(),
+          home: BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, state) {
+              return AuthPage();
+            },
+          ),
           routes: <String, WidgetBuilder>{
             '/a': (BuildContext context) => Notifications(),
             '/b': (BuildContext context) => Confid(),

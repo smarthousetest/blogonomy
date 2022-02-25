@@ -8,6 +8,7 @@ import 'package:blogonomy/cubit/network/app_auth.dart';
 import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/main.dart';
 import 'package:blogonomy/screens/sliding_up_panel_screens.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -28,6 +29,7 @@ class AuthCubit extends Cubit<AuthState> {
       'access_token_expiration_date_time';
   final String idTokenKey = 'id_token';
   Map<String, dynamic>? decodedToken;
+  String? yourToken;
   AuthCubit() : super(EmptyState());
 
   Future<void> check() async {
@@ -84,6 +86,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logOut() async {
+    final idTokenHint = await sharedPreferences.getString(idTokenKey);
     //  emit(InProcessState());
     print("Logout");
     await secureStorage.delete(key: refreshTokenKey);
@@ -92,11 +95,16 @@ class AuthCubit extends Cubit<AuthState> {
     await sharedPreferences.remove(idTokenKey);
     AppAuth.accessToken = null;
 
-    // await appAuth.endSession(EndSessionRequest(
-    //       idTokenHint: '',
-    //       postLogoutRedirectUrl: 'com.blogonomy.mobile:/exit',
-    //       serviceConfiguration:  AuthorizationServiceConfiguration(authorizationEndpoint: 'https://passport-blogonomy.maksatlabs.ru/connect/authorize', endSessionEndpoint: '<end_session_endpoint>', tokenEndpoint: 'https://passport-blogonomy.maksatlabs.ru/connect/token'
-    // ));
+    await appAuth.endSession(EndSessionRequest(
+        idTokenHint: idTokenHint,
+        postLogoutRedirectUrl: 'com.blogonomy.mobile:/logout',
+        serviceConfiguration: AuthorizationServiceConfiguration(
+            authorizationEndpoint:
+                'https://passport-blogonomy.maksatlabs.ru/connect/authorize',
+            endSessionEndpoint:
+                'https://passport-blogonomy.maksatlabs.ru/connect/logout',
+            tokenEndpoint:
+                'https://passport-blogonomy.maksatlabs.ru/connect/token')));
     emit(LogoutedState());
     print("Logout ended");
   }
@@ -131,8 +139,8 @@ class AuthCubit extends Cubit<AuthState> {
         //preferEphemeralSession: preferEphemeralSession,
       ),
     );
-    String yourToken = "${result!.accessToken}";
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken);
+    yourToken = "${result!.accessToken}";
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(yourToken!);
     print(decodedToken);
     print(result.refreshToken);
     AdminCubit().checkOnAdmin(decodedToken['role']);
@@ -145,6 +153,7 @@ class AuthCubit extends Cubit<AuthState> {
     //       promptValues: ['login']),
     // );
     print("result = $result");
+
     if (result == null) {
       emit(ErrorState("undefined"));
     } else {

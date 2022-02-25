@@ -29,10 +29,12 @@ class AppAuth {
   static AuthorizationServiceConfiguration serviceConfiguration =
       // ignore: prefer_const_constructors
       AuthorizationServiceConfiguration(
-    authorizationEndpoint:
-        'https://passport-blogonomy.maksatlabs.ru/connect/authorize',
-    tokenEndpoint: 'https://passport-blogonomy.maksatlabs.ru/connect/token',
-  );
+          authorizationEndpoint:
+              'https://passport-blogonomy.maksatlabs.ru/connect/authorize',
+          tokenEndpoint:
+              'https://passport-blogonomy.maksatlabs.ru/connect/token',
+          endSessionEndpoint:
+              'https://passport-blogonomy.maksatlabs.ru/connect/logout');
 }
 
 class AdminClass {

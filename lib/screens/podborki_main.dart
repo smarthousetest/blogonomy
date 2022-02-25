@@ -1,4 +1,5 @@
 import 'package:blogonomy/cubit/bottom_navigation_bar.dart';
+import 'package:blogonomy/cubit/network/admin_cubit.dart';
 import 'package:blogonomy/cubit/network/auth_cubit.dart';
 import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
@@ -21,6 +22,8 @@ class PodborkiMain extends StatelessWidget {
     podborkaBool.public = false;
     CardCubit2 cardCubit2 = context.read<CardCubit2>();
     cardCubit2.fetchCard();
+    CardCubit cardCubit = context.read<CardCubit>();
+    cardCubit.fetchCard();
 
     return BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
       if (state is LoginedState) {
@@ -108,15 +111,16 @@ class PodborkiMain extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Podborka()));
+                                        builder: (context) => Podborka(
+                                              index: index,
+                                               name: state.loadedCard?[index].name,
+                                            )));
                               },
                               child: CardView(
                                   id: '${state.loadedCard?[index].id}',
                                   name: '${state.loadedCard?[index].name}',
                                   image: state.loadedCard?[index].picUrl,
-                                  numberOfBloggers:
-                                      state.loadedCard?[index].numBloggers ??
-                                          1),
+                                  numberOfBloggers: state.loadedCard?[index].numBloggers ?? 1),
                             );
                           }),
                     )

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:blogonomy/Repository/card_repositoriesCateg.dart';
+import 'package:blogonomy/cubit/network/auth_cubit.dart';
+import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/cubit/network/bloger_find_model.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
@@ -49,10 +51,14 @@ class _BlogersListState extends State<BlogersList> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<AuthCubit>().stream.listen((state) {
+      print("state ${state}}");
+    });
+
     setupScrollController(context);
     BlocProvider.of<BlogersCubit>(context).fetchBlogers();
 
-    print("state - $context");
+    print("state1 - $context");
     print("Открыл");
     print(filterModels.id);
 
@@ -121,6 +127,7 @@ class _BlogersListState extends State<BlogersList> {
                         onTap: () {
                           blogerFindModel =
                               BlogerFindModel(id: "${blogers[index].id}");
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(

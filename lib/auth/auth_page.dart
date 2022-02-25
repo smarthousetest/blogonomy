@@ -18,27 +18,28 @@ class AuthPage extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Stack(children: [
-          BlocProvider(
-            create: (context) => AuthCubit(),
-            child: BlocBuilder<AuthCubit, AuthState>(
-              builder: (context, state) {
-                print("state = $state");
-                if (state is LoginedState) {
-                  return SlidingUp();
-                }
-                if (state is LogoutedState) {
-                  return AuthPage();
-                }
-                if (state is EmptyState) {
-                  return SlidingUp();
-                }
-                if (state is ErrorState) {
-                  return SlidingUp();
-                }
-                return Text("erroe");
-              },
-            ),
+          // BlocProvider(
+          //   create: (context) => AuthCubit(),
+          //   child:
+          BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, state) {
+              print("state = $state");
+              if (state is LoginedState) {
+                return SlidingUp();
+              }
+              if (state is LogoutedState) {
+                return AuthPage();
+              }
+              if (state is EmptyState) {
+                return SlidingUp();
+              }
+              if (state is ErrorState) {
+                return SlidingUp();
+              }
+              return Text("erroe");
+            },
           ),
+          //),
           const SlidingUp2(),
           SlidingUp3()
         ]));

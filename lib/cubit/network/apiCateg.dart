@@ -371,7 +371,7 @@ class OneBlogerApi {
   }
 }
 
-class Podborka {
+class Pod {
   Future<String?> create(String name, bool public) async {
     print(name);
     print(public);
@@ -473,12 +473,14 @@ class Podborka {
 
 class FilterOneApi {
   Future<List<FilterOneModel>> getFilterOne(String bloggerId) async {
+    print(bloggerId);
+    print(AppAuth.accessToken);
     final response = await http.post(
         Uri.parse(
             'https://service-blogonomy.maksatlabs.ru/api/Info/AboutBloggerCategories'),
-        headers: {"Content-Type": "application/json"},
+        headers: {'Authorization': 'Bearer ${AppAuth.accessToken}'},
         body: jsonEncode({"bloggerId": bloggerId}));
-    print(response.body);
+    print("response.body = = = ${response.body}");
     if (response.statusCode == 200) {
       final List<dynamic> filteroneJson = json.decode(response.body);
       return filteroneJson

@@ -167,11 +167,10 @@ class _SlidingUpState3 extends State<SlidingUp3> {
                           showAlertDialog(context);
                           String name = textEditingController.text;
 
-                          String? idpodborka =
-                              await Podborka().create(name, false);
+                          String? idpodborka = await Pod().create(name, false);
 
                           String? createpodborka =
-                              await Podborka().setbloggers(idpodborka!);
+                              await Pod().setbloggers(idpodborka!);
 
                           context.read<SlidingUpCubit2>().close();
                           context.read<SlidingUpCubit3>().close();
@@ -302,7 +301,7 @@ class _SlidingUpState4 extends State<SlidingUp4> {
                         onPressed: () async {
                           String name = textEditingController2.text;
 
-                          String? updatepodborka = await Podborka()
+                          String? updatepodborka = await Pod()
                               .update(filterModels.id![0].id, name, false);
 
                           textEditingController2.text = "";
@@ -329,7 +328,7 @@ class _SlidingUpState4 extends State<SlidingUp4> {
                         ))),
                         onPressed: () async {
                           String? deletepodborka =
-                              await Podborka().delete(filterModels.id![0].id);
+                              await Pod().delete(filterModels.id![0].id);
 
                           context.read<SlidingUpCubit4>().close();
                           Navigator.pop(context);

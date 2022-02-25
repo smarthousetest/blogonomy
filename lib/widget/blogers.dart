@@ -42,9 +42,10 @@ class BlogerState extends State<Blogers> {
               BlocBuilder<AdminCubit, AdminState>(builder: (context, state) {
             //var authState = context.read<AuthCubit>().state;
             //(authState is LoginedState ||
+            print('state now is $state');
             if (state is NoAdminState)
               return Container();
-            else
+            else if (state is AdminInState) {
               return IconButton(
                   onPressed: () {
                     showDialog(
@@ -136,6 +137,8 @@ class BlogerState extends State<Blogers> {
                     Icons.add,
                     color: Colors.blue,
                   ));
+            }
+            return Text('');
           }),
           actions: [
             Container(

@@ -1,5 +1,9 @@
 import 'dart:async';
 
+import 'package:blogonomy/cubit/network/admin_cubit.dart';
+import 'package:blogonomy/cubit/network/apiCateg.dart';
+import 'package:blogonomy/cubit/network/auth_cubit.dart';
+import 'package:blogonomy/cubit/network/auth_state.dart';
 import 'package:blogonomy/cubit/network/bloger_find_model.dart';
 import 'package:blogonomy/cubit/network/card_cubitCateg.dart';
 import 'package:blogonomy/cubit/network/card_modelCateg.dart';
@@ -8,6 +12,7 @@ import 'package:blogonomy/cubit/panel_controller_cubit.dart';
 import 'package:blogonomy/main.dart';
 import 'package:blogonomy/screens/bloger_profile_screen.dart';
 import 'package:blogonomy/screens/blogers_screens.dart';
+import 'package:blogonomy/screens/blogers_sliding.dart';
 import 'package:blogonomy/screens/popular_tab.dart';
 import 'package:blogonomy/widget/bloger_view.dart';
 import 'package:blogonomy/widget/sliding_up/bloger_panel.dart';
@@ -18,12 +23,17 @@ import 'package:provider/src/provider.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class Podborka extends StatefulWidget {
-  const Podborka({Key? key}) : super(key: key);
+  int index;
+  String name;
+  Podborka({Key? key, required this.index, required this.name})
+      : super(key: key);
   @override
   State<Podborka> createState() => PodborkaState();
 }
 
 class PodborkaState extends State<Podborka> {
+  bool _enabled = false;
+  bool value = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +73,25 @@ class PodborkaState extends State<Podborka> {
               icon: Icon(Icons.edit),
               color: Colors.blue,
             )),
+            BlocBuilder<CardCubit, CardState>(builder: ((context, state) {
+              if (state is CardLoadedState) {
+                return Switch(
+                  value: _enabled,
+                  onChanged: (value) {
+                    Pod().update(state.loadedCard![widget.index].id,
+                        state.loadedCard![widget.index].name, _enabled);
+                    setState(() {
+                      _enabled = value;
+                    });
+                  },
+                  activeThumbImage: new NetworkImage(
+                      'https://cdn-icons-png.flaticon.com/512/76/76296.png'),
+                  inactiveThumbImage: new NetworkImage(
+                      'https://e7.pngegg.com/pngimages/447/557/png-clipart-computer-icons-padlock-padlock-computer-technic.png'),
+                );
+              }
+              return Text('');
+            }))
           ],
           iconTheme: IconThemeData(color: Colors.blue),
         )),
@@ -162,7 +191,6 @@ class _PodborkaListState extends State<PodborkaList> {
                 }),
           ),
           onRefresh: blogersCubit.fetchBlogers);
-      return Text("Error");
     });
   }
 
