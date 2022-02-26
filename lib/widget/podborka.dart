@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:blogonomy/cubit/network/admin_cubit.dart';
+import 'package:blogonomy/cubit/network/admin_state.dart';
 import 'package:blogonomy/cubit/network/apiCateg.dart';
 import 'package:blogonomy/cubit/network/auth_cubit.dart';
 import 'package:blogonomy/cubit/network/auth_state.dart';
@@ -73,25 +74,34 @@ class PodborkaState extends State<Podborka> {
               icon: Icon(Icons.edit),
               color: Colors.blue,
             )),
-            BlocBuilder<CardCubit, CardState>(builder: ((context, state) {
-              if (state is CardLoadedState) {
-                return Switch(
-                  value: _enabled,
-                  onChanged: (value) {
-                    Pod().update(state.loadedCard![widget.index].id,
-                        state.loadedCard![widget.index].name, _enabled);
-                    setState(() {
-                      _enabled = value;
-                    });
-                  },
-                  activeThumbImage: new NetworkImage(
-                      'https://cdn-icons-png.flaticon.com/512/76/76296.png'),
-                  inactiveThumbImage: new NetworkImage(
-                      'https://e7.pngegg.com/pngimages/447/557/png-clipart-computer-icons-padlock-padlock-computer-technic.png'),
-                );
-              }
-              return Text('');
-            }))
+            BlocBuilder<AdminCubit, AdminState>(
+              builder: (context, state) {
+                print("admin $state ");
+                if (state is AdminInState) {
+                  return BlocBuilder<CardCubit, CardState>(
+                      builder: ((context, state) {
+                    if (state is CardLoadedState) {
+                      return Switch(
+                        value: _enabled,
+                        onChanged: (value) {
+                          Pod().update(state.loadedCard![widget.index].id,
+                              state.loadedCard![widget.index].name, _enabled);
+                          setState(() {
+                            _enabled = value;
+                          });
+                        },
+                        activeThumbImage: new NetworkImage(
+                            'https://cdn-icons-png.flaticon.com/512/76/76296.png'),
+                        inactiveThumbImage: new NetworkImage(
+                            'https://e7.pngegg.com/pngimages/447/557/png-clipart-computer-icons-padlock-padlock-computer-technic.png'),
+                      );
+                    }
+                    return Text('');
+                  }));
+                }
+                return Text('');
+              },
+            )
           ],
           iconTheme: IconThemeData(color: Colors.blue),
         )),
