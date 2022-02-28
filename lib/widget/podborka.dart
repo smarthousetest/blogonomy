@@ -161,45 +161,42 @@ class _PodborkaListState extends State<PodborkaList> {
       BlogersCubit2 blogersCubit = context.read<BlogersCubit2>();
 
       return RefreshIndicator(
-          child: Expanded(
-            flex: 1,
-            child: ListView.builder(
-                controller: scrollController,
-                physics: ClampingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: blogers.length + (isLoading ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (index < blogers.length)
-                    return GestureDetector(
-                      onTap: () {
-                        blogerFindModel =
-                            BlogerFindModel(id: "${blogers[index].id}");
+          child: ListView.builder(
+              controller: scrollController,
+              physics: ClampingScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: blogers.length + (isLoading ? 1 : 0),
+              itemBuilder: (context, index) {
+                if (index < blogers.length)
+                  return GestureDetector(
+                    onTap: () {
+                      blogerFindModel =
+                          BlogerFindModel(id: "${blogers[index].id}");
 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BlogerProfileScreen()));
-                      },
-                      child: BlogerView(
-                          id: '${index + 1}',
-                          userName: '${blogers[index].userName}',
-                          //   fullName: '${state.loadedBlogers?[index].fullName}',
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BlogerProfileScreen()));
+                    },
+                    child: BlogerView(
+                        id: '${index + 1}',
+                        userName: '${blogers[index].userName}',
+                        //   fullName: '${state.loadedBlogers?[index].fullName}',
 
-                          picUrl: '${blogers[index].picUrl}',
-                          // picUrl:
-                          //     'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
-                          er: blogers[index].er ?? 1),
-                    );
-                  else {
-                    Timer(Duration(milliseconds: 300), () {
-                      scrollController
-                          .jumpTo(scrollController.position.maxScrollExtent);
-                    });
+                        picUrl: '${blogers[index].picUrl}',
+                        // picUrl:
+                        //     'https://img.desktopwallpapers.ru/animals/pics/wide/1920x1200/6369fc18cca723f6a53f8730d420e7ee.jpg',
+                        er: blogers[index].er ?? 1),
+                  );
+                else {
+                  Timer(Duration(milliseconds: 300), () {
+                    scrollController
+                        .jumpTo(scrollController.position.maxScrollExtent);
+                  });
 
-                    return _loadingIndicator();
-                  }
-                }),
-          ),
+                  return _loadingIndicator();
+                }
+              }),
           onRefresh: blogersCubit.fetchBlogers);
     });
   }
