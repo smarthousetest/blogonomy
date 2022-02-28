@@ -500,9 +500,8 @@ class ProfileState extends State<Profile> {
                               margin: const EdgeInsets.only(
                                   left: 35.0, right: 35.0, top: 20),
                               child: ElevatedButton(
-                                onPressed: () {
-                                  print("ggggyggy");
-                                  context.read<AuthCubit>().logOut();
+                                onPressed: () async {
+                                  await context.read<AuthCubit>().logOut();
                                 },
                                 child: const Text(
                                   'Выйти',

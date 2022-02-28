@@ -98,7 +98,7 @@ class AuthCubit extends Cubit<AuthState> {
     await appAuth.endSession(EndSessionRequest(
         idTokenHint: idTokenHint,
         postLogoutRedirectUrl: 'com.blogonomy.mobile:/logout',
-        serviceConfiguration: AuthorizationServiceConfiguration(
+        serviceConfiguration: const AuthorizationServiceConfiguration(
             authorizationEndpoint:
                 'https://passport-blogonomy.maksatlabs.ru/connect/authorize',
             endSessionEndpoint:
