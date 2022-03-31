@@ -1168,49 +1168,55 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
         show: true,
         rightTitles: SideTitles(showTitles: false),
         topTitles: SideTitles(showTitles: false),
-        // bottomTitles: SideTitles(
-        //   showTitles: true,
-        //   reservedSize: 22,
-        //   interval: 1,
-        //   getTextStyles: (context, value) => const TextStyle(
-        //       color: Color(0xff68737d),
-        //       fontWeight: FontWeight.bold,
-        //       fontSize: 16),
-        //   getTitles: (value) {
-        //     switch (value.toInt()) {
-        //       case 2:
-        //         return 'MAR';
-        //       case 5:
-        //         return 'JUN';
-        //       case 8:
-        //         return 'SEP';
-        //     }
-        //     return '';
-        //   },
-        //   margin: 8,
-        // ),
-        // leftTitles: SideTitles(
-        //   showTitles: true,
-        //   interval: 1,
-        //   getTextStyles: (context, value) => const TextStyle(
-        //     color: Color(0xff67727d),
-        //     fontWeight: FontWeight.bold,
-        //     fontSize: 15,
-        //   ),
-        //   getTitles: (value) {
-        //     switch (value.toInt()) {
-        //       case 1:
-        //         return '10k';
-        //       case 3:
-        //         return '30k';
-        //       case 5:
-        //         return '50k';
-        //     }
-        //     return '';
-        //   },
-        //   reservedSize: 32,
-        //   margin: 12,
-        // ),
+        bottomTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 22,
+          interval: 1,
+          getTextStyles: (context, value) => const TextStyle(
+              color: Color(0xff68737d),
+              fontWeight: FontWeight.bold,
+              fontSize: 15),
+          getTitles: (value) {
+            switch (value.toInt()) {
+              case 0:
+                return '0';
+              case 1:
+                return '02.22';
+              case 2:
+                return '03.22';
+              case 3:
+                return '04.22';
+            }
+            return '';
+          },
+          margin: 8,
+        ),
+        leftTitles: SideTitles(
+          showTitles: true,
+          interval: 1,
+          getTextStyles: (context, value) => const TextStyle(
+            color: Color(0xff67727d),
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+          getTitles: (value) {
+            switch (value.toInt()) {
+              case 0:
+                return '0';
+              case 1:
+                return '5';
+              case 2:
+                return '10';
+              case 3:
+                return '15';
+              case 4:
+                return '25';
+            }
+            return '';
+          },
+          reservedSize: 32,
+          margin: 12,
+        ),
       ),
       minX: 0,
       minY: 0,
