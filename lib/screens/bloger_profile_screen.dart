@@ -1171,25 +1171,26 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
-          interval: 1,
+          interval: 1.3,
           getTextStyles: (context, value) => const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
               fontSize: 15),
           getTitles: (value) {
+            print("value =  $value");
             switch (value.toInt()) {
               case 0:
                 return '0';
               case 1:
-                return '02.22';
-              case 2:
                 return '03.22';
-              case 3:
+              case 2:
                 return '04.22';
+              // case 3:
+              //   return '04.22';
             }
             return '';
           },
-          margin: 8,
+          margin: 10,
         ),
         leftTitles: SideTitles(
           showTitles: true,
@@ -1214,7 +1215,7 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
             }
             return '';
           },
-          reservedSize: 32,
+          reservedSize: 42,
           margin: 12,
         ),
       ),
