@@ -661,7 +661,7 @@ class _FourPageState extends State<FourPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
             color: Colors.black,

@@ -24,6 +24,7 @@ class BlogerState extends State<Blogers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text(
             'Блогеры',
@@ -36,7 +37,7 @@ class BlogerState extends State<Blogers> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           elevation: 0,
           leading:
               BlocBuilder<AdminCubit, AdminState>(builder: (context, state) {

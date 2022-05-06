@@ -632,16 +632,39 @@ class _BlogerProfileScreenState extends State<BlogerProfileScreen> {
                                                     TextButton(
                                                         onPressed: () {
                                                           setState(() {
-                                                            tegsscrol = false;
+                                                            if (tegsscrol ==
+                                                                false) {
+                                                              tegsscrol = true;
+                                                            } else {
+                                                              tegsscrol = false;
+                                                            }
+
                                                             tegsopen =
                                                                 !tegsopen;
-                                                            heightcontainer1 = tegsopen
-                                                                ? state
+                                                            print(
+                                                                'length state ${state.loadedBloger?.hashtag!.length}');
+                                                            if (state
                                                                         .loadedBloger
                                                                         ?.hashtag!
                                                                         .length *
-                                                                    25.8
-                                                                : 100;
+                                                                    17 <
+                                                                100) {
+                                                              heightcontainer1 =
+                                                                  100;
+                                                            } else {
+                                                              heightcontainer1 = tegsopen
+                                                                  ? state
+                                                                          .loadedBloger
+                                                                          ?.hashtag!
+                                                                          .length *
+                                                                      17.0
+                                                                  : 100;
+                                                            }
+
+                                                            print(
+                                                                "hight cont  $heightcontainer1");
+                                                            print(
+                                                                "tegsscroll $tegsscrol");
                                                           });
                                                         },
                                                         child: Text(

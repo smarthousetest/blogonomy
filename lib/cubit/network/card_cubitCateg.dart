@@ -58,8 +58,9 @@ class BlogersCubit extends Cubit<BlogersState> {
   Future<void> fetchBlogers({String pagen = "1"}) async {
     if (state is BlogersLoadingState) return;
     var oldPosts = <BlogersModel>[];
-
+    print("oldpost $oldPosts");
     if (pagen != "scrool") {
+      print("oldpost1 $oldPosts");
       page = 1;
       oldPosts.clear();
       emit(BlogersEmptyState());

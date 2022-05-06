@@ -33,7 +33,7 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(EmptyState());
 
   Future<void> check() async {
-    //   if (state is InProcessState) return;
+    AppAuth.accessToken = await secureStorage.read(key: "accessToken");
 
     final currentState = state;
 
@@ -41,21 +41,10 @@ class AuthCubit extends Cubit<AuthState> {
       return;
     }
 
-    //   emit(InProcessState());
-
-    final storedRefreshToken = await secureStorage.read(key: refreshTokenKey);
-    final storedAccessToken = await secureStorage.read(key: accessTokenKey);
-
-    if (storedRefreshToken == null) {
+    if (AppAuth.accessToken == null) {
       emit(LogoutedState());
       return;
     }
-    if (storedAccessToken == null) {
-      refresh();
-      return;
-    }
-    AppAuth.accessToken = storedAccessToken;
-
     emit(LoginedState());
   }
 

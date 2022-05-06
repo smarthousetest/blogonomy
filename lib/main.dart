@@ -76,7 +76,8 @@ class MyApp extends StatelessWidget {
               create: (context) => sl<OneBlogerCubit>()),
           BlocProvider<BottomNavigationControllerSelect>(
               create: (context) => sl<BottomNavigationControllerSelect>()),
-          BlocProvider<AuthCubit>(create: (context) => sl<AuthCubit>()),
+          BlocProvider<AuthCubit>(
+              create: (context) => sl<AuthCubit>()..check()),
           BlocProvider<AdminCubit>(create: (context) => sl<AdminCubit>()),
           BlocProvider<AuthApi>(create: (context) => sl<AuthApi>()),
         ],
